@@ -1,7 +1,16 @@
 import React, { createContext, useContext, useState, useMemo } from 'react';
-import { DEMO_PATIENTS, INITIAL_CASES, INITIAL_VITALS_HISTORY } from '../data/mockData';
+import {
+  DEMO_PATIENTS,
+  INITIAL_CASES,
+  INITIAL_VITALS_HISTORY,
+  HOSPITAL_DOCTORS,
+  HOSPITAL_PATIENTS,
+  HOSPITAL_BED_TELEMETRY,
+  HOSPITAL_RESOURCES
+} from '../data/mockData';
 
 const MediSenseContext = createContext(null);
+
 
 const INITIAL_APPOINTMENTS = [
   {
@@ -53,7 +62,25 @@ export function MediSenseProvider({ children }) {
   // Navigation
   const [activePortal, setActivePortal] = useState('patient'); // 'patient' | 'doctor'
   const [patientTab, setPatientTab] = useState('symptoms'); // 'symptoms' | 'appointments' | 'vitals' | 'history' | 'profile'
-  const [doctorTab, setDoctorTab] = useState('triage'); // 'triage' | 'analytics' | 'audit'
+  const [doctorTab, setDoctorTab] = useState('roster'); // 'roster' | 'triage' | 'analytics' | 'audit'
+
+  // Modal for Gated Doctor / Hospital Staff Sign In
+  const [doctorAuthModalOpen, setDoctorAuthModalOpen] = useState(false);
+
+  // Hospital-Wide Operations, Doctor Roster & Inpatient Census
+  const [hospitalDoctors, setHospitalDoctors] = useState(HOSPITAL_DOCTORS);
+  const [hospitalPatients, setHospitalPatients] = useState(HOSPITAL_PATIENTS);
+
+  const updateDoctorStatus = (doctorId, newStatus, newLabel, nextFreeTime) => {
+    setHospitalDoctors(prev =>
+      prev.map(d =>
+        d.id === doctorId
+          ? { ...d, status: newStatus, statusLabel: newLabel, nextFreeTime }
+          : d
+      )
+    );
+  };
+
 
   // Patients & Current Patient
   const [patientsList, setPatientsList] = useState(DEMO_PATIENTS);
@@ -664,8 +691,16 @@ export function MediSenseProvider({ children }) {
         analyzeAndSubmitSymptoms,
         acceptDoctorDecision,
         overrideDoctorDecision,
-        emergencyCount
+        emergencyCount,
+        doctorAuthModalOpen,
+        setDoctorAuthModalOpen,
+        hospitalDoctors,
+        setHospitalDoctors,
+        hospitalPatients,
+        setHospitalPatients,
+        updateDoctorStatus
       }}
+
     >
       {children}
     </MediSenseContext.Provider>

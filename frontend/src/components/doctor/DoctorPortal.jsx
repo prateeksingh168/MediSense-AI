@@ -1,8 +1,9 @@
-﻿import React from 'react';
+import React from 'react';
 import { useMediSense } from '../../context/MediSenseContext';
 import TriageQueue from './TriageQueue';
 import ClinicalAnalytics from './ClinicalAnalytics';
 import DecisionHistory from './DecisionHistory';
+import HospitalRoster from './HospitalRoster';
 import CaseReviewModal from './CaseReviewModal';
 import {
   Activity,
@@ -13,7 +14,9 @@ import {
   ShieldCheck,
   Stethoscope,
   Sparkles,
-  BarChart3
+  BarChart3,
+  Building2,
+  Users
 } from 'lucide-react';
 
 export default function DoctorPortal() {
@@ -25,7 +28,9 @@ export default function DoctorPortal() {
     setSelectedCaseId,
     reviewModalOpen,
     setReviewModalOpen,
-    activeCase
+    activeCase,
+    hospitalDoctors,
+    hospitalPatients
   } = useMediSense();
 
   const totalCases = cases.length;
@@ -48,14 +53,14 @@ export default function DoctorPortal() {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div>
             <div className="flex items-center gap-2 text-indigo-700 text-xs font-bold uppercase tracking-wider">
-              <Stethoscope className="w-4 h-4" />
-              <span>Doctor Command Center • Emergency & Internal Medicine</span>
+              <Building2 className="w-4 h-4" />
+              <span>Doctor & Hospital Command Center • Emergency, Inpatient & Bed Telemetry</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
-              Physician Decision Support Dashboard
+              Hospital Decision Support & Clinical Command Center
             </h2>
             <p className="text-slate-500 text-sm mt-1 max-w-2xl">
-              AI prior-triage and explainable differential diagnostics. The attending physician retains final clinical authority over all patient admissions, discharges, and medication orders.
+              AI prior-triage, explainable differential diagnostics, physician staff availability, and total hospital-wide inpatient & emergency bed telemetry.
             </p>
           </div>
 
@@ -110,10 +115,22 @@ export default function DoctorPortal() {
       </div>
 
       {/* Sub-Navigation Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
+      <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-2">
+        <button
+          onClick={() => setDoctorTab('roster')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+            doctorTab === 'roster'
+              ? 'bg-indigo-600 text-white shadow-md'
+              : 'text-slate-600 hover:text-slate-900 bg-white border border-slate-200'
+          }`}
+        >
+          <Building2 className="w-4 h-4" />
+          <span>Hospital Roster & Patient Census ({hospitalPatients?.length || 16})</span>
+        </button>
+
         <button
           onClick={() => setDoctorTab('triage')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
             doctorTab === 'triage'
               ? 'bg-indigo-600 text-white shadow-md'
               : 'text-slate-600 hover:text-slate-900 bg-white border border-slate-200'
@@ -125,19 +142,19 @@ export default function DoctorPortal() {
 
         <button
           onClick={() => setDoctorTab('analytics')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
             doctorTab === 'analytics'
               ? 'bg-indigo-600 text-white shadow-md'
               : 'text-slate-600 hover:text-slate-900 bg-white border border-slate-200'
           }`}
         >
           <BarChart3 className="w-4 h-4" />
-          <span>Clinical Analytics & Bed Telemetry</span>
+          <span>Hospital Visual Analytics & Telemetry</span>
         </button>
 
         <button
           onClick={() => setDoctorTab('audit')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
             doctorTab === 'audit'
               ? 'bg-indigo-600 text-white shadow-md'
               : 'text-slate-600 hover:text-slate-900 bg-white border border-slate-200'
@@ -150,6 +167,9 @@ export default function DoctorPortal() {
 
       {/* Tab Views */}
       <div>
+        {doctorTab === 'roster' && (
+          <HospitalRoster />
+        )}
         {doctorTab === 'triage' && (
           <TriageQueue onSelectCase={handleSelectCase} />
         )}
