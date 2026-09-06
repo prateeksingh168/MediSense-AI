@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useMediSense } from '../../context/MediSenseContext';
 import logoImg from '../../assets/logo.png';
 import {
@@ -65,9 +65,24 @@ const TIME_SLOTS = [
 ];
 
 export default function AppointmentBooking() {
-  const { currentPatient, appointments, bookAppointment } = useMediSense();
+  const { currentPatient, appointments, bookAppointment, hospitalDoctors = [] } = useMediSense();
 
-  const [selectedDoctor, setSelectedDoctor] = useState(DOCTORS_LIST[0]);
+  const allDoctors = React.useMemo(() => {
+    if (hospitalDoctors && hospitalDoctors.length > 0) {
+      return hospitalDoctors.map(d => ({
+        name: d.name,
+        specialty: d.title,
+        department: d.department,
+        room: d.cabin,
+        days: d.dutyShift,
+        fee: '$85 / Covered by Insurance',
+        status: d.statusLabel || 'Available'
+      }));
+    }
+    return DOCTORS_LIST;
+  }, [hospitalDoctors]);
+
+  const [selectedDoctor, setSelectedDoctor] = useState(allDoctors[0]);
   const [selectedDate, setSelectedDate] = useState('2026-09-08');
   const [selectedTime, setSelectedTime] = useState(TIME_SLOTS[1]);
   const [consultType, setConsultType] = useState('In-Person Urgent OPD');
@@ -118,7 +133,7 @@ export default function AppointmentBooking() {
 
             {/* Doctor Picker Cards */}
             <div className="space-y-2.5">
-              {DOCTORS_LIST.map((doc, idx) => {
+              {allDoctors.map((doc, idx) => {
                 const isSelected = selectedDoctor.name === doc.name;
                 return (
                   <div

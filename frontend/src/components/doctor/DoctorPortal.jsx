@@ -59,6 +59,9 @@ export default function DoctorPortal() {
   // Selected patient for EMR quick modal
   const [selectedPatient, setSelectedPatient] = useState(null);
 
+  // Inner sub-view for unified Assigned Cases & Prioritization: 'triage' (Prioritized Cases Queue) | 'patients' (Bedside Inpatients)
+  const [casesSubTab, setCasesSubTab] = useState('triage');
+
   // Filter patients strictly assigned to the logged-in doctor
   const myPatients = useMemo(() => {
     return (hospitalPatients || []).filter(p => p.attendingDoctorId === doc.id);
@@ -196,30 +199,18 @@ export default function DoctorPortal() {
         </div>
       </div>
 
-      {/* Sub-Navigation Tabs */}
+      {/* Sub-Navigation Tabs: Assigned Patients & Prioritization merged into ONE unified tab */}
       <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-2">
         <button
           onClick={() => setDoctorTab('triage')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-            doctorTab === 'triage'
+            doctorTab === 'triage' || doctorTab === 'patients'
               ? 'bg-indigo-600 text-white shadow-md'
               : 'text-slate-600 hover:text-slate-900 bg-white border border-slate-200'
           }`}
         >
           <Activity className="w-4 h-4" />
-          <span>Patient Cases & Prioritization ({myCases.length})</span>
-        </button>
-
-        <button
-          onClick={() => setDoctorTab('patients')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-            doctorTab === 'patients'
-              ? 'bg-indigo-600 text-white shadow-md'
-              : 'text-slate-600 hover:text-slate-900 bg-white border border-slate-200'
-          }`}
-        >
-          <Users className="w-4 h-4" />
-          <span>My Assigned Patients ({myPatients.length})</span>
+          <span>Assigned Patients & Case Prioritization ({myCases.length + myPatients.length})</span>
         </button>
 
         <button

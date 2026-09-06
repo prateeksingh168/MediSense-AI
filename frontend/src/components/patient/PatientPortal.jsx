@@ -1,12 +1,14 @@
 import React from 'react';
 import { useMediSense } from '../../context/MediSenseContext';
 import SymptomEntry from './SymptomEntry';
+import AppointmentBooking from './AppointmentBooking';
 import HealthTracker from './HealthTracker';
 import PreviousAssessments from './PreviousAssessments';
 import PatientProfile from './PatientProfile';
 import MediChatbot from './MediChatbot';
 import {
   Stethoscope,
+  Calendar,
   Activity,
   FileText,
   User,
@@ -18,12 +20,13 @@ import {
 } from 'lucide-react';
 
 export default function PatientPortal() {
-  const { patientTab, setPatientTab, currentPatient, cases } = useMediSense();
+  const { patientTab, setPatientTab, currentPatient, cases, appointments = [] } = useMediSense();
 
   const myAssessmentsCount = cases.filter(c => c.patientId === currentPatient.id).length;
 
   const tabs = [
-    { id: 'symptoms', label: 'Symptom Entry & AI Analysis', icon: Stethoscope },
+    { id: 'symptoms', label: 'Symptom Entry & AI Match', icon: Stethoscope },
+    { id: 'appointments', label: `My Bookings & Receipts (${appointments.length})`, icon: Calendar },
     { id: 'vitals', label: 'Health Tracking & Vitals', icon: Activity },
     { id: 'history', label: `Previous Assessments (${myAssessmentsCount})`, icon: FileText },
     { id: 'profile', label: 'Patient Profile', icon: User }
@@ -57,6 +60,7 @@ export default function PatientPortal() {
       {/* Tab Content Display */}
       <div>
         {patientTab === 'symptoms' && <SymptomEntry />}
+        {patientTab === 'appointments' && <AppointmentBooking />}
         {patientTab === 'vitals' && <HealthTracker />}
         {patientTab === 'history' && <PreviousAssessments />}
         {patientTab === 'profile' && <PatientProfile />}
@@ -119,22 +123,22 @@ export default function PatientPortal() {
             </div>
           </div>
 
-          {/* Card 3: Health Tracking & Vitals Trend */}
+          {/* Card 3: OPD Token Receipts & Appointments */}
           <div className="p-5 rounded-3xl bg-gradient-to-br from-sky-50 to-white border border-sky-200 shadow-sm space-y-3">
             <div className="flex items-center gap-2.5 text-sky-800 font-bold text-sm">
               <div className="p-2 rounded-xl bg-sky-100 text-sky-700">
-                <HeartPulse className="w-4 h-4" />
+                <Calendar className="w-4 h-4" />
               </div>
-              <span>Continuous Health Tracking</span>
+              <span>Digital OPD Token Receipts</span>
             </div>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Track daily blood pressure, pulse, SpO2 and glucose changes with interactive visual telemetry charts.
+              Show your digital or printed token receipt at Hospital OPD Desk B for queue priority. Zero long waiting lines.
             </p>
             <button
-              onClick={() => setPatientTab('vitals')}
+              onClick={() => setPatientTab('appointments')}
               className="text-xs font-bold text-sky-700 hover:underline pt-1 block cursor-pointer"
             >
-              Open Health Vitals Tracker →
+              View My Bookings & Receipts ({appointments.length}) →
             </button>
           </div>
 
