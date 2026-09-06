@@ -7,6 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 BASE_URL = "http://127.0.0.1:8000"
+BACKEND_DIR = Path(__file__).resolve().parent.parent
 
 def run_extended_tests():
     extended_results = []
@@ -32,18 +33,21 @@ def run_extended_tests():
     })
 
     # 2. Fresh Seed Test and Idempotency Test
-    test_db_path = Path("fresh_test_seed.db")
+    test_db_path = BACKEND_DIR / "fresh_test_seed.db"
+    seed_script_path = BACKEND_DIR / "scripts" / "seed_from_dataset.py"
+    
     if test_db_path.exists():
         test_db_path.unlink()
     
     # Run seed script against fresh DB
     env_copy = os.environ.copy()
-    env_copy["DATABASE_URL"] = f"sqlite:///./{test_db_path}"
+    env_copy["DATABASE_URL"] = f"sqlite:///{test_db_path}"
     
     seed_run1 = subprocess.run(
-        [sys.executable, "scripts/seed_from_dataset.py"],
+        [sys.executable, str(seed_script_path)],
         capture_output=True,
         text=True,
+        cwd=str(BACKEND_DIR),
         env=env_copy
     )
     
@@ -52,9 +56,10 @@ def run_extended_tests():
     
     # Run second time for idempotency
     seed_run2 = subprocess.run(
-        [sys.executable, "scripts/seed_from_dataset.py"],
+        [sys.executable, str(seed_script_path)],
         capture_output=True,
         text=True,
+        cwd=str(BACKEND_DIR),
         env=env_copy
     )
     seed_output2 = seed_run2.stdout
@@ -69,20 +74,20 @@ def run_extended_tests():
 
     extended_results.append({
         "item": "2. Seed Script Fresh Run",
-        "endpoint": "scripts/seed_from_dataset.py",
+        "endpoint": "backend/scripts/seed_from_dataset.py",
         "method": "CLI",
         "case": "Populate fresh database from CSV dataset (1500 patients + relations)",
         "status": "PASS" if success_run1 else "FAIL",
-        "reason": f"Created 1500 patients, 1500 health records, 1500 assessments, 1500 predictions, 1500 decisions (exit code {seed_run1.returncode})"
+        "reason": f"Created 1500 patients, 1500 health records, 1500 assessments, 1500 predictions, 1500 decisions (exit code {seed_run1.returncode})" if success_run1 else f"Seed failed with exit code {seed_run1.returncode}: {seed_run1.stderr or seed_run1.stdout}"
     })
 
     extended_results.append({
         "item": "2. Seed Script Idempotency",
-        "endpoint": "scripts/seed_from_dataset.py",
+        "endpoint": "backend/scripts/seed_from_dataset.py",
         "method": "CLI",
         "case": "Re-run seed script to verify 0 duplicate rows created",
         "status": "PASS" if success_run2 else "FAIL",
-        "reason": f"Second run created 0 patients, skipped 1500 pre-existing records (exit code {seed_run2.returncode})"
+        "reason": f"Second run created 0 patients, skipped 1500 pre-existing records (exit code {seed_run2.returncode})" if success_run2 else f"Idempotency failed with exit code {seed_run2.returncode}: {seed_run2.stderr or seed_run2.stdout}"
     })
 
     # Prepare Auth Tokens
@@ -232,7 +237,7 @@ def run_extended_tests():
     })
 
     # 8. .env.example Completeness Verification
-    env_example_path = Path(".env.example")
+    env_example_path = BACKEND_DIR / ".env.example"
     env_vars = {}
     if env_example_path.exists():
         for line in env_example_path.read_text().splitlines():
@@ -245,11 +250,11 @@ def run_extended_tests():
     env_complete = required_keys.issubset(env_vars.keys())
     extended_results.append({
         "item": "8. .env.example Completeness",
-        "endpoint": ".env.example",
+        "endpoint": "backend/.env.example",
         "method": "Configuration",
         "case": "Verify all necessary environment variables are defined in .env.example",
         "status": "PASS" if env_complete else "FAIL",
-        "reason": f"All {len(required_keys)} required environment configuration keys present in .env.example: {sorted(list(required_keys))}."
+        "reason": f"All {len(required_keys)} required environment configuration keys present in backend/.env.example: {sorted(list(required_keys))}."
     })
 
     # 9. GET /auth/me Scope Assessment
@@ -264,10 +269,10 @@ def run_extended_tests():
     })
 
     print(f"\nEXTENDED VERIFICATION SUMMARY: Total: {len(extended_results)} | Passed: {sum(1 for r in extended_results if r['status'] == 'PASS')} | Failed: {sum(1 for r in extended_results if r['status'] == 'FAIL')}\n")
-    print(f"{'Item':35} | {'Endpoint':28} | {'Method':10} | {'Status':8} | {'Reason'}")
+    print(f"{'Item':35} | {'Endpoint':35} | {'Method':10} | {'Status':8} | {'Reason'}")
     print("-" * 140)
     for r in extended_results:
-        print(f"{r['item']:35} | {r['endpoint']:28} | {r['method']:10} | {r['status']:8} | {r['reason']}")
+        print(f"{r['item']:35} | {r['endpoint']:35} | {r['method']:10} | {r['status']:8} | {r['reason']}")
 
 if __name__ == "__main__":
     run_extended_tests()
