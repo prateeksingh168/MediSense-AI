@@ -62,9 +62,12 @@ export default function DoctorAuthModal({ isOpen, onClose }) {
 
     setTimeout(() => {
       let doctorProfile;
+      let targetPortal = 'doctor';
+
       if (type === 'thorne') {
         doctorProfile = {
           id: 'DOC-CARDIO-4421',
+          doctorId: 'doc_001',
           name: 'Dr. Aris Thorne, MD',
           role: 'doctor',
           email: 'dr.thorne@medisense.org',
@@ -74,6 +77,7 @@ export default function DoctorAuthModal({ isOpen, onClose }) {
       } else if (type === 'al-mansoor') {
         doctorProfile = {
           id: 'DOC-NEURO-8821',
+          doctorId: 'doc_002',
           name: 'Dr. Sarah Al-Mansoor, MD',
           role: 'doctor',
           email: 'dr.almansoor@medisense.org',
@@ -83,6 +87,7 @@ export default function DoctorAuthModal({ isOpen, onClose }) {
       } else if (type === 'chen') {
         doctorProfile = {
           id: 'DOC-EMERG-9111',
+          doctorId: 'doc_003',
           name: 'Dr. Robert Chen, MD',
           role: 'doctor',
           email: 'dr.chen@medisense.org',
@@ -98,14 +103,16 @@ export default function DoctorAuthModal({ isOpen, onClose }) {
           department: 'Hospital Administration & Telemetry',
           license: 'HOSP-OPS-KEY-2026'
         };
+        targetPortal = 'hospital';
       }
 
       loginClinician(doctorProfile);
-      setActivePortal('doctor');
+      setActivePortal(targetPortal);
       setIsAuthenticating(false);
       onClose();
     }, 350);
   };
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-fadeIn">

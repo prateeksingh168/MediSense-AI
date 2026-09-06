@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import PatientPortal from './components/patient/PatientPortal';
 import DoctorPortal from './components/doctor/DoctorPortal';
+import HospitalPortal from './components/hospital/HospitalPortal';
 
 function AppContent() {
   const { currentUser, activePortal, setActivePortal, setDoctorAuthModalOpen } = useMediSense();
@@ -14,13 +15,13 @@ function AppContent() {
     return <AuthPage />;
   }
 
-  const isPatientAccessingDoctor = activePortal === 'doctor' && currentUser?.role === 'patient';
+  const isPatientAccessingStaff = (activePortal === 'doctor' || activePortal === 'hospital') && currentUser?.role === 'patient';
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-900 selection:bg-teal-500 selection:text-white">
       <Navbar />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 flex-1 w-full">
-        {isPatientAccessingDoctor ? (
+        {isPatientAccessingStaff ? (
           <div className="max-w-xl mx-auto my-12 p-8 rounded-3xl bg-white border border-amber-200 shadow-xl text-center space-y-5">
             <div className="w-16 h-16 rounded-3xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center mx-auto shadow-inner">
               <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -55,6 +56,8 @@ function AppContent() {
           </div>
         ) : activePortal === 'patient' ? (
           <PatientPortal />
+        ) : activePortal === 'hospital' ? (
+          <HospitalPortal />
         ) : (
           <DoctorPortal />
         )}
@@ -63,6 +66,7 @@ function AppContent() {
     </div>
   );
 }
+
 
 
 export default function App() {

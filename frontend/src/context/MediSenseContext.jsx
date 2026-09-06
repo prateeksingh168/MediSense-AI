@@ -60,9 +60,9 @@ export function MediSenseProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
 
   // Navigation
-  const [activePortal, setActivePortal] = useState('patient'); // 'patient' | 'doctor'
+  const [activePortal, setActivePortal] = useState('patient'); // 'patient' | 'doctor' | 'hospital'
   const [patientTab, setPatientTab] = useState('symptoms'); // 'symptoms' | 'appointments' | 'vitals' | 'history' | 'profile'
-  const [doctorTab, setDoctorTab] = useState('roster'); // 'roster' | 'triage' | 'analytics' | 'audit'
+  const [doctorTab, setDoctorTab] = useState('patients'); // 'patients' | 'triage' | 'analytics' | 'audit'
 
   // Modal for Gated Doctor / Hospital Staff Sign In
   const [doctorAuthModalOpen, setDoctorAuthModalOpen] = useState(false);
@@ -70,6 +70,32 @@ export function MediSenseProvider({ children }) {
   // Hospital-Wide Operations, Doctor Roster & Inpatient Census
   const [hospitalDoctors, setHospitalDoctors] = useState(HOSPITAL_DOCTORS);
   const [hospitalPatients, setHospitalPatients] = useState(HOSPITAL_PATIENTS);
+
+  // Active Logged-in Doctor ID (for Individual Doctor Workspace)
+  const [currentDoctorId, setCurrentDoctorId] = useState('doc_001'); // Dr. Aris Thorne by default
+
+  const activeDoctor = useMemo(() => {
+    return hospitalDoctors.find(d => d.id === currentDoctorId) || hospitalDoctors[0];
+  }, [hospitalDoctors, currentDoctorId]);
+
+  const switchDoctor = (doctorId) => {
+    const doc = hospitalDoctors.find(d => d.id === doctorId);
+    if (doc) {
+      setCurrentDoctorId(doctorId);
+      setCurrentUser(prev => ({
+        ...(prev || {}),
+        role: 'doctor',
+        name: doc.name,
+        title: doc.title,
+        department: doc.department,
+        specialty: doc.specialty,
+        doctorId: doc.id,
+        cabin: doc.cabin,
+        contact: doc.contact,
+        email: `${doc.name.toLowerCase().replace(/[^a-z]/g, '')}@medisense.org`
+      }));
+    }
+  };
 
   const updateDoctorStatus = (doctorId, newStatus, newLabel, nextFreeTime) => {
     setHospitalDoctors(prev =>
@@ -80,6 +106,7 @@ export function MediSenseProvider({ children }) {
       )
     );
   };
+
 
 
   // Patients & Current Patient
@@ -296,6 +323,20 @@ export function MediSenseProvider({ children }) {
 
   // Secure Clinician Authentication
   const loginClinician = (emailInput, passwordInput, role = 'doctor') => {
+    // If passed a user object directly
+    if (typeof emailInput === 'object' && emailInput !== null) {
+      const userObj = emailInput;
+      setCurrentUser(userObj);
+      if (userObj.role === 'admin') {
+        setActivePortal('hospital');
+      } else {
+        const docId = userObj.doctorId || (userObj.name?.includes('Chen') ? 'doc_003' : userObj.name?.includes('Mansoor') ? 'doc_002' : 'doc_001');
+        setCurrentDoctorId(docId);
+        setActivePortal('doctor');
+      }
+      return { success: true };
+    }
+
     const cleanEmail = emailInput?.toLowerCase().trim();
     const cleanPassword = passwordInput?.trim();
 
@@ -307,25 +348,47 @@ export function MediSenseProvider({ children }) {
       return { success: false, error: 'Security key must be at least 4 characters long.' };
     }
 
-    if (role === 'admin') {
+    if (role === 'admin' || cleanEmail.includes('admin') || cleanEmail.includes('hosp')) {
       setCurrentUser({
         role: 'admin',
-        name: 'Dr. Sarah Al-Mansoor (Hospital Chief)',
-        specialty: 'Chief Medical Officer / Administration',
+        name: 'Hospital Administration Director',
+        specialty: 'Chief Medical Officer / Operations',
         email: cleanEmail
       });
+      setActivePortal('hospital');
     } else {
+      // Find matching doctor or default to Dr. Aris Thorne
+      let matchedDoc = hospitalDoctors[0]; // Dr. Aris Thorne
+      if (cleanEmail.includes('chen') || cleanEmail.includes('emerg')) {
+        matchedDoc = hospitalDoctors.find(d => d.id === 'doc_003') || hospitalDoctors[0];
+      } else if (cleanEmail.includes('mansoor') || cleanEmail.includes('neuro')) {
+        matchedDoc = hospitalDoctors.find(d => d.id === 'doc_002') || hospitalDoctors[0];
+      } else if (cleanEmail.includes('nair') || cleanEmail.includes('surg')) {
+        matchedDoc = hospitalDoctors.find(d => d.id === 'doc_004') || hospitalDoctors[0];
+      } else if (cleanEmail.includes('zhang') || cleanEmail.includes('pulm')) {
+        matchedDoc = hospitalDoctors.find(d => d.id === 'doc_005') || hospitalDoctors[0];
+      } else if (cleanEmail.includes('morales') || cleanEmail.includes('endo')) {
+        matchedDoc = hospitalDoctors.find(d => d.id === 'doc_006') || hospitalDoctors[0];
+      }
+
+      setCurrentDoctorId(matchedDoc.id);
       setCurrentUser({
         role: 'doctor',
-        name: 'Dr. Robert Chen, MD',
-        specialty: 'Cardiology & Emergency Triage',
+        name: matchedDoc.name,
+        title: matchedDoc.title,
+        department: matchedDoc.department,
+        specialty: matchedDoc.specialty,
+        doctorId: matchedDoc.id,
+        cabin: matchedDoc.cabin,
+        contact: matchedDoc.contact,
         email: cleanEmail
       });
+      setActivePortal('doctor');
     }
 
-    setActivePortal('doctor');
     return { success: true };
   };
+
 
   // General login handler (backward compatibility)
   const loginUser = (userObj) => {
@@ -698,8 +761,12 @@ export function MediSenseProvider({ children }) {
         setHospitalDoctors,
         hospitalPatients,
         setHospitalPatients,
-        updateDoctorStatus
+        updateDoctorStatus,
+        currentDoctorId,
+        switchDoctor,
+        activeDoctor
       }}
+
 
     >
       {children}

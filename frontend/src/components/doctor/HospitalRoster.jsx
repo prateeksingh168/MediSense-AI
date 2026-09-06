@@ -22,11 +22,18 @@ import {
   Sparkles
 } from 'lucide-react';
 
-export default function HospitalRoster() {
+export default function HospitalRoster({ initialView = 'doctors' }) {
   const { hospitalDoctors, hospitalPatients, updateDoctorStatus } = useMediSense();
 
   // Active view: 'doctors' or 'patients'
-  const [activeSubView, setActiveSubView] = useState('doctors');
+  const [activeSubView, setActiveSubView] = useState(initialView);
+
+  React.useEffect(() => {
+    if (initialView) {
+      setActiveSubView(initialView);
+    }
+  }, [initialView]);
+
 
   // Doctor filters
   const [doctorStatusFilter, setDoctorStatusFilter] = useState('ALL');
