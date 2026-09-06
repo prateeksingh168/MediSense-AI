@@ -28,6 +28,7 @@ This document details all recent modifications made to the **MediSense AI** fron
 ### Summary of Latest Changes:
 | Commit Hash | Type | Change Description |
 | :--- | :--- | :--- |
+| `a1484dd` | **Feature** | Added **Real-Time Live Sign-in & User Access Audit Logging** for Hospital Central Command, tracking all doctor, patient, and admin sessions with timestamps, and streamlined hospital portal strictly to core essentials. |
 | `b686191` | **Feature** | Aligned Patient & Doctor Portals strictly with the PRD specification matrix while preserving Hospital Central Command and the Medi AI Voice/Text Companion intact. |
 | `39f4000` | **Docs** | Added comprehensive English CHANGES_README documenting frontend architecture, RBAC, and integration specs. |
 | `8216060` | **Fix** | Resolved React runtime `ReferenceError: autofillStaff is not defined` on `AuthPage.jsx` when passing props to `MediChatbot`, fixing blank screen. |
@@ -139,30 +140,24 @@ In accordance with healthcare privacy standards (e.g., HIPAA-style patient confi
 ### 3.3 🏥 Hospital Central Command
 *Accessible only when authenticated as Hospital Administration (`role: 'admin'`).*
 
-- **Institutional Operations Header**:
-  - High-level KPIs: 120 Total Beds (88 Occupied, 73.3% occupancy), 6 Staff Physicians on duty, ICU Ventilators (14/18 active), Oxygen Purity (99.2%, 4,200L reserve), Active Surgical Theaters (2 in surgery, 1 prep, 1 cath lab), Ambulance Fleet (4 active, 2 standby).
+- **Streamlined Institutional Operations Header**:
+  - Key real-time indicators: Staff Physicians on duty and available, 16 admitted inpatients with emergency count, and **Live Active Users Online Now** telemetry indicator.
+  - Eliminated distracting, over-complicated simulation counters to maintain a clean clinical focus.
 - **`Doctors Staff & Availability Directory` Tab (`HospitalRoster.jsx`)**:
   - Complete roster of all 6 hospital physicians.
   - Real-time availability status (*Available / Free Now, In Surgery, In Consult, On Rounds*).
   - Next free slot timing (*who is free when*).
   - Attended patient listing (*who is seeing which patient*).
   - Cabin number, duty shift, and direct phone extension.
-- **`Total Hospital Patient Census` Tab**:
-  - Complete institutional census of all 16 admitted inpatients across all hospital wards:
-    - Cardiac CCU (Ward A)
-    - Medical ICU (Ward B)
-    - Trauma & Emergency (ER Ground)
-    - General Medical (Ward C)
-    - Post-Anesthesia Care (PACU 2nd Fl)
-    - Pediatrics & Neonatal (Wing D)
-  - Full-text search by patient name, diagnosis, or bed ID, plus ward filters.
-- **`Hospital Visual Analytics & Telemetry` Tab (`ClinicalAnalytics.jsx`)**:
-  - Multi-ward bed occupancy bar charts.
-  - Doctor duty status breakdown donut chart.
-  - Department caseload workloads.
-  - 24-hour hospital admissions vs. discharges flow telemetry.
-  - Operating Theater live schedule (OT 1 to 4).
-  - Blood Bank reserve levels (A+, O+, B+, AB-, O- critical stocks).
+- **`Total Hospital Patient Census` Tab (`HospitalRoster.jsx`)**:
+  - Complete institutional census of all 16 admitted inpatients across all hospital wards (Cardiac CCU, Medical ICU, Trauma & Emergency, General Medical, PACU, Pediatrics).
+  - Bed numbers, attending physicians, admission diagnoses, and triage urgency levels.
+  - Full-text search and ward filters.
+- **`Real-Time Sign-In & Live User Log` Tab (`HospitalLiveAudit.jsx`)**:
+  - **Persistent Real-Time Session Store**: Continuous live recording of who is using the platform, when they authenticated (exact timestamp), and their healthcare role (Doctor, Patient, Administrator).
+  - **Live Online Status**: Tracks active users currently logged in vs. concluded sessions.
+  - **One-Click Sign-In Simulation**: Interactive buttons to simulate incoming patient and doctor logins in real time during hackathon presentations.
+  - **Search & Role Filtering**: Filter real-time records by Doctor, Patient, Administrator, or Active Online sessions.
 
 ---
 
