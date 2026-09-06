@@ -61,8 +61,8 @@ export function MediSenseProvider({ children }) {
 
   // Navigation
   const [activePortal, setActivePortal] = useState('patient'); // 'patient' | 'doctor' | 'hospital'
-  const [patientTab, setPatientTab] = useState('symptoms'); // 'symptoms' | 'appointments' | 'vitals' | 'history' | 'profile'
-  const [doctorTab, setDoctorTab] = useState('patients'); // 'patients' | 'triage' | 'analytics' | 'audit'
+  const [patientTab, setPatientTab] = useState('symptoms'); // 'symptoms' | 'vitals' | 'history' | 'profile'
+  const [doctorTab, setDoctorTab] = useState('triage'); // 'triage' | 'patients' | 'audit' | 'analytics'
 
   // Modal for Gated Doctor / Hospital Staff Sign In
   const [doctorAuthModalOpen, setDoctorAuthModalOpen] = useState(false);

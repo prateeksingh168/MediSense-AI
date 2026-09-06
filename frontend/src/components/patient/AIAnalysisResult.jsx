@@ -2,7 +2,7 @@ import React from 'react';
 import { useMediSense } from '../../context/MediSenseContext';
 import { TriageBadge } from '../common/Badge';
 import RedFlagAlert from '../common/RedFlagAlert';
-import { CheckCircle2, Activity, ShieldCheck, Calendar } from 'lucide-react';
+import { CheckCircle2, Activity, ShieldCheck, FileText } from 'lucide-react';
 
 export default function AIAnalysisResult({ result, onClose }) {
   const { setPatientTab } = useMediSense();
@@ -11,9 +11,9 @@ export default function AIAnalysisResult({ result, onClose }) {
 
   const isEmergency = result.triageLevel === 'EMERGENCY';
 
-  const openAppointmentBooking = () => {
+  const viewAssessments = () => {
     onClose();
-    setPatientTab('appointments');
+    setPatientTab('history');
   };
 
   return (
@@ -95,16 +95,16 @@ export default function AIAnalysisResult({ result, onClose }) {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
           
           <button
-            onClick={openAppointmentBooking}
-            className="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-bold text-teal-800 bg-teal-100 hover:bg-teal-200 border border-teal-300 transition-colors flex items-center justify-center gap-1.5"
+            onClick={viewAssessments}
+            className="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-bold text-teal-800 bg-teal-100 hover:bg-teal-200 border border-teal-300 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
           >
-            <Calendar className="w-4 h-4 text-teal-700" />
-            <span>Book Doctor Visit & Get Token Receipt</span>
+            <FileText className="w-4 h-4 text-teal-700" />
+            <span>View Saved in My Assessments →</span>
           </button>
 
           <button
             onClick={onClose}
-            className="w-full sm:w-auto px-6 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition-colors"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer"
           >
             Close Assessment
           </button>

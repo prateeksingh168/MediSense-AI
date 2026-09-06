@@ -1,14 +1,12 @@
-﻿import React from 'react';
+import React from 'react';
 import { useMediSense } from '../../context/MediSenseContext';
 import SymptomEntry from './SymptomEntry';
-import AppointmentBooking from './AppointmentBooking';
 import HealthTracker from './HealthTracker';
 import PreviousAssessments from './PreviousAssessments';
 import PatientProfile from './PatientProfile';
 import MediChatbot from './MediChatbot';
 import {
   Stethoscope,
-  Calendar,
   Activity,
   FileText,
   User,
@@ -16,20 +14,19 @@ import {
   ShieldCheck,
   Bot,
   Sparkles,
-  HelpCircle
+  HeartPulse
 } from 'lucide-react';
 
 export default function PatientPortal() {
-  const { patientTab, setPatientTab, currentPatient, cases, appointments } = useMediSense();
+  const { patientTab, setPatientTab, currentPatient, cases } = useMediSense();
 
   const myAssessmentsCount = cases.filter(c => c.patientId === currentPatient.id).length;
 
   const tabs = [
-    { id: 'symptoms', label: 'AI Symptom Checker', icon: Stethoscope },
-    { id: 'appointments', label: `Book Appointment & Receipts (${appointments.length})`, icon: Calendar },
-    { id: 'vitals', label: 'Health Vitals Tracking', icon: Activity },
-    { id: 'history', label: `My Assessments (${myAssessmentsCount})`, icon: FileText },
-    { id: 'profile', label: 'Health Profile', icon: User }
+    { id: 'symptoms', label: 'Symptom Entry & AI Analysis', icon: Stethoscope },
+    { id: 'vitals', label: 'Health Tracking & Vitals', icon: Activity },
+    { id: 'history', label: `Previous Assessments (${myAssessmentsCount})`, icon: FileText },
+    { id: 'profile', label: 'Patient Profile', icon: User }
   ];
 
   return (
@@ -44,7 +41,7 @@ export default function PatientPortal() {
             <button
               key={tab.id}
               onClick={() => setPatientTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all cursor-pointer ${
                 isActive
                   ? 'bg-teal-600 text-white shadow-md'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 bg-white border border-slate-200'
@@ -60,7 +57,6 @@ export default function PatientPortal() {
       {/* Tab Content Display */}
       <div>
         {patientTab === 'symptoms' && <SymptomEntry />}
-        {patientTab === 'appointments' && <AppointmentBooking />}
         {patientTab === 'vitals' && <HealthTracker />}
         {patientTab === 'history' && <PreviousAssessments />}
         {patientTab === 'profile' && <PatientProfile />}
@@ -123,22 +119,22 @@ export default function PatientPortal() {
             </div>
           </div>
 
-          {/* Card 3: OPD Token Check-in */}
+          {/* Card 3: Health Tracking & Vitals Trend */}
           <div className="p-5 rounded-3xl bg-gradient-to-br from-sky-50 to-white border border-sky-200 shadow-sm space-y-3">
             <div className="flex items-center gap-2.5 text-sky-800 font-bold text-sm">
               <div className="p-2 rounded-xl bg-sky-100 text-sky-700">
-                <Calendar className="w-4 h-4" />
+                <HeartPulse className="w-4 h-4" />
               </div>
-              <span>Digital OPD Token Verification</span>
+              <span>Continuous Health Tracking</span>
             </div>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Show your digital or printed token receipt at Hospital OPD Wing B for queue priority. No long waiting lines required.
+              Track daily blood pressure, pulse, SpO2 and glucose changes with interactive visual telemetry charts.
             </p>
             <button
-              onClick={() => setPatientTab('appointments')}
-              className="text-xs font-bold text-sky-700 hover:underline pt-1 block"
+              onClick={() => setPatientTab('vitals')}
+              className="text-xs font-bold text-sky-700 hover:underline pt-1 block cursor-pointer"
             >
-              View My Bookings & Receipts →
+              Open Health Vitals Tracker →
             </button>
           </div>
 

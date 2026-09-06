@@ -199,6 +199,18 @@ export default function DoctorPortal() {
       {/* Sub-Navigation Tabs */}
       <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-2">
         <button
+          onClick={() => setDoctorTab('triage')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+            doctorTab === 'triage'
+              ? 'bg-indigo-600 text-white shadow-md'
+              : 'text-slate-600 hover:text-slate-900 bg-white border border-slate-200'
+          }`}
+        >
+          <Activity className="w-4 h-4" />
+          <span>Patient Cases & Prioritization ({myCases.length})</span>
+        </button>
+
+        <button
           onClick={() => setDoctorTab('patients')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
             doctorTab === 'patients'
@@ -211,15 +223,15 @@ export default function DoctorPortal() {
         </button>
 
         <button
-          onClick={() => setDoctorTab('triage')}
+          onClick={() => setDoctorTab('audit')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-            doctorTab === 'triage'
+            doctorTab === 'audit'
               ? 'bg-indigo-600 text-white shadow-md'
               : 'text-slate-600 hover:text-slate-900 bg-white border border-slate-200'
           }`}
         >
-          <Activity className="w-4 h-4" />
-          <span>My Clinical Triage Queue ({myCases.length})</span>
+          <FileCheck className="w-4 h-4" />
+          <span>Recorded Final Decisions ({Math.max(myReviewedCount, 2)})</span>
         </button>
 
         <button
@@ -231,19 +243,7 @@ export default function DoctorPortal() {
           }`}
         >
           <BarChart3 className="w-4 h-4" />
-          <span>My Practice Analytics & Charts</span>
-        </button>
-
-        <button
-          onClick={() => setDoctorTab('audit')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-            doctorTab === 'audit'
-              ? 'bg-indigo-600 text-white shadow-md'
-              : 'text-slate-600 hover:text-slate-900 bg-white border border-slate-200'
-          }`}
-        >
-          <FileCheck className="w-4 h-4" />
-          <span>My Certified Decision Trail ({Math.max(myReviewedCount, 2)})</span>
+          <span>Doctor Analytics & Charts</span>
         </button>
       </div>
 
