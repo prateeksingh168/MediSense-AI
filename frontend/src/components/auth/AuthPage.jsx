@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useMediSense } from '../../context/MediSenseContext';
 import logoImg from '../../assets/logo.png';
 import {
@@ -16,20 +16,26 @@ import {
   Building2,
   FileText,
   Activity,
-  CheckCircle2
+  CheckCircle2,
+  AlertCircle,
+  KeyRound
 } from 'lucide-react';
 
 export default function AuthPage() {
-  const { loginUser, registerNewPatient, demoPatients } = useMediSense();
+  const { loginPatient, loginClinician, registerNewPatient, demoPatients } = useMediSense();
 
   // Mode: 'patient_signin' | 'patient_signup' | 'doctor'
   const [authMode, setAuthMode] = useState('patient_signin');
 
-  // Sign In State
+  // Error & Status Feedback
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+
+  // Sign In State (Patient)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Sign Up State
+  // Sign Up State (Patient)
   const [signUpForm, setSignUpForm] = useState({
     name: '',
     email: '',
@@ -46,56 +52,98 @@ export default function AuthPage() {
 
   // Doctor Role State
   const [adminRole, setAdminRole] = useState('doctor'); // 'doctor' | 'admin'
+  const [doctorEmail, setDoctorEmail] = useState('');
+  const [doctorPassword, setDoctorPassword] = useState('');
+
+  const switchTab = (mode) => {
+    setAuthMode(mode);
+    setErrorMessage('');
+    setSuccessMessage('');
+  };
 
   const handlePatientSignIn = (e) => {
     e.preventDefault();
-    loginUser({
-      role: 'patient',
-      name: demoPatients[0].name,
-      patientId: demoPatients[0].id,
-      email: email || 'sarah.jenkins@medisense.ai'
-    });
+    setErrorMessage('');
+    setSuccessMessage('');
+
+    if (!email.trim()) {
+      setErrorMessage('Please enter your registered patient email address or Patient ID.');
+      return;
+    }
+    if (!password.trim()) {
+      setErrorMessage('Please enter your account password.');
+      return;
+    }
+
+    const res = loginPatient(email, password);
+    if (!res.success) {
+      setErrorMessage(res.error);
+    }
   };
 
   const handlePatientSignUp = (e) => {
     e.preventDefault();
-    if (!signUpForm.name || !signUpForm.email) {
-      alert('Please fill in your name and email.');
+    setErrorMessage('');
+    setSuccessMessage('');
+
+    if (!signUpForm.name.trim()) {
+      setErrorMessage('Please provide your full legal name.');
       return;
     }
-    if (signUpForm.password && signUpForm.password !== signUpForm.confirmPassword) {
-      alert('Passwords do not match!');
+    if (!signUpForm.email.trim()) {
+      setErrorMessage('Please provide a valid email address.');
       return;
     }
+    if (!signUpForm.password) {
+      setErrorMessage('Please create a secure password for your account.');
+      return;
+    }
+    if (signUpForm.password.length < 4) {
+      setErrorMessage('Password must be at least 4 characters long.');
+      return;
+    }
+    if (signUpForm.password !== signUpForm.confirmPassword) {
+      setErrorMessage('Passwords do not match! Please verify and re-type.');
+      return;
+    }
+
     registerNewPatient(signUpForm);
   };
 
   const handleDoctorSubmit = (e) => {
     e.preventDefault();
-    loginUser({
-      role: adminRole === 'admin' ? 'admin' : 'doctor',
-      name: adminRole === 'admin' ? 'Dr. Sarah Al-Mansoor (Hospital Chief)' : 'Dr. Robert Chen, MD',
-      specialty: adminRole === 'admin' ? 'Chief Medical Officer / Administration' : 'Cardiology & Emergency Triage',
-      email: email || (adminRole === 'admin' ? 'admin@medisense.hospital.org' : 'dr.chen@medisense.hospital.org')
-    });
+    setErrorMessage('');
+    setSuccessMessage('');
+
+    if (!doctorEmail.trim()) {
+      setErrorMessage('Please enter your hospital staff email or physician ID.');
+      return;
+    }
+    if (!doctorPassword.trim()) {
+      setErrorMessage('Please enter your medical license security key.');
+      return;
+    }
+
+    const res = loginClinician(doctorEmail, doctorPassword, adminRole);
+    if (!res.success) {
+      setErrorMessage(res.error);
+    }
   };
 
-  const quickLoginPatient = (patient) => {
-    loginUser({
-      role: 'patient',
-      name: patient.name,
-      patientId: patient.id,
-      email: `${patient.name.toLowerCase().replace(' ', '.')}@medisense.ai`
-    });
+  // Helper autofill handlers (fills form fields only; user must still click Sign In)
+  const autofillPatient = (pEmail, pPass) => {
+    setEmail(pEmail);
+    setPassword(pPass);
+    setErrorMessage('');
+    setSuccessMessage(`Credentials for ${pEmail} populated into form. Click "Sign In as Patient" to proceed.`);
   };
 
-  const quickLoginDoctor = (name, specialty, role = 'doctor') => {
-    loginUser({
-      role,
-      name,
-      specialty,
-      email: `${name.toLowerCase().replace(/[^a-z]/g, '')}@medisense.hospital.org`
-    });
+  const autofillStaff = (sEmail, sPass, role = 'doctor') => {
+    setDoctorEmail(sEmail);
+    setDoctorPassword(sPass);
+    setAdminRole(role);
+    setErrorMessage('');
+    setSuccessMessage(`Staff credentials populated into form. Click "Access Clinical Command Center" to proceed.`);
   };
 
   return (
@@ -160,7 +208,7 @@ export default function AuthPage() {
           <div className="grid grid-cols-3 p-1 rounded-2xl bg-slate-100 border border-slate-200 text-xs font-bold">
             <button
               type="button"
-              onClick={() => setAuthMode('patient_signin')}
+              onClick={() => switchTab('patient_signin')}
               className={`py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all ${
                 authMode === 'patient_signin'
                   ? 'bg-white text-teal-700 shadow-md border border-slate-200'
@@ -173,7 +221,7 @@ export default function AuthPage() {
 
             <button
               type="button"
-              onClick={() => setAuthMode('patient_signup')}
+              onClick={() => switchTab('patient_signup')}
               className={`py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all ${
                 authMode === 'patient_signup'
                   ? 'bg-white text-teal-700 shadow-md border border-slate-200'
@@ -186,7 +234,7 @@ export default function AuthPage() {
 
             <button
               type="button"
-              onClick={() => setAuthMode('doctor')}
+              onClick={() => switchTab('doctor')}
               className={`py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all ${
                 authMode === 'doctor'
                   ? 'bg-white text-indigo-700 shadow-md border border-slate-200'
@@ -198,6 +246,21 @@ export default function AuthPage() {
             </button>
           </div>
 
+          {/* Validation / Status Banners */}
+          {errorMessage && (
+            <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold flex items-start gap-2.5 animate-in fade-in duration-200">
+              <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+              <div className="flex-1 leading-relaxed">{errorMessage}</div>
+            </div>
+          )}
+
+          {successMessage && (
+            <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-start gap-2.5 animate-in fade-in duration-200">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+              <div className="flex-1 leading-relaxed">{successMessage}</div>
+            </div>
+          )}
+
           {/* TAB 1: PATIENT SIGN IN */}
           {authMode === 'patient_signin' && (
             <div className="space-y-5">
@@ -208,15 +271,19 @@ export default function AuthPage() {
 
               <form onSubmit={handlePatientSignIn} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Patient ID or Email</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Patient Email Address or ID</label>
                   <div className="relative">
                     <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
                       type="text"
-                      placeholder="e.g. P00001 or sarah.jenkins@medisense.ai"
+                      placeholder="e.g. sarah.jenkins@medisense.ai or your email"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        setErrorMessage('');
+                      }}
                       className="w-full bg-slate-50 text-xs sm:text-sm text-slate-900 pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-teal-500 focus:bg-white focus:ring-1 focus:ring-teal-500"
+                      required
                     />
                   </div>
                 </div>
@@ -227,51 +294,61 @@ export default function AuthPage() {
                     <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
                       type="password"
-                      placeholder="••••••••••••"
+                      placeholder="Enter your account password"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                        setErrorMessage('');
+                      }}
                       className="w-full bg-slate-50 text-xs sm:text-sm text-slate-900 pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-teal-500 focus:bg-white focus:ring-1 focus:ring-teal-500"
+                      required
                     />
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between text-xs text-slate-500">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" defaultChecked className="rounded text-teal-600 focus:ring-0" />
-                    <span>Keep me signed in</span>
-                  </label>
-                  <span onClick={() => setAuthMode('patient_signup')} className="text-teal-600 hover:underline cursor-pointer font-semibold">
+                  <span className="text-[11px] text-slate-400">Default demo password: <code className="text-teal-700 font-bold">patient123</code></span>
+                  <span onClick={() => switchTab('patient_signup')} className="text-teal-600 hover:underline cursor-pointer font-semibold">
                     Need an account? Sign up
                   </span>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-teal-600 to-sky-600 hover:from-teal-500 hover:to-sky-500 shadow-md flex items-center justify-center gap-2 transition-all"
+                  className="w-full py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-teal-600 to-sky-600 hover:from-teal-500 hover:to-sky-500 shadow-md flex items-center justify-center gap-2 transition-all cursor-pointer"
                 >
                   <span>Sign In as Patient</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </form>
 
-              {/* 1-Click Fast Patient Profiles */}
+              {/* Demo Credentials Helper (Fills inputs; does NOT auto-login) */}
               <div className="pt-4 border-t border-slate-100 space-y-2">
                 <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
-                  ⚡ 1-Click Instant Demo Patients:
+                  📋 Demo Patients (Click to Populate Form):
                 </span>
                 <div className="grid grid-cols-2 gap-2">
-                  {demoPatients.slice(0, 4).map((p) => (
-                    <button
-                      key={p.id}
-                      type="button"
-                      onClick={() => quickLoginPatient(p)}
-                      className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/50 border border-slate-200 hover:border-teal-300 text-left transition-all text-xs"
-                    >
-                      <div className="font-bold text-slate-800">{p.name}</div>
-                      <div className="text-[10px] text-slate-500">{p.age}y • {p.chronicConditions[0] || 'Healthy'}</div>
-                    </button>
-                  ))}
+                  <button
+                    type="button"
+                    onClick={() => autofillPatient('sarah.jenkins@medisense.ai', 'patient123')}
+                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/50 border border-slate-200 hover:border-teal-300 text-left transition-all text-xs"
+                  >
+                    <div className="font-bold text-slate-800">Sarah Jenkins (Demo)</div>
+                    <div className="text-[10px] text-slate-500">sarah.jenkins@medisense.ai</div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => autofillPatient('marcus.vance@medisense.ai', 'patient123')}
+                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/50 border border-slate-200 hover:border-teal-300 text-left transition-all text-xs"
+                  >
+                    <div className="font-bold text-slate-800">Marcus Vance (Demo)</div>
+                    <div className="text-[10px] text-slate-500">marcus.vance@medisense.ai</div>
+                  </button>
                 </div>
+                <p className="text-[10px] text-slate-400 text-center italic">
+                  Tip: Populates the inputs above. Click "Sign In as Patient" to authenticate.
+                </p>
               </div>
             </div>
           )}
@@ -299,12 +376,11 @@ export default function AuthPage() {
                       required
                     />
                   </div>
-
                   <div>
                     <label className="block font-semibold text-slate-700 mb-1">Email Address *</label>
                     <input
                       type="email"
-                      placeholder="aanya.sharma@example.com"
+                      placeholder="e.g. aanya.sharma@example.com"
                       value={signUpForm.email}
                       onChange={(e) => setSignUpForm({ ...signUpForm, email: e.target.value })}
                       className="w-full bg-slate-50 text-slate-900 p-2.5 rounded-xl border border-slate-300 focus:bg-white focus:border-teal-500 focus:outline-none"
@@ -313,8 +389,8 @@ export default function AuthPage() {
                   </div>
                 </div>
 
-                {/* Phone & Age & Gender */}
-                <div className="grid grid-cols-3 gap-2.5">
+                {/* Phone & Age */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block font-semibold text-slate-700 mb-1">Phone Number *</label>
                     <input
@@ -326,7 +402,6 @@ export default function AuthPage() {
                       required
                     />
                   </div>
-
                   <div>
                     <label className="block font-semibold text-slate-700 mb-1">Age *</label>
                     <input
@@ -335,12 +410,17 @@ export default function AuthPage() {
                       value={signUpForm.age}
                       onChange={(e) => setSignUpForm({ ...signUpForm, age: e.target.value })}
                       className="w-full bg-slate-50 text-slate-900 p-2.5 rounded-xl border border-slate-300 focus:bg-white focus:border-teal-500 focus:outline-none"
+                      min="1"
+                      max="120"
                       required
                     />
                   </div>
+                </div>
 
+                {/* Gender, Blood Group & City */}
+                <div className="grid grid-cols-3 gap-2">
                   <div>
-                    <label className="block font-semibold text-slate-700 mb-1">Gender *</label>
+                    <label className="block font-semibold text-slate-700 mb-1">Gender</label>
                     <select
                       value={signUpForm.gender}
                       onChange={(e) => setSignUpForm({ ...signUpForm, gender: e.target.value })}
@@ -351,12 +431,9 @@ export default function AuthPage() {
                       <option value="Other">Other</option>
                     </select>
                   </div>
-                </div>
 
-                {/* Blood Type & City */}
-                <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-semibold text-slate-700 mb-1">Blood Group</label>
+                    <label className="block font-semibold text-slate-700 mb-1">Blood Type</label>
                     <select
                       value={signUpForm.bloodType}
                       onChange={(e) => setSignUpForm({ ...signUpForm, bloodType: e.target.value })}
@@ -374,10 +451,10 @@ export default function AuthPage() {
                   </div>
 
                   <div>
-                    <label className="block font-semibold text-slate-700 mb-1">City / Region</label>
+                    <label className="block font-semibold text-slate-700 mb-1">City</label>
                     <input
                       type="text"
-                      placeholder="Mumbai / Delhi / Jaipur"
+                      placeholder="City"
                       value={signUpForm.city}
                       onChange={(e) => setSignUpForm({ ...signUpForm, city: e.target.value })}
                       className="w-full bg-slate-50 text-slate-900 p-2.5 rounded-xl border border-slate-300 focus:bg-white focus:border-teal-500 focus:outline-none"
@@ -385,37 +462,48 @@ export default function AuthPage() {
                   </div>
                 </div>
 
-                {/* Known Conditions / Allergies */}
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Known Allergies / Chronic History (Optional)</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Penicillin allergy, Mild Asthma, Hypertension"
-                    value={signUpForm.chronicConditions}
-                    onChange={(e) => setSignUpForm({ ...signUpForm, chronicConditions: e.target.value })}
-                    className="w-full bg-slate-50 text-slate-900 p-2.5 rounded-xl border border-slate-300 focus:bg-white focus:border-teal-500 focus:outline-none"
-                  />
+                {/* Medical History */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1">Chronic Conditions (if any)</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Asthma, Hypertension (or None)"
+                      value={signUpForm.chronicConditions}
+                      onChange={(e) => setSignUpForm({ ...signUpForm, chronicConditions: e.target.value })}
+                      className="w-full bg-slate-50 text-slate-900 p-2.5 rounded-xl border border-slate-300 focus:bg-white focus:border-teal-500 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1">Known Allergies (if any)</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Penicillin, Peanuts (or None)"
+                      value={signUpForm.knownAllergies}
+                      onChange={(e) => setSignUpForm({ ...signUpForm, knownAllergies: e.target.value })}
+                      className="w-full bg-slate-50 text-slate-900 p-2.5 rounded-xl border border-slate-300 focus:bg-white focus:border-teal-500 focus:outline-none"
+                    />
+                  </div>
                 </div>
 
                 {/* Password & Confirm */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block font-semibold text-slate-700 mb-1">Create Password *</label>
                     <input
                       type="password"
-                      placeholder="••••••••"
+                      placeholder="••••••••••••"
                       value={signUpForm.password}
                       onChange={(e) => setSignUpForm({ ...signUpForm, password: e.target.value })}
                       className="w-full bg-slate-50 text-slate-900 p-2.5 rounded-xl border border-slate-300 focus:bg-white focus:border-teal-500 focus:outline-none"
                       required
                     />
                   </div>
-
                   <div>
                     <label className="block font-semibold text-slate-700 mb-1">Confirm Password *</label>
                     <input
                       type="password"
-                      placeholder="••••••••"
+                      placeholder="••••••••••••"
                       value={signUpForm.confirmPassword}
                       onChange={(e) => setSignUpForm({ ...signUpForm, confirmPassword: e.target.value })}
                       className="w-full bg-slate-50 text-slate-900 p-2.5 rounded-xl border border-slate-300 focus:bg-white focus:border-teal-500 focus:outline-none"
@@ -427,7 +515,7 @@ export default function AuthPage() {
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-teal-600 to-sky-600 hover:from-teal-500 hover:to-sky-500 shadow-md flex items-center justify-center gap-2"
+                    className="w-full py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-teal-600 to-sky-600 hover:from-teal-500 hover:to-sky-500 shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all"
                   >
                     <UserPlus className="w-4 h-4" />
                     <span>Create My Patient Account & Enter Portal</span>
@@ -436,7 +524,7 @@ export default function AuthPage() {
 
                 <p className="text-center text-[11px] text-slate-500">
                   Already registered?{' '}
-                  <span onClick={() => setAuthMode('patient_signin')} className="text-teal-600 font-bold hover:underline cursor-pointer">
+                  <span onClick={() => switchTab('patient_signin')} className="text-teal-600 font-bold hover:underline cursor-pointer">
                     Sign in here
                   </span>
                 </p>
@@ -457,7 +545,10 @@ export default function AuthPage() {
               <div className="flex items-center gap-2 p-1 rounded-xl bg-slate-100 border border-slate-200 text-xs">
                 <button
                   type="button"
-                  onClick={() => setAdminRole('doctor')}
+                  onClick={() => {
+                    setAdminRole('doctor');
+                    setErrorMessage('');
+                  }}
                   className={`flex-1 py-1.5 rounded-lg font-semibold transition-all flex items-center justify-center gap-1.5 ${
                     adminRole === 'doctor' ? 'bg-white text-indigo-700 shadow border border-slate-200' : 'text-slate-500'
                   }`}
@@ -467,7 +558,10 @@ export default function AuthPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setAdminRole('admin')}
+                  onClick={() => {
+                    setAdminRole('admin');
+                    setErrorMessage('');
+                  }}
                   className={`flex-1 py-1.5 rounded-lg font-semibold transition-all flex items-center justify-center gap-1.5 ${
                     adminRole === 'admin' ? 'bg-white text-purple-700 shadow border border-slate-200' : 'text-slate-500'
                   }`}
@@ -479,15 +573,21 @@ export default function AuthPage() {
 
               <form onSubmit={handleDoctorSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Doctor ID / Hospital Email</label>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    {adminRole === 'admin' ? 'Admin Staff Email' : 'Doctor ID / Hospital Email'}
+                  </label>
                   <div className="relative">
                     <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
                       type="text"
-                      placeholder="e.g. dr.chen@medisense.hospital.org"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder={adminRole === 'admin' ? 'admin@medisense.hospital.org' : 'dr.chen@medisense.hospital.org'}
+                      value={doctorEmail}
+                      onChange={(e) => {
+                        setDoctorEmail(e.target.value);
+                        setErrorMessage('');
+                      }}
                       className="w-full bg-slate-50 text-xs sm:text-sm text-slate-900 pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-indigo-500 focus:bg-white"
+                      required
                     />
                   </div>
                 </div>
@@ -498,17 +598,25 @@ export default function AuthPage() {
                     <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
                       type="password"
-                      placeholder="••••••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter security key (e.g. doctor123)"
+                      value={doctorPassword}
+                      onChange={(e) => {
+                        setDoctorPassword(e.target.value);
+                        setErrorMessage('');
+                      }}
                       className="w-full bg-slate-50 text-xs sm:text-sm text-slate-900 pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-indigo-500 focus:bg-white"
+                      required
                     />
                   </div>
                 </div>
 
+                <div className="text-[11px] text-slate-400">
+                  Default demo keys: <code className="text-indigo-700 font-bold">doctor123</code> or <code className="text-purple-700 font-bold">admin123</code>
+                </div>
+
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 shadow-md flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all"
                 >
                   <ShieldCheck className="w-4 h-4" />
                   <span>Access Clinical Command Center</span>
@@ -516,15 +624,15 @@ export default function AuthPage() {
                 </button>
               </form>
 
-              {/* 1-Click Clinician Logins */}
+              {/* Demo Clinician Autofill Helpers */}
               <div className="pt-4 border-t border-slate-100 space-y-2">
                 <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
-                  ⚡ 1-Click Fast Clinician Logins:
+                  📋 Demo Staff Credentials (Click to Populate):
                 </span>
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
-                    onClick={() => quickLoginDoctor('Dr. Robert Chen, MD', 'Cardiology & Emergency Triage', 'doctor')}
+                    onClick={() => autofillStaff('dr.chen@medisense.hospital.org', 'doctor123', 'doctor')}
                     className="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50/50 border border-slate-200 hover:border-indigo-300 text-left transition-all text-xs"
                   >
                     <div className="font-bold text-slate-800">Dr. Robert Chen, MD</div>
@@ -533,13 +641,16 @@ export default function AuthPage() {
 
                   <button
                     type="button"
-                    onClick={() => quickLoginDoctor('Dr. Sarah Al-Mansoor', 'Chief Medical Officer / Administration', 'admin')}
+                    onClick={() => autofillStaff('admin@medisense.hospital.org', 'admin123', 'admin')}
                     className="p-2.5 rounded-xl bg-slate-50 hover:bg-purple-50/50 border border-slate-200 hover:border-purple-300 text-left transition-all text-xs"
                   >
                     <div className="font-bold text-slate-800">Hospital Administration</div>
                     <div className="text-[10px] text-slate-500">Clinical Audit & Governance</div>
                   </button>
                 </div>
+                <p className="text-[10px] text-slate-400 text-center italic">
+                  Tip: Populates the inputs above. Click "Access Clinical Command Center" to authenticate.
+                </p>
               </div>
 
             </div>

@@ -137,12 +137,41 @@ export function MediSenseProvider({ children }) {
     }));
   };
 
+  // Registered Accounts (Persistent storage of patient accounts and credentials)
+  const [registeredAccounts, setRegisteredAccounts] = useState([
+    {
+      email: 'sarah.jenkins@medisense.ai',
+      password: 'patient123',
+      patientId: 'pat_001',
+      name: 'Sarah Jenkins',
+      role: 'patient'
+    },
+    {
+      email: 'marcus.vance@medisense.ai',
+      password: 'patient123',
+      patientId: 'pat_002',
+      name: 'Marcus Vance',
+      role: 'patient'
+    },
+    {
+      email: 'david.miller@medisense.ai',
+      password: 'patient123',
+      patientId: 'pat_003',
+      name: 'David Miller',
+      role: 'patient'
+    }
+  ]);
+
   // Patient Registration Action
   const registerNewPatient = (formData) => {
     const newId = `pat_${String(patientsList.length + 1).padStart(3, '0')}`;
+    const cleanEmail = formData.email ? formData.email.toLowerCase().trim() : `patient_${Date.now()}@medisense.ai`;
+    const cleanPassword = formData.password || 'patient123';
+
     const newPatient = {
       id: newId,
       name: formData.name,
+      email: cleanEmail,
       age: Number(formData.age) || 30,
       gender: formData.gender || 'Not specified',
       bloodType: formData.bloodType || 'O+',
@@ -154,20 +183,124 @@ export function MediSenseProvider({ children }) {
       lastVitals: null // Null initially for fresh registration - no fake measurements
     };
 
+    // Store account credentials for subsequent logins
+    const newAccount = {
+      email: cleanEmail,
+      password: cleanPassword,
+      patientId: newId,
+      name: formData.name,
+      role: 'patient'
+    };
+
+    setRegisteredAccounts(prev => [newAccount, ...prev]);
     setPatientsList(prev => [newPatient, ...prev]);
     setCurrentPatient(newPatient);
     setCurrentUser({
       role: 'patient',
       name: newPatient.name,
       patientId: newPatient.id,
-      email: formData.email
+      email: cleanEmail
     });
     setActivePortal('patient');
     setPatientTab('symptoms');
     return newPatient;
   };
 
-  // Login handler
+  // Secure Patient Authentication (Validates registered email & password)
+  const loginPatient = (emailInput, passwordInput) => {
+    const cleanEmail = emailInput?.toLowerCase().trim();
+    const cleanPassword = passwordInput?.trim();
+
+    if (!cleanEmail || !cleanPassword) {
+      return { success: false, error: 'Please enter both your registered email and password.' };
+    }
+
+    // 1. Search in registered accounts by email
+    const account = registeredAccounts.find(a => a.email.toLowerCase() === cleanEmail);
+    if (account) {
+      if (account.password !== cleanPassword) {
+        return { success: false, error: 'Incorrect password for this account. Please try again.' };
+      }
+      const patient = patientsList.find(p => p.id === account.patientId) || {
+        id: account.patientId,
+        name: account.name,
+        email: account.email,
+        age: 30,
+        gender: 'Female',
+        bloodType: 'O+',
+        lastVitals: null
+      };
+      setCurrentPatient(patient);
+      setCurrentUser({
+        role: 'patient',
+        name: patient.name,
+        patientId: patient.id,
+        email: account.email
+      });
+      setActivePortal('patient');
+      setPatientTab('symptoms');
+      return { success: true };
+    }
+
+    // 2. Also check if user entered Patient ID (e.g. pat_001 or P00001)
+    const patientById = patientsList.find(p => p.id.toLowerCase() === cleanEmail);
+    if (patientById) {
+      const acc = registeredAccounts.find(a => a.patientId === patientById.id);
+      if (acc && acc.password !== cleanPassword) {
+        return { success: false, error: 'Incorrect password for this Patient ID.' };
+      }
+      setCurrentPatient(patientById);
+      setCurrentUser({
+        role: 'patient',
+        name: patientById.name,
+        patientId: patientById.id,
+        email: patientById.email || `${patientById.name.toLowerCase().replace(' ', '.')}@medisense.ai`
+      });
+      setActivePortal('patient');
+      setPatientTab('symptoms');
+      return { success: true };
+    }
+
+    return {
+      success: false,
+      error: `No registered patient account found for "${emailInput}". Please click "Need an account? Sign up" to create a new profile.`
+    };
+  };
+
+  // Secure Clinician Authentication
+  const loginClinician = (emailInput, passwordInput, role = 'doctor') => {
+    const cleanEmail = emailInput?.toLowerCase().trim();
+    const cleanPassword = passwordInput?.trim();
+
+    if (!cleanEmail || !cleanPassword) {
+      return { success: false, error: 'Please enter both your hospital staff email and security key.' };
+    }
+
+    if (cleanPassword.length < 4) {
+      return { success: false, error: 'Security key must be at least 4 characters long.' };
+    }
+
+    if (role === 'admin') {
+      setCurrentUser({
+        role: 'admin',
+        name: 'Dr. Sarah Al-Mansoor (Hospital Chief)',
+        specialty: 'Chief Medical Officer / Administration',
+        email: cleanEmail
+      });
+    } else {
+      setCurrentUser({
+        role: 'doctor',
+        name: 'Dr. Robert Chen, MD',
+        specialty: 'Cardiology & Emergency Triage',
+        email: cleanEmail
+      });
+    }
+
+    setActivePortal('doctor');
+    return { success: true };
+  };
+
+  // General login handler (backward compatibility)
   const loginUser = (userObj) => {
     setCurrentUser(userObj);
     if (userObj.role === 'patient') {
@@ -500,6 +633,9 @@ export function MediSenseProvider({ children }) {
       value={{
         currentUser,
         loginUser,
+        loginPatient,
+        loginClinician,
+        registeredAccounts,
         logoutUser,
         registerNewPatient,
         activePortal,
