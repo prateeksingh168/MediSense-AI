@@ -1,139 +1,170 @@
-# MediSense AI — Frontend Architecture & Backend Integration Guide 🩺🤖
+# MediSense AI — Comprehensive Frontend Architecture & Backend Integration Guide 🩺🤖
 
 > **"AI assists. Doctors decide."**  
-> An intelligent clinical decision-support ecosystem bridging patients and physicians. Powered by Explainable AI (XAI), automated emergency red-flag triage, and 1,500+ synthetic clinical cohort references.
+> An ethical clinical decision-support platform bridging patients and physicians. Powered by Explainable AI (XAI), automated emergency red-flag triage, continuous telemetry, and 1,500+ synthetic clinical cohort references.
 
 ---
 
-## 📋 Table of Contents
-1. [Overview & Philosophy](#1-overview--philosophy)
-2. [Technology Stack](#2-technology-stack)
-3. [Folder & Component Structure](#3-folder--component-structure)
-4. [Authentication & Role-Based Access](#4-authentication--role-based-access)
-5. [Frontend Data Contracts & Schemas](#5-frontend-data-contracts--schemas)
-6. [Backend API Specification (REST Endpoints)](#6-backend-api-specification-rest-endpoints)
-7. [Database Schema Recommendations](#7-database-schema-recommendations)
-8. [Connecting Frontend to Backend (Integration Steps)](#8-connecting-frontend-to-backend-integration-steps)
-9. [Development & Build Commands](#9-development--build-commands)
+## 📌 Notice for Team & Evaluators: All Technologies & Dependencies Used
+
+To maintain 100% transparency across the frontend, backend, and database teams, here is the complete list of every technology, library, browser API, and dataset used in this frontend. **No hidden third-party paid APIs, secret microservices, or external trackers are used.**
+
+### 1. Production NPM Dependencies (`package.json`)
+- `react` (`^18.3.1`): Core declarative UI framework.
+- `react-dom` (`^18.3.1`): DOM rendering engine for React.
+- `recharts` (`^2.15.1`): SVG charting library used for:
+  - 24-hour continuous Blood Pressure AreaChart (Systolic / Diastolic gradient).
+  - Hemodynamics LineChart (Pulse rate BPM and Oxygen Saturation SpO2 dual-axis).
+  - Clinical Triage Acuity distribution & bed capacity telemetry in the Doctor Command Center.
+- `lucide-react` (`^0.475.0`): Clean, standardized clinical and UI icons (Stethoscope, Heart, Activity, Wind, Zap, Bot, ShieldCheck, etc.).
+- `clsx` (`^2.1.1`) & `tailwind-merge` (`^2.6.0`): Utility functions for conditionally merging Tailwind CSS classes cleanly without collision.
+
+### 2. Development & Build Tooling
+- `vite` (`^6.1.0`): High-performance Next-Generation frontend build tool with sub-second Hot Module Replacement (HMR).
+- `@vitejs/plugin-react` (`^4.3.4`): Official Babel/Fast Refresh plugin for React in Vite.
+- `tailwindcss` (`^3.4.17`): Utility-first CSS framework configured with a **custom Light Medical Design System** (`#f8fafc` slate background, crisp white `#ffffff` cards, teal `#0d9488`, cyan, rose, and indigo clinical accents).
+- `postcss` (`^8.5.1`) & `autoprefixer` (`^10.4.20`): CSS processing and vendor prefixing.
+
+### 3. Native Browser Web APIs (Zero Extra Packages Required)
+- **Web Speech API (`SpeechRecognition` / `webkitSpeechRecognition`)**:
+  - Used in the **"Medi" AI Clinical Chatbot** for voice input.
+  - Converts spoken voice to text in real-time with an animated listening pulse.
+  - Runs natively in Google Chrome, Microsoft Edge, and Safari — **requires zero paid speech APIs** (no Whisper, Google Cloud Speech, or AWS Polly keys needed).
+- **Native Browser Print API (`window.print()`)**:
+  - Used in **AppointmentBooking.jsx** to print/save the official **OPD Token Receipt** (`#OPD-B14`).
+  - Used in **PatientProfile.jsx** to print the **Digital Health ID Card**.
+  - Styled with CSS `@media print` rules for clean, receipt-paper formatted printouts.
+
+### 4. Synthetic Clinical Dataset (Provided by Challenge Organizers)
+- Extracted from `MediSense_AI_Synthetic_Dataset.zip` into `src/data/dataset/` and `src/data/syntheticCases.json`.
+- Contains **1,500+ synthetic clinical patient records** across 6 standardized CSVs:
+  - `patients.csv`: Demographics, age, gender, chronic history.
+  - `health_records.csv`: Biometrics, blood pressure, heart rate, blood glucose.
+  - `symptom_assessments.csv`: Organ systems, symptoms, subjective pain scores.
+  - `ai_predictions.csv`: Model diagnostic predictions, probabilities, urgency scores.
+  - `doctor_decisions.csv`: Physician accept/override audit trail and treatment plans.
+  - `data_dictionary.csv`: Full attribute metadata and clinical definitions.
+- **Usage**: Used by the frontend for historical case matching in `SimilarCases.jsx` and baseline validation benchmarks in `ClinicalAnalytics.jsx`.
+
+### 5. NLP & Decision Logic Engine (`chatbotKnowledge.js`)
+- An in-house, zero-latency clinical NLP engine designed for medical hackathons.
+- Features multi-intent matching, sub-categorization for ambiguous inputs (e.g. probing where `"pain"` or `"dard"` is located with interactive chips), bilingual English/Hinglish understanding, and safety disclaimers.
+- **No external OpenAI or Gemini API keys are required for frontend execution**, ensuring it never fails due to rate-limits or offline connections during hackathon judging.
 
 ---
 
-## 1. Overview & Philosophy
-
-MediSense AI is a dual-portal clinical platform designed for healthcare hackathons and real-world medical workflows:
-
-- **Patient Portal**:
-  - **AI Symptom Checker**: Multi-system organ triage (Cardiovascular, Respiratory, Neurological, Abdominal, Musculoskeletal) with 1–10 pain severity scoring.
-  - **Book Appointment & OPD Receipts**: Specialist doctor booking with official printable OPD Token Receipts (`#OPD-B14`), room allocation, and barcode verification.
-  - **Health Vitals Tracking**: Real-time biometric monitoring with Recharts telemetry (Blood Pressure, Heart Rate, SpO2, Blood Glucose). New patients begin with a clean unmeasured state.
-  - **Digital Health ID Card**: Smart patient pass with scannable QR verification, chronic conditions, and allergy tags.
-  - **"Medi" Voice AI Companion**: An empathetic clinical assistant supporting speech-to-text (Web Speech API) and multi-chip interactive clinical probing (e.g. chest vs abdominal pain differentiation).
-
-- **Doctor Command Center**:
-  - **Prioritized Triage Queue**: Sorts acute patients by urgency (`EMERGENCY` > `URGENT` > `ROUTINE`).
-  - **Explainable AI (XAI)**: Displays feature attribution weights (e.g. *"+48% substernal chest pressure"*), preventing black-box uncertainty.
-  - **Missing Clinical Tests Alert**: Recommends mandatory diagnostic tests (e.g., 12-Lead ECG, Troponin I) before confirming high-risk conditions.
-  - **Historical Cohort Matching**: Correlates acute presentations with 1,500+ synthetic clinical cases.
-  - **Accept / Override Legal Audit Trail**: 100% physician autonomy with timestamps and clinical justification logs.
-  - **Clinical Analytics & Telemetry**: Bed occupancy telemetry, triage acuity distributions, and AI-physician concordance metrics.
-
----
-
-## 2. Technology Stack
-
-| Layer | Technologies Used |
-|---|---|
-| **Framework & Build Tool** | React 18, Vite 6, Modern ES6+ JavaScript |
-| **Styling & Design System** | Tailwind CSS v3 (Crisp Light Medical Theme: Slate `#f8fafc`, Teal `#0d9488`, Cyan, Rose, Indigo) |
-| **Iconography** | Lucide React |
-| **Data Visualization** | Recharts (AreaChart, LineChart, ResponsiveContainer) |
-| **Voice AI / Speech Recognition** | Web Speech API (`SpeechRecognition` / `webkitSpeechRecognition`) |
-| **State Management** | React Context API (`MediSenseContext.jsx`) |
-| **Synthetic Data Engine** | 1,500 Patient Cohort Benchmark (`syntheticCases.json`, CSV tables) |
-
----
-
-## 3. Folder & Component Structure
+## 🏛️ System Architecture & Workflow
 
 ```
-frontend/
-├── public/
-│   └── logo.png                       # MediSense AI logo asset
-├── src/
-│   ├── assets/
-│   │   └── logo.png                   # Brand logo image
-│   ├── components/
-│   │   ├── auth/
-│   │   │   └── AuthPage.jsx           # 3-way auth: Patient Login, Patient Signup, Doctor/Admin Login
-│   │   ├── common/
-│   │   │   ├── Badge.jsx              # Triage severity badges (Emergency, Urgent, Routine)
-│   │   │   └── RedFlagAlert.jsx       # Pulsing emergency banner for life-threatening symptoms
-│   │   ├── doctor/
-│   │   │   ├── AcceptOverrideModal.jsx# Modal for doctor to confirm or override AI decision
-│   │   │   ├── CaseReviewModal.jsx    # Full-screen deep clinical case inspection
-│   │   │   ├── ClinicalAnalytics.jsx  # Recharts hospital telemetry, bed capacity, acuity charts
-│   │   │   ├── DecisionHistory.jsx    # Legal physician audit log of accepted/overridden cases
-│   │   │   ├── DoctorPortal.jsx       # Doctor Command container & sub-tabs
-│   │   │   ├── ExplainableAI.jsx      # XAI feature attribution weight bars (+% / -%)
-│   │   │   ├── MissingInfoCard.jsx    # Critical lab tests missing from patient case
-│   │   │   ├── SimilarCases.jsx       # Historical cohort matching (1,500 synthetic cases)
-│   │   │   └── TriageQueue.jsx        # Acuity-ranked incoming patient triage queue
-│   │   ├── patient/
-│   │   │   ├── AIAnalysisResult.jsx   # Patient-facing triage urgency rating & instructions
-│   │   │   ├── AppointmentBooking.jsx # Doctor scheduling & official printable OPD receipt generator
-│   │   │   ├── HealthTracker.jsx      # Biometric cards & 24-hr Recharts BP/SpO2 trend curves
-│   │   │   ├── MediChatbot.jsx        # Floating "Medi" AI companion with mic speech-to-text
-│   │   │   ├── PatientPortal.jsx      # Patient container & navigation sub-tabs
-│   │   │   ├── PatientProfile.jsx     # Medical record, active meds, & Digital Health ID card
-│   │   │   ├── PreviousAssessments.jsx# Patient's submission history and reviewing doctor decisions
-│   │   │   └── SymptomEntry.jsx       # 5 organ systems, symptom chips, pain slider (1-10)
-│   │   ├── Navbar.jsx                 # Top header with logo, title, patient switcher, logout
-│   │   └── Footer.jsx                 # Bottom pinned footer with capabilities & disclaimer
-│   ├── context/
-│   │   └── MediSenseContext.jsx       # Global application store (auth, patients, cases, vitals)
-│   ├── data/
-│   │   ├── chatbotKnowledge.js        # Medi NLP clinical engine, probing trees & Hinglish
-│   │   ├── mockData.js                # Initial seed patients, triage cases, doctors
-│   │   ├── syntheticCases.json        # 1,500 synthetic cases extracted from provided dataset
-│   │   └── dataset/                   # Unzipped raw synthetic dataset CSV files
-│   ├── App.jsx                        # Root wrapper with layout & portal routing
-│   ├── index.css                      # Tailwind utilities & custom healthcare animations
-│   └── main.jsx                       # React DOM root entrypoint
-├── index.html                         # HTML template
-├── package.json                       # Dependencies & build scripts
-├── tailwind.config.js                 # Tailwind design theme configuration
-└── vite.config.js                     # Vite build configuration
+                             ┌──────────────────────────────────────┐
+                             │       MediSense AI Front-End         │
+                             │ (React 18 + Vite + Tailwind CSS)     │
+                             └──────────────────┬───────────────────┘
+                                                │
+                 ┌──────────────────────────────┴─────────────────────────────┐
+                 ▼                                                            ▼
+    ┌───────────────────────────┐                               ┌───────────────────────────┐
+    │      Patient Portal       │                               │   Doctor Command Center   │
+    │  (Patient-Empowerment)    │                               │     (Clinical Triage)     │
+    └────────────┬──────────────┘                               └─────────────┬─────────────┘
+                 │                                                            │
+    ┌────────────┼───────────────────────────┐                  ┌─────────────┼───────────────────────────┐
+    ▼            ▼             ▼             ▼                  ▼             ▼             ▼             ▼
+[Symptom]   [Appointment]  [Health]     ["Medi" AI]        [Triage Queue]   [XAI Feature] [Missing Lab] [Accept/Override]
+[Checker]   [& OPD Token]  [Vitals]     [Companion]        [Prioritized]    [Weights]     [Tests Alert] [Legal Audit]
+    │            │             │             │                  ▲             ▲             ▲             ▲
+    └────────────┼─────────────┴─────────────┘                  │             │             │             │
+                 ▼                                              │             │             │             │
+    ┌───────────────────────────────────────────────────────────┴─────────────┴─────────────┴─────────────┴─┐
+    │                               MediSenseContext (Global Reactive Store)                                 │
+    │              - Session & Accounts    - Active Patients List    - Vitals History Map                   │
+    │              - Triage Cases Store    - Booked Appointments     - Clinical Decision History            │
+    └───────────────────────────────────────────┬────────────────────────────────────────────────────────────┘
+                                                ▼
+                             ┌──────────────────────────────────────┐
+                             │          Backend REST API            │
+                             │      (Node.js / Express / Python)     │
+                             └──────────────────┬───────────────────┘
+                                                ▼
+                             ┌──────────────────────────────────────┐
+                             │     Database (PostgreSQL / MongoDB)  │
+                             └──────────────────────────────────────┘
 ```
 
 ---
 
-## 4. Authentication & Role-Based Access
+## 📂 Complete File-by-File Breakdown
 
-The frontend currently provides state-managed authentication via `MediSenseContext.jsx` and `AuthPage.jsx`:
-
-1. **Patient Sign Up**:
-   - Fields collected: Full Name, Email, Phone, Age, Gender, Blood Type, City, Chronic Conditions, Known Allergies, Password.
-   - Account is saved in `registeredAccounts` and `patientsList`.
-   - The user immediately enters the Patient Portal with `lastVitals: null` (unmeasured).
-2. **Patient Sign In**:
-   - Validates email and password against `registeredAccounts`.
-   - Successfully loads the **exact registered patient profile and their personal vitals history**.
-   - Demo Accounts available for instant testing:
-     - `sarah.jenkins@medisense.ai` (Password: `patient123`)
-     - `marcus.vance@medisense.ai` (Password: `patient123`)
-3. **Doctor / Admin Sign In**:
-   - Requires staff email and medical security key (e.g. `doctor123` / `admin123`).
-   - Roles:
-     - `doctor`: Dr. Robert Chen, MD (Cardiology & Emergency Triage)
-     - `admin`: Dr. Sarah Al-Mansoor (Chief Medical Officer / Administration)
+```
+frontend/src/
+├── App.jsx                               # Root application wrapper with persistent layout & portal toggle
+├── main.jsx                              # React DOM root mounting
+├── index.css                             # Global styles, Tailwind directives, and printing rules
+│
+├── assets/
+│   └── logo.png                          # Official MediSense AI brand logo
+│
+├── components/
+│   ├── Navbar.jsx                        # Top navigation: brand logo, CDS badge, demo switcher, portal tabs, user profile
+│   ├── Footer.jsx                        # Bottom pinned footer: capabilities overview, copyright, medical disclaimer
+│   │
+│   ├── auth/
+│   │   └── AuthPage.jsx                  # 3-way authentication: Patient Sign In, Patient Sign Up, Doctor/Admin login
+│   │
+│   ├── common/
+│   │   ├── Badge.jsx                     # Urgency badges: EMERGENCY (red), URGENT (amber), ROUTINE (emerald)
+│   │   └── RedFlagAlert.jsx              # Pulsing red-flag warning alert for acute life-threatening symptoms
+│   │
+│   ├── patient/
+│   │   ├── PatientPortal.jsx             # Main container for patient features and 5 sub-tabs
+│   │   ├── SymptomEntry.jsx              # 5-organ system selector, symptom pills, pain slider (1-10), acute notes
+│   │   ├── AIAnalysisResult.jsx          # Immediate patient triage score, urgency level, and clinical recommendations
+│   │   ├── AppointmentBooking.jsx        # Specialist picker, OPD token generator, and printable OPD Token Receipt
+│   │   ├── HealthTracker.jsx             # Biometric cards (BP, HR, SpO2, Glucose) & 24-hr Recharts telemetry curves
+│   │   ├── PreviousAssessments.jsx       # Historical list of patient assessments and reviewing physician decisions
+│   │   ├── PatientProfile.jsx            # Full demographics, active medications, allergies, and Digital Health ID Card
+│   │   └── MediChatbot.jsx               # Floating "Medi" AI companion with Web Speech API and clinical probing
+│   │
+│   └── doctor/
+│       ├── DoctorPortal.jsx              # Doctor Command container (Triage Queue, Analytics, Decision Audit)
+│       ├── TriageQueue.jsx               # Priority queue sorted by clinical acuity with quick review actions
+│       ├── CaseReviewModal.jsx           # Deep case inspection: patient history, current complaint, vital signs
+│       ├── ExplainableAI.jsx             # XAI feature attribution weight bars showing AI reasoning transparently
+│       ├── MissingInfoCard.jsx           # Clinical test recommendations (ECG, Troponin, CT) prior to final diagnosis
+│       ├── SimilarCases.jsx              # Historical cohort matcher searching 1,500 synthetic cases for similar outcomes
+│       ├── AcceptOverrideModal.jsx       # Physician modal to Accept or Override AI assessment with clinical justification
+│       ├── ClinicalAnalytics.jsx         # Hospital capacity charts: CCU/Trauma beds, AI concordance rate (92.4%)
+│       └── DecisionHistory.jsx           # Legal audit log recording all physician confirmations and overrides
+│
+├── context/
+│   └── MediSenseContext.jsx              # Central state engine managing auth, patients, vitals, triage cases, appointments
+│
+└── data/
+    ├── chatbotKnowledge.js               # Clinical NLP knowledge base, probing trees, symptom guidance, Hinglish support
+    ├── mockData.js                       # Initial seed patients, sample cases, and specialist doctor listings
+    ├── syntheticCases.json               # 1,500 benchmark clinical cases extracted from the provided dataset
+    └── dataset/                          # 6 raw CSV tables extracted from MediSense_AI_Synthetic_Dataset.zip
+```
 
 ---
 
-## 5. Frontend Data Contracts & Schemas
+## 🔐 Authentication & Session Persistence Rules
 
-To integrate with your backend database (PostgreSQL, MongoDB, MySQL, etc.), match the following JSON structures:
+1. **Persistent Accounts (`registeredAccounts`)**:
+   - When a patient registers via **New Patient Sign Up**, their account is saved in `registeredAccounts`.
+   - When logging out and logging back in via **Patient Sign In**, entering their email and password authenticates them and **loads their exact registered profile** — never demo data.
+2. **Strict Credential Validation (No Direct Click Bypass)**:
+   - Clicking "Sign In" with empty fields is strictly prevented with error banners.
+   - Form autofill buttons are provided for demo evaluation, but users must still click **"Sign In"** to authenticate.
+3. **Unmeasured Vitals for New Patients**:
+   - Newly registered patients start with `lastVitals: null` and an empty vitals history.
+   - `HealthTracker.jsx` displays an honest unmeasured state with `-- / -- mmHg` dashes and an invitation to log their first reading or load sample baseline measurements.
 
-### A. Patient Entity
+---
+
+## 📊 Data Models & JSON Schemas (For Backend & Database Developers)
+
+### 1. Patient Entity Schema
 ```json
 {
   "id": "pat_001",
@@ -159,7 +190,7 @@ To integrate with your backend database (PostgreSQL, MongoDB, MySQL, etc.), matc
 }
 ```
 
-### B. Biometric Vital Reading Record
+### 2. Biometric Vital Reading Schema
 ```json
 {
   "patientId": "pat_001",
@@ -172,7 +203,7 @@ To integrate with your backend database (PostgreSQL, MongoDB, MySQL, etc.), matc
 }
 ```
 
-### C. Triage Case & AI Assessment (XAI)
+### 3. Triage Case & AI Assessment (XAI) Schema
 ```json
 {
   "id": "CASE-2026-001",
@@ -225,7 +256,7 @@ To integrate with your backend database (PostgreSQL, MongoDB, MySQL, etc.), matc
 }
 ```
 
-### D. Doctor Review Object (Accept / Override Audit)
+### 4. Doctor Review Object (Audit Trail)
 ```json
 {
   "action": "ACCEPTED",
@@ -239,7 +270,7 @@ To integrate with your backend database (PostgreSQL, MongoDB, MySQL, etc.), matc
 }
 ```
 
-### E. Appointment & OPD Token Receipt
+### 5. Appointment & OPD Token Receipt Schema
 ```json
 {
   "id": "APT-2026-8941",
@@ -265,9 +296,7 @@ To integrate with your backend database (PostgreSQL, MongoDB, MySQL, etc.), matc
 
 ---
 
-## 6. Backend API Specification (REST Endpoints)
-
-Implement the following endpoints in your Node.js/Express, Python (FastAPI/Flask), or Java (Spring Boot) backend:
+## 🌐 Backend REST API Endpoints Specification
 
 | Method | Endpoint | Description | Request Body | Response Body |
 |---|---|---|---|---|
@@ -285,10 +314,9 @@ Implement the following endpoints in your Node.js/Express, Python (FastAPI/Flask
 
 ---
 
-## 7. Database Schema Recommendations
+## 🗄️ Database Schema (SQL DDL & MongoDB Mongoose)
 
-### Relational Schema (PostgreSQL / MySQL)
-
+### PostgreSQL DDL Table Creation Script
 ```sql
 -- Patients Table
 CREATE TABLE patients (
@@ -349,22 +377,57 @@ CREATE TABLE appointments (
 );
 ```
 
+### MongoDB Mongoose Schemas
+```javascript
+import mongoose from 'mongoose';
+
+const PatientSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  phone: String,
+  age: Number,
+  gender: String,
+  bloodType: String,
+  city: String,
+  chronicConditions: [String],
+  knownAllergies: [String],
+  currentMedications: [String],
+  createdAt: { type: Date, default: Date.now }
+});
+
+const TriageCaseSchema = new mongoose.Schema({
+  patientId: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient', required: true },
+  organSystem: String,
+  selectedSymptoms: Array,
+  primarySeverity: Number,
+  triageLevel: { type: String, enum: ['EMERGENCY', 'URGENT', 'ROUTINE'] },
+  triageScore: Number,
+  status: { type: String, enum: ['PENDING_REVIEW', 'ACCEPTED', 'OVERRIDDEN'], default: 'PENDING_REVIEW' },
+  aiAnalysis: Object,
+  doctorReview: Object,
+  createdAt: { type: Date, default: Date.now }
+});
+
+export const Patient = mongoose.model('Patient', PatientSchema);
+export const TriageCase = mongoose.model('TriageCase', TriageCaseSchema);
+```
+
 ---
 
-## 8. Connecting Frontend to Backend (Integration Steps)
+## 🔌 Connecting Frontend to Backend (Step-by-Step)
 
-1. **Set Environment Variable**:
+1. **Create Environment File**:
    In `frontend/.env.development`:
    ```env
    VITE_API_BASE_URL=http://localhost:5000/api
    ```
 
-2. **Connecting `MediSenseContext.jsx` to Real API**:
-   Replace the local state methods in `frontend/src/context/MediSenseContext.jsx` with standard `fetch` or `axios` calls:
+2. **Connect API Calls in `MediSenseContext.jsx`**:
    ```javascript
    const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
-   // Example: Real Login Integration
+   // Real API Patient Login
    const loginPatient = async (email, password) => {
      try {
        const res = await fetch(`${API_BASE}/auth/login`, {
@@ -373,41 +436,40 @@ CREATE TABLE appointments (
          body: JSON.stringify({ email, password, role: 'patient' })
        });
        const data = await res.json();
-       if (!res.ok) return { success: false, error: data.message };
+       if (!res.ok) return { success: false, error: data.error || 'Login failed.' };
 
        setCurrentPatient(data.patient);
        setCurrentUser({ role: 'patient', ...data.user });
        setActivePortal('patient');
        return { success: true };
      } catch (err) {
-       return { success: false, error: 'Server connection failed.' };
+       return { success: false, error: 'Cannot connect to backend server.' };
      }
    };
    ```
 
-3. **CORS Configuration**:
-   Ensure your backend permits requests from the frontend origin:
+3. **Enable CORS in Backend**:
    ```javascript
-   // In Express.js backend:
+   // In Express.js backend server.js:
    const cors = require('cors');
    app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
    ```
 
 ---
 
-## 9. Development & Build Commands
+## 🚀 Setup, Run & Build Commands
 
 ```bash
-# 1. Navigate to frontend directory
+# 1. Enter the frontend directory
 cd frontend
 
 # 2. Install all dependencies
 npm install
 
-# 3. Start local development server (with hot module reload)
+# 3. Start local development server (http://127.0.0.1:5173/)
 npm run dev
 
-# 4. Build for production (outputs optimized static bundle to dist/)
+# 4. Compile optimized production build (0 errors)
 npm run build
 
 # 5. Preview production build locally
@@ -416,16 +478,36 @@ npm run preview
 
 ---
 
-## 🏆 Hackathon Evaluation Quick Reference
+## 🏆 Judge Demonstration Script (To Win the Hackathon)
 
-| Feature | Where to Test in UI | Expected Result |
-|---|---|---|
-| **New Patient Registration** | Auth Screen -> `New Patient Sign Up` | Creates new account, starts with `null` vitals, persists for future logins |
-| **Authentic Login Check** | Auth Screen -> `Patient Sign In` | Re-logging in with registered email loads **that patient's record**, not demo data |
-| **Interactive Chatbot "Medi"** | Bottom-right floating icon | Type `"pain"`, `"fever"` or `"How to use app?"` for clinical probing & action chips |
-| **Emergency Red-Flag Triage** | Symptom Checker -> `⚡ Load Demo Emergency` | Triggers ACS protocol, 911 banner, 95 triage score, XAI feature weights |
-| **Printable OPD Token Receipt** | Book Appointment -> Confirm Booking | Generates official `#OPD-B14` card with Room Suite & Print button |
-| **Physician Decision Audit** | Doctor Portal -> Click Case -> `Confirm` or `Override` | Logs legal audit timestamp with clinical justification in Decision History |
-| **Hospital Analytics** | Doctor Portal -> `Clinical Analytics` | Real-time Recharts triage donut, bed occupancy, and AI concordance telemetry |
+1. **Step 1 — Modern Auth & Sign Up**:
+   - Open [http://127.0.0.1:5173/](http://127.0.0.1:5173/).
+   - Click **"New Patient Sign Up"**, enter a name (e.g. *Ananya Gupta*), email, and password.
+   - Click Create Account. You enter the Patient Portal as Ananya with clean unmeasured vitals.
+2. **Step 2 — Scoped Vitals & Telemetry**:
+   - Switch to **"Health Vitals Tracking"**. Notice the genuine empty state (`-- / -- mmHg`).
+   - Click `⚡ Load Sample Baseline Profile` or `+ Log Reading` to see the live Recharts BP & SpO2 curves animate into view!
+3. **Step 3 — Interactive Voice AI Companion "Medi"**:
+   - Click the floating **Medi** bot icon at bottom-right.
+   - Type `"pain"` or `"dard"`. Medi probes with clinical empathy: *"Where is the pain located?"* with 5 clickable chips.
+   - Click `[ 🚨 Chest Pain (Urgent) ]` to receive acute coronary emergency instructions.
+4. **Step 4 — Symptom Checker & Red-Flag Urgency**:
+   - Open **"AI Symptom Checker"**. Click `⚡ Load Demo Emergency`.
+   - Severity auto-sets to 9/10 with radiating chest pain. Click **"Analyze with MediSense AI"**.
+   - An immediate **EMERGENCY (95/100)** score appears with 911 dispatch warning and XAI attribution.
+5. **Step 5 — Official Printable OPD Token Receipt**:
+   - Switch to **"Book Appointment & Receipts"**. Pick *Dr. Robert Chen (Cardiology)*.
+   - Click **"Confirm Appointment & Generate Token Receipt"**.
+   - Official `#OPD-B14` card is generated with barcode and a **Print / Save as PDF** button!
+6. **Step 6 — Doctor Command Center & Explainable AI (XAI)**:
+   - Click the top Navbar switch to **"Doctor Command"**.
+   - View the prioritized Triage Queue with pending emergency cases.
+   - Click **"Review Clinical Assessment"**: Inspect **XAI feature weights** (+48% chest pressure), **missing tests** (ECG, Troponin), and **1,500 synthetic case cohort matches**.
+7. **Step 7 — Physician Accept / Override & Analytics**:
+   - Click **"Confirm / Override AI Assessment"**. Enter clinical notes and confirm or override.
+   - Check **"Decision History & Audit"** for legal timestamped logs.
+   - Check **"Clinical Analytics"** for real-time Recharts bed telemetry and 92.4% AI-doctor concordance!
+
+---
 
 *MediSense AI — Engineered for Medical Excellence, Safety & Doctor-in-the-Loop Governance.*
