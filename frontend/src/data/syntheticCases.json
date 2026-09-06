@@ -1,0 +1,5007 @@
+[
+  {
+    "patient_id": "P00001",
+    "age": 23,
+    "sex": "Female",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 135,
+      "bpDia": 75,
+      "hr": 76,
+      "temp": 36.8,
+      "spo2": 97
+    },
+    "symptom_duration_days": 7,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "lower_abdominal_pain",
+        "name": "Lower Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Urinary Tract Infection",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.64,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00002",
+    "age": 66,
+    "sex": "Female",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 142,
+      "bpDia": 77,
+      "hr": 84,
+      "temp": 36.5,
+      "spo2": 99
+    },
+    "symptom_duration_days": 1,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Hypertension",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.69,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00003",
+    "age": 59,
+    "sex": "Female",
+    "city": "Indore",
+    "vitals": {
+      "bpSys": 106,
+      "bpDia": 65,
+      "hr": 87,
+      "temp": 37.3,
+      "spo2": 95
+    },
+    "symptom_duration_days": 10,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "abdominal_pain",
+        "name": "Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Gastroenteritis",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.86,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00004",
+    "age": 45,
+    "sex": "Female",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 144,
+      "bpDia": 74,
+      "hr": 98,
+      "temp": 37,
+      "spo2": 96
+    },
+    "symptom_duration_days": 7,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "chest_tightness",
+        "name": "Chest Tightness",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Asthma Exacerbation",
+      "urgency_label_demo": "urgent_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.86,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00005",
+    "age": 45,
+    "sex": "Male",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 148,
+      "bpDia": 75,
+      "hr": 57,
+      "temp": 36.2,
+      "spo2": 99
+    },
+    "symptom_duration_days": 11,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "chest_discomfort",
+        "name": "Chest Discomfort",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "heartburn",
+        "name": "Heartburn",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Acid Reflux",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.91,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00006",
+    "age": 72,
+    "sex": "Female",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 135,
+      "bpDia": 87,
+      "hr": 66,
+      "temp": 37.9,
+      "spo2": 96
+    },
+    "symptom_duration_days": 9,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "lower_abdominal_pain",
+        "name": "Lower Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Urinary Tract Infection",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.88,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00007",
+    "age": 23,
+    "sex": "Female",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 148,
+      "bpDia": 68,
+      "hr": 58,
+      "temp": 37.7,
+      "spo2": 98
+    },
+    "symptom_duration_days": 12,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "increased_thirst",
+        "name": "Increased Thirst",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Type 2 Diabetes",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.8,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00008",
+    "age": 61,
+    "sex": "Male",
+    "city": "Pune",
+    "vitals": {
+      "bpSys": 131,
+      "bpDia": 93,
+      "hr": 99,
+      "temp": 38,
+      "spo2": 96
+    },
+    "symptom_duration_days": 7,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Hypertension",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.73,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00009",
+    "age": 30,
+    "sex": "Female",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 117,
+      "bpDia": 68,
+      "hr": 95,
+      "temp": 37.1,
+      "spo2": 94
+    },
+    "symptom_duration_days": 1,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "increased_thirst",
+        "name": "Increased Thirst",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.62,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00010",
+    "age": 23,
+    "sex": "Female",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 132,
+      "bpDia": 85,
+      "hr": 57,
+      "temp": 36.9,
+      "spo2": 95
+    },
+    "symptom_duration_days": 2,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "abdominal_pain",
+        "name": "Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Gastroenteritis",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.84,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00011",
+    "age": 51,
+    "sex": "Male",
+    "city": "Jabalpur",
+    "vitals": {
+      "bpSys": 133,
+      "bpDia": 65,
+      "hr": 60,
+      "temp": 37.4,
+      "spo2": 97
+    },
+    "symptom_duration_days": 7,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.72,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00012",
+    "age": 79,
+    "sex": "Female",
+    "city": "Pune",
+    "vitals": {
+      "bpSys": 111,
+      "bpDia": 90,
+      "hr": 69,
+      "temp": 36.5,
+      "spo2": 94
+    },
+    "symptom_duration_days": 6,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "chest_discomfort",
+        "name": "Chest Discomfort",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "heartburn",
+        "name": "Heartburn",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Acid Reflux",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.71,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00013",
+    "age": 64,
+    "sex": "Female",
+    "city": "Indore",
+    "vitals": {
+      "bpSys": 114,
+      "bpDia": 86,
+      "hr": 68,
+      "temp": 37,
+      "spo2": 95
+    },
+    "symptom_duration_days": 12,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "abdominal_pain",
+        "name": "Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Gastroenteritis",
+      "urgency_label_demo": "urgent_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.95,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00014",
+    "age": 65,
+    "sex": "Female",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 118,
+      "bpDia": 90,
+      "hr": 84,
+      "temp": 36.8,
+      "spo2": 99
+    },
+    "symptom_duration_days": 6,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.68,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00015",
+    "age": 63,
+    "sex": "Male",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 130,
+      "bpDia": 93,
+      "hr": 82,
+      "temp": 35.9,
+      "spo2": 94
+    },
+    "symptom_duration_days": 13,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "chest_tightness",
+        "name": "Chest Tightness",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Asthma Exacerbation",
+      "urgency_label_demo": "urgent_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.63,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00016",
+    "age": 67,
+    "sex": "Female",
+    "city": "Jabalpur",
+    "vitals": {
+      "bpSys": 111,
+      "bpDia": 90,
+      "hr": 75,
+      "temp": 37,
+      "spo2": 95
+    },
+    "symptom_duration_days": 3,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.94,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00017",
+    "age": 50,
+    "sex": "Female",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 140,
+      "bpDia": 84,
+      "hr": 64,
+      "temp": 36.6,
+      "spo2": 97
+    },
+    "symptom_duration_days": 6,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.72,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00018",
+    "age": 26,
+    "sex": "Female",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 110,
+      "bpDia": 90,
+      "hr": 91,
+      "temp": 36.7,
+      "spo2": 97
+    },
+    "symptom_duration_days": 11,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "chest_discomfort",
+        "name": "Chest Discomfort",
+        "redFlag": true
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "heartburn",
+        "name": "Heartburn",
+        "redFlag": false
+      },
+      {
+        "id": "lower_abdominal_pain",
+        "name": "Lower Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Urinary Tract Infection",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.75,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00019",
+    "age": 70,
+    "sex": "Female",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 148,
+      "bpDia": 67,
+      "hr": 99,
+      "temp": 37.2,
+      "spo2": 95
+    },
+    "symptom_duration_days": 2,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.65,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00020",
+    "age": 46,
+    "sex": "Male",
+    "city": "Pune",
+    "vitals": {
+      "bpSys": 136,
+      "bpDia": 85,
+      "hr": 90,
+      "temp": 37.8,
+      "spo2": 94
+    },
+    "symptom_duration_days": 5,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "increased_thirst",
+        "name": "Increased Thirst",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Type 2 Diabetes",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.76,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00021",
+    "age": 49,
+    "sex": "Female",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 120,
+      "bpDia": 95,
+      "hr": 100,
+      "temp": 36.3,
+      "spo2": 99
+    },
+    "symptom_duration_days": 11,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.95,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00022",
+    "age": 41,
+    "sex": "Male",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 122,
+      "bpDia": 76,
+      "hr": 106,
+      "temp": 36.7,
+      "spo2": 97
+    },
+    "symptom_duration_days": 9,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "chest_tightness",
+        "name": "Chest Tightness",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Asthma Exacerbation",
+      "urgency_label_demo": "urgent_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.86,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00023",
+    "age": 29,
+    "sex": "Male",
+    "city": "Indore",
+    "vitals": {
+      "bpSys": 136,
+      "bpDia": 95,
+      "hr": 102,
+      "temp": 36.4,
+      "spo2": 97
+    },
+    "symptom_duration_days": 11,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.78,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00024",
+    "age": 76,
+    "sex": "Male",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 109,
+      "bpDia": 80,
+      "hr": 91,
+      "temp": 36.3,
+      "spo2": 94
+    },
+    "symptom_duration_days": 8,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Hypertension",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.72,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00025",
+    "age": 67,
+    "sex": "Female",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 137,
+      "bpDia": 79,
+      "hr": 57,
+      "temp": 36.5,
+      "spo2": 95
+    },
+    "symptom_duration_days": 13,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "increased_thirst",
+        "name": "Increased Thirst",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Type 2 Diabetes",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.74,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00026",
+    "age": 58,
+    "sex": "Male",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 130,
+      "bpDia": 74,
+      "hr": 73,
+      "temp": 36.8,
+      "spo2": 94
+    },
+    "symptom_duration_days": 13,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "chest_tightness",
+        "name": "Chest Tightness",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.83,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00027",
+    "age": 43,
+    "sex": "Male",
+    "city": "Pune",
+    "vitals": {
+      "bpSys": 115,
+      "bpDia": 68,
+      "hr": 78,
+      "temp": 37.3,
+      "spo2": 99
+    },
+    "symptom_duration_days": 14,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "chest_tightness",
+        "name": "Chest Tightness",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Asthma Exacerbation",
+      "urgency_label_demo": "urgent_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.71,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00028",
+    "age": 69,
+    "sex": "Female",
+    "city": "Pune",
+    "vitals": {
+      "bpSys": 146,
+      "bpDia": 92,
+      "hr": 94,
+      "temp": 37.1,
+      "spo2": 98
+    },
+    "symptom_duration_days": 2,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "itchy_eyes",
+        "name": "Itchy Eyes",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Seasonal Allergy",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.67,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00029",
+    "age": 52,
+    "sex": "Male",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 133,
+      "bpDia": 87,
+      "hr": 102,
+      "temp": 36.2,
+      "spo2": 97
+    },
+    "symptom_duration_days": 9,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "increased_thirst",
+        "name": "Increased Thirst",
+        "redFlag": false
+      },
+      {
+        "id": "lower_abdominal_pain",
+        "name": "Lower Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Type 2 Diabetes",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.86,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00030",
+    "age": 45,
+    "sex": "Male",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 112,
+      "bpDia": 77,
+      "hr": 90,
+      "temp": 37.8,
+      "spo2": 98
+    },
+    "symptom_duration_days": 2,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.92,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00031",
+    "age": 46,
+    "sex": "Female",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 135,
+      "bpDia": 94,
+      "hr": 75,
+      "temp": 37.6,
+      "spo2": 94
+    },
+    "symptom_duration_days": 4,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "abdominal_pain",
+        "name": "Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Gastroenteritis",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.93,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00032",
+    "age": 32,
+    "sex": "Male",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 123,
+      "bpDia": 70,
+      "hr": 99,
+      "temp": 36.3,
+      "spo2": 99
+    },
+    "symptom_duration_days": 5,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "itchy_eyes",
+        "name": "Itchy Eyes",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Seasonal Allergy",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.91,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00033",
+    "age": 23,
+    "sex": "Female",
+    "city": "Jabalpur",
+    "vitals": {
+      "bpSys": 140,
+      "bpDia": 89,
+      "hr": 93,
+      "temp": 37.8,
+      "spo2": 97
+    },
+    "symptom_duration_days": 10,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Migraine",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.8,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00034",
+    "age": 52,
+    "sex": "Male",
+    "city": "Nagpur",
+    "vitals": {
+      "bpSys": 127,
+      "bpDia": 79,
+      "hr": 99,
+      "temp": 37.1,
+      "spo2": 97
+    },
+    "symptom_duration_days": 7,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.89,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00035",
+    "age": 73,
+    "sex": "Other",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 150,
+      "bpDia": 84,
+      "hr": 87,
+      "temp": 36.8,
+      "spo2": 99
+    },
+    "symptom_duration_days": 13,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "itchy_eyes",
+        "name": "Itchy Eyes",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Seasonal Allergy",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.93,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00036",
+    "age": 22,
+    "sex": "Female",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 147,
+      "bpDia": 66,
+      "hr": 91,
+      "temp": 37.2,
+      "spo2": 94
+    },
+    "symptom_duration_days": 5,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.63,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00037",
+    "age": 72,
+    "sex": "Male",
+    "city": "Jabalpur",
+    "vitals": {
+      "bpSys": 106,
+      "bpDia": 83,
+      "hr": 74,
+      "temp": 36.9,
+      "spo2": 96
+    },
+    "symptom_duration_days": 9,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "increased_thirst",
+        "name": "Increased Thirst",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Type 2 Diabetes",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.76,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00038",
+    "age": 70,
+    "sex": "Female",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 123,
+      "bpDia": 86,
+      "hr": 77,
+      "temp": 37.3,
+      "spo2": 94
+    },
+    "symptom_duration_days": 11,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Hypertension",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.69,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00039",
+    "age": 35,
+    "sex": "Male",
+    "city": "Pune",
+    "vitals": {
+      "bpSys": 114,
+      "bpDia": 95,
+      "hr": 70,
+      "temp": 37,
+      "spo2": 96
+    },
+    "symptom_duration_days": 14,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "itchy_eyes",
+        "name": "Itchy Eyes",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Seasonal Allergy",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.96,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00040",
+    "age": 57,
+    "sex": "Male",
+    "city": "Indore",
+    "vitals": {
+      "bpSys": 125,
+      "bpDia": 75,
+      "hr": 69,
+      "temp": 36.7,
+      "spo2": 95
+    },
+    "symptom_duration_days": 4,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Migraine",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.94,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00041",
+    "age": 28,
+    "sex": "Female",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 111,
+      "bpDia": 67,
+      "hr": 91,
+      "temp": 35.5,
+      "spo2": 96
+    },
+    "symptom_duration_days": 11,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "chest_discomfort",
+        "name": "Chest Discomfort",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "heartburn",
+        "name": "Heartburn",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Acid Reflux",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.89,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00042",
+    "age": 65,
+    "sex": "Female",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 129,
+      "bpDia": 66,
+      "hr": 76,
+      "temp": 37.3,
+      "spo2": 98
+    },
+    "symptom_duration_days": 2,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "heartburn",
+        "name": "Heartburn",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.72,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00043",
+    "age": 62,
+    "sex": "Female",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 112,
+      "bpDia": 69,
+      "hr": 62,
+      "temp": 36.6,
+      "spo2": 95
+    },
+    "symptom_duration_days": 8,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "chest_tightness",
+        "name": "Chest Tightness",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Asthma Exacerbation",
+      "urgency_label_demo": "urgent_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.94,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00044",
+    "age": 40,
+    "sex": "Female",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 133,
+      "bpDia": 74,
+      "hr": 56,
+      "temp": 37.4,
+      "spo2": 94
+    },
+    "symptom_duration_days": 6,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Migraine",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.63,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00045",
+    "age": 22,
+    "sex": "Female",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 125,
+      "bpDia": 90,
+      "hr": 103,
+      "temp": 37.2,
+      "spo2": 94
+    },
+    "symptom_duration_days": 14,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Migraine",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.68,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00046",
+    "age": 79,
+    "sex": "Female",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 150,
+      "bpDia": 71,
+      "hr": 79,
+      "temp": 36.7,
+      "spo2": 98
+    },
+    "symptom_duration_days": 11,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "itchy_eyes",
+        "name": "Itchy Eyes",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.83,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00047",
+    "age": 46,
+    "sex": "Female",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 145,
+      "bpDia": 69,
+      "hr": 87,
+      "temp": 37.6,
+      "spo2": 97
+    },
+    "symptom_duration_days": 13,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.89,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00048",
+    "age": 74,
+    "sex": "Female",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 132,
+      "bpDia": 65,
+      "hr": 105,
+      "temp": 37,
+      "spo2": 99
+    },
+    "symptom_duration_days": 12,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.92,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00049",
+    "age": 60,
+    "sex": "Male",
+    "city": "Indore",
+    "vitals": {
+      "bpSys": 125,
+      "bpDia": 76,
+      "hr": 61,
+      "temp": 37,
+      "spo2": 99
+    },
+    "symptom_duration_days": 6,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.72,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00050",
+    "age": 67,
+    "sex": "Male",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 137,
+      "bpDia": 83,
+      "hr": 107,
+      "temp": 36.8,
+      "spo2": 94
+    },
+    "symptom_duration_days": 11,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.75,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00051",
+    "age": 65,
+    "sex": "Male",
+    "city": "Jabalpur",
+    "vitals": {
+      "bpSys": 135,
+      "bpDia": 73,
+      "hr": 94,
+      "temp": 38.1,
+      "spo2": 98
+    },
+    "symptom_duration_days": 1,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "chest_discomfort",
+        "name": "Chest Discomfort",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "heartburn",
+        "name": "Heartburn",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Acid Reflux",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.77,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00052",
+    "age": 30,
+    "sex": "Female",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 111,
+      "bpDia": 80,
+      "hr": 90,
+      "temp": 36.4,
+      "spo2": 94
+    },
+    "symptom_duration_days": 8,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "chest_tightness",
+        "name": "Chest Tightness",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.63,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00053",
+    "age": 40,
+    "sex": "Male",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 122,
+      "bpDia": 72,
+      "hr": 79,
+      "temp": 36.7,
+      "spo2": 94
+    },
+    "symptom_duration_days": 1,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "increased_thirst",
+        "name": "Increased Thirst",
+        "redFlag": false
+      },
+      {
+        "id": "lower_abdominal_pain",
+        "name": "Lower Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Urinary Tract Infection",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.91,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00054",
+    "age": 47,
+    "sex": "Male",
+    "city": "Jabalpur",
+    "vitals": {
+      "bpSys": 150,
+      "bpDia": 89,
+      "hr": 94,
+      "temp": 36,
+      "spo2": 98
+    },
+    "symptom_duration_days": 11,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "lower_abdominal_pain",
+        "name": "Lower Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Urinary Tract Infection",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.73,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00055",
+    "age": 49,
+    "sex": "Female",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 119,
+      "bpDia": 65,
+      "hr": 66,
+      "temp": 37.4,
+      "spo2": 96
+    },
+    "symptom_duration_days": 14,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "abdominal_pain",
+        "name": "Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Gastroenteritis",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.69,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00056",
+    "age": 20,
+    "sex": "Female",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 105,
+      "bpDia": 71,
+      "hr": 71,
+      "temp": 36.5,
+      "spo2": 99
+    },
+    "symptom_duration_days": 10,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "abdominal_pain",
+        "name": "Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Migraine",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.76,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00057",
+    "age": 52,
+    "sex": "Male",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 143,
+      "bpDia": 82,
+      "hr": 108,
+      "temp": 36.6,
+      "spo2": 94
+    },
+    "symptom_duration_days": 12,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "lower_abdominal_pain",
+        "name": "Lower Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Urinary Tract Infection",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.86,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00058",
+    "age": 27,
+    "sex": "Female",
+    "city": "Indore",
+    "vitals": {
+      "bpSys": 147,
+      "bpDia": 91,
+      "hr": 70,
+      "temp": 36.5,
+      "spo2": 97
+    },
+    "symptom_duration_days": 4,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "abdominal_pain",
+        "name": "Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "chest_discomfort",
+        "name": "Chest Discomfort",
+        "redFlag": true
+      },
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Gastroenteritis",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.92,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00059",
+    "age": 64,
+    "sex": "Male",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 135,
+      "bpDia": 77,
+      "hr": 95,
+      "temp": 36.9,
+      "spo2": 95
+    },
+    "symptom_duration_days": 14,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "chest_tightness",
+        "name": "Chest Tightness",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Asthma Exacerbation",
+      "urgency_label_demo": "urgent_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.69,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00060",
+    "age": 61,
+    "sex": "Other",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 134,
+      "bpDia": 67,
+      "hr": 107,
+      "temp": 36,
+      "spo2": 99
+    },
+    "symptom_duration_days": 8,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "abdominal_pain",
+        "name": "Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "increased_thirst",
+        "name": "Increased Thirst",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Type 2 Diabetes",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.68,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00061",
+    "age": 76,
+    "sex": "Female",
+    "city": "Pune",
+    "vitals": {
+      "bpSys": 121,
+      "bpDia": 82,
+      "hr": 88,
+      "temp": 35.5,
+      "spo2": 98
+    },
+    "symptom_duration_days": 10,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "chest_discomfort",
+        "name": "Chest Discomfort",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "heartburn",
+        "name": "Heartburn",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Acid Reflux",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.94,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00062",
+    "age": 64,
+    "sex": "Female",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 121,
+      "bpDia": 73,
+      "hr": 71,
+      "temp": 37.2,
+      "spo2": 98
+    },
+    "symptom_duration_days": 11,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "chest_tightness",
+        "name": "Chest Tightness",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.81,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00063",
+    "age": 41,
+    "sex": "Other",
+    "city": "Nagpur",
+    "vitals": {
+      "bpSys": 147,
+      "bpDia": 74,
+      "hr": 102,
+      "temp": 35.5,
+      "spo2": 95
+    },
+    "symptom_duration_days": 9,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "abdominal_pain",
+        "name": "Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Gastroenteritis",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.74,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00064",
+    "age": 78,
+    "sex": "Male",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 144,
+      "bpDia": 93,
+      "hr": 101,
+      "temp": 37.5,
+      "spo2": 99
+    },
+    "symptom_duration_days": 5,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "chest_tightness",
+        "name": "Chest Tightness",
+        "redFlag": true
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "itchy_eyes",
+        "name": "Itchy Eyes",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Seasonal Allergy",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.69,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00065",
+    "age": 43,
+    "sex": "Female",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 127,
+      "bpDia": 94,
+      "hr": 85,
+      "temp": 38,
+      "spo2": 99
+    },
+    "symptom_duration_days": 9,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Migraine",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.96,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00066",
+    "age": 38,
+    "sex": "Male",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 119,
+      "bpDia": 73,
+      "hr": 61,
+      "temp": 36.8,
+      "spo2": 98
+    },
+    "symptom_duration_days": 10,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Migraine",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.86,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00067",
+    "age": 75,
+    "sex": "Male",
+    "city": "Pune",
+    "vitals": {
+      "bpSys": 113,
+      "bpDia": 83,
+      "hr": 79,
+      "temp": 37.8,
+      "spo2": 96
+    },
+    "symptom_duration_days": 13,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "itchy_eyes",
+        "name": "Itchy Eyes",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Seasonal Allergy",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.69,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00068",
+    "age": 41,
+    "sex": "Male",
+    "city": "Nagpur",
+    "vitals": {
+      "bpSys": 105,
+      "bpDia": 81,
+      "hr": 79,
+      "temp": 36.9,
+      "spo2": 99
+    },
+    "symptom_duration_days": 7,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Hypertension",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.65,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00069",
+    "age": 22,
+    "sex": "Male",
+    "city": "Pune",
+    "vitals": {
+      "bpSys": 127,
+      "bpDia": 94,
+      "hr": 65,
+      "temp": 38,
+      "spo2": 98
+    },
+    "symptom_duration_days": 8,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "lower_abdominal_pain",
+        "name": "Lower Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Urinary Tract Infection",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.69,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00070",
+    "age": 47,
+    "sex": "Female",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 130,
+      "bpDia": 94,
+      "hr": 77,
+      "temp": 36.6,
+      "spo2": 94
+    },
+    "symptom_duration_days": 8,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "increased_thirst",
+        "name": "Increased Thirst",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Type 2 Diabetes",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.7,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00071",
+    "age": 68,
+    "sex": "Female",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 136,
+      "bpDia": 75,
+      "hr": 63,
+      "temp": 35.5,
+      "spo2": 99
+    },
+    "symptom_duration_days": 2,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.66,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00072",
+    "age": 29,
+    "sex": "Male",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 142,
+      "bpDia": 65,
+      "hr": 93,
+      "temp": 36.8,
+      "spo2": 94
+    },
+    "symptom_duration_days": 2,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.7,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00073",
+    "age": 47,
+    "sex": "Female",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 121,
+      "bpDia": 65,
+      "hr": 79,
+      "temp": 38.1,
+      "spo2": 98
+    },
+    "symptom_duration_days": 1,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "abdominal_pain",
+        "name": "Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Gastroenteritis",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.66,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00074",
+    "age": 26,
+    "sex": "Male",
+    "city": "Indore",
+    "vitals": {
+      "bpSys": 112,
+      "bpDia": 65,
+      "hr": 95,
+      "temp": 37.3,
+      "spo2": 95
+    },
+    "symptom_duration_days": 10,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.75,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00075",
+    "age": 61,
+    "sex": "Male",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 143,
+      "bpDia": 89,
+      "hr": 80,
+      "temp": 36.5,
+      "spo2": 99
+    },
+    "symptom_duration_days": 6,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "itchy_eyes",
+        "name": "Itchy Eyes",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Seasonal Allergy",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.79,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00076",
+    "age": 47,
+    "sex": "Female",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 140,
+      "bpDia": 87,
+      "hr": 94,
+      "temp": 37.1,
+      "spo2": 98
+    },
+    "symptom_duration_days": 13,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "chest_discomfort",
+        "name": "Chest Discomfort",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "heartburn",
+        "name": "Heartburn",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Acid Reflux",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.77,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00077",
+    "age": 38,
+    "sex": "Male",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 129,
+      "bpDia": 90,
+      "hr": 96,
+      "temp": 37.6,
+      "spo2": 98
+    },
+    "symptom_duration_days": 10,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "heartburn",
+        "name": "Heartburn",
+        "redFlag": false
+      },
+      {
+        "id": "itchy_eyes",
+        "name": "Itchy Eyes",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Seasonal Allergy",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.9,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00078",
+    "age": 32,
+    "sex": "Female",
+    "city": "Pune",
+    "vitals": {
+      "bpSys": 106,
+      "bpDia": 69,
+      "hr": 63,
+      "temp": 36.8,
+      "spo2": 98
+    },
+    "symptom_duration_days": 2,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "itchy_eyes",
+        "name": "Itchy Eyes",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Seasonal Allergy",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.71,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00079",
+    "age": 53,
+    "sex": "Male",
+    "city": "Nagpur",
+    "vitals": {
+      "bpSys": 126,
+      "bpDia": 66,
+      "hr": 79,
+      "temp": 38.7,
+      "spo2": 97
+    },
+    "symptom_duration_days": 2,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "chest_tightness",
+        "name": "Chest Tightness",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Asthma Exacerbation",
+      "urgency_label_demo": "urgent_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.92,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00080",
+    "age": 60,
+    "sex": "Female",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 133,
+      "bpDia": 70,
+      "hr": 96,
+      "temp": 36.5,
+      "spo2": 99
+    },
+    "symptom_duration_days": 6,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "lower_abdominal_pain",
+        "name": "Lower Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Urinary Tract Infection",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.93,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00081",
+    "age": 77,
+    "sex": "Male",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 144,
+      "bpDia": 84,
+      "hr": 88,
+      "temp": 37.6,
+      "spo2": 95
+    },
+    "symptom_duration_days": 13,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "chest_tightness",
+        "name": "Chest Tightness",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "painful_urination",
+        "name": "Painful Urination",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Asthma Exacerbation",
+      "urgency_label_demo": "urgent_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.95,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00082",
+    "age": 45,
+    "sex": "Male",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 128,
+      "bpDia": 65,
+      "hr": 67,
+      "temp": 37.4,
+      "spo2": 97
+    },
+    "symptom_duration_days": 1,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "abdominal_pain",
+        "name": "Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Gastroenteritis",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.68,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00083",
+    "age": 28,
+    "sex": "Female",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 126,
+      "bpDia": 85,
+      "hr": 101,
+      "temp": 36.4,
+      "spo2": 95
+    },
+    "symptom_duration_days": 3,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Hypertension",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.7,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00084",
+    "age": 70,
+    "sex": "Male",
+    "city": "Jabalpur",
+    "vitals": {
+      "bpSys": 122,
+      "bpDia": 92,
+      "hr": 66,
+      "temp": 36.6,
+      "spo2": 94
+    },
+    "symptom_duration_days": 1,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.83,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00085",
+    "age": 57,
+    "sex": "Male",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 124,
+      "bpDia": 69,
+      "hr": 110,
+      "temp": 37.6,
+      "spo2": 99
+    },
+    "symptom_duration_days": 6,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "abdominal_pain",
+        "name": "Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "diarrhea",
+        "name": "Diarrhea",
+        "redFlag": false
+      },
+      {
+        "id": "lower_abdominal_pain",
+        "name": "Lower Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Gastroenteritis",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.67,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00086",
+    "age": 62,
+    "sex": "Male",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 105,
+      "bpDia": 87,
+      "hr": 94,
+      "temp": 37,
+      "spo2": 96
+    },
+    "symptom_duration_days": 14,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.65,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00087",
+    "age": 24,
+    "sex": "Male",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 109,
+      "bpDia": 82,
+      "hr": 73,
+      "temp": 37.1,
+      "spo2": 94
+    },
+    "symptom_duration_days": 10,
+    "severity": 5,
+    "activeSymptoms": [
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "increased_thirst",
+        "name": "Increased Thirst",
+        "redFlag": false
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Type 2 Diabetes",
+      "urgency_label_demo": "priority_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.65,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00088",
+    "age": 37,
+    "sex": "Other",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 139,
+      "bpDia": 94,
+      "hr": 65,
+      "temp": 35.8,
+      "spo2": 98
+    },
+    "symptom_duration_days": 7,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "lower_abdominal_pain",
+        "name": "Lower Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Migraine",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.83,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00089",
+    "age": 66,
+    "sex": "Female",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 121,
+      "bpDia": 72,
+      "hr": 105,
+      "temp": 37.4,
+      "spo2": 99
+    },
+    "symptom_duration_days": 3,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "chest_tightness",
+        "name": "Chest Tightness",
+        "redFlag": true
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      },
+      {
+        "id": "wheezing",
+        "name": "Wheezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Asthma Exacerbation",
+      "urgency_label_demo": "urgent_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.89,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00090",
+    "age": 70,
+    "sex": "Male",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 144,
+      "bpDia": 72,
+      "hr": 84,
+      "temp": 37.1,
+      "spo2": 97
+    },
+    "symptom_duration_days": 5,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "lower_abdominal_pain",
+        "name": "Lower Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.71,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00091",
+    "age": 45,
+    "sex": "Female",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 123,
+      "bpDia": 65,
+      "hr": 100,
+      "temp": 36.9,
+      "spo2": 95
+    },
+    "symptom_duration_days": 8,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "itchy_eyes",
+        "name": "Itchy Eyes",
+        "redFlag": false
+      },
+      {
+        "id": "nasal_congestion",
+        "name": "Nasal Congestion",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sneezing",
+        "name": "Sneezing",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Seasonal Allergy",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.94,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00092",
+    "age": 68,
+    "sex": "Male",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 150,
+      "bpDia": 86,
+      "hr": 101,
+      "temp": 37.2,
+      "spo2": 99
+    },
+    "symptom_duration_days": 4,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "lower_abdominal_pain",
+        "name": "Lower Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.89,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00093",
+    "age": 71,
+    "sex": "Male",
+    "city": "Bhopal",
+    "vitals": {
+      "bpSys": 113,
+      "bpDia": 91,
+      "hr": 58,
+      "temp": 36.6,
+      "spo2": 98
+    },
+    "symptom_duration_days": 10,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.65,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00094",
+    "age": 42,
+    "sex": "Female",
+    "city": "Nagpur",
+    "vitals": {
+      "bpSys": 113,
+      "bpDia": 65,
+      "hr": 93,
+      "temp": 36.5,
+      "spo2": 95
+    },
+    "symptom_duration_days": 14,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "chest_discomfort",
+        "name": "Chest Discomfort",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "light_sensitivity",
+        "name": "Light Sensitivity",
+        "redFlag": false
+      },
+      {
+        "id": "nausea",
+        "name": "Nausea",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Migraine",
+      "urgency_label_demo": "urgent_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.76,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00095",
+    "age": 74,
+    "sex": "Female",
+    "city": "Pune",
+    "vitals": {
+      "bpSys": 132,
+      "bpDia": 80,
+      "hr": 73,
+      "temp": 36.7,
+      "spo2": 95
+    },
+    "symptom_duration_days": 3,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "body_ache",
+        "name": "Body Ache",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "fever",
+        "name": "Fever",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Viral Fever",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.64,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00096",
+    "age": 36,
+    "sex": "Male",
+    "city": "Pune",
+    "vitals": {
+      "bpSys": 141,
+      "bpDia": 87,
+      "hr": 105,
+      "temp": 36.6,
+      "spo2": 99
+    },
+    "symptom_duration_days": 4,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      },
+      {
+        "id": "vomiting",
+        "name": "Vomiting",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.93,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00097",
+    "age": 33,
+    "sex": "Female",
+    "city": "Indore",
+    "vitals": {
+      "bpSys": 111,
+      "bpDia": 89,
+      "hr": 67,
+      "temp": 38.4,
+      "spo2": 99
+    },
+    "symptom_duration_days": 2,
+    "severity": 4,
+    "activeSymptoms": [
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "frequent_urination",
+        "name": "Frequent Urination",
+        "redFlag": false
+      },
+      {
+        "id": "increased_thirst",
+        "name": "Increased Thirst",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Type 2 Diabetes",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.87,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "accepted_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00098",
+    "age": 60,
+    "sex": "Male",
+    "city": "Jaipur",
+    "vitals": {
+      "bpSys": 128,
+      "bpDia": 93,
+      "hr": 56,
+      "temp": 37.5,
+      "spo2": 98
+    },
+    "symptom_duration_days": 11,
+    "severity": 3,
+    "activeSymptoms": [
+      {
+        "id": "dizziness",
+        "name": "Dizziness",
+        "redFlag": true
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "headache",
+        "name": "Headache",
+        "redFlag": false
+      },
+      {
+        "id": "heartburn",
+        "name": "Heartburn",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Hypertension",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.85,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "pending_review",
+    "decision_note": "Awaiting review"
+  },
+  {
+    "patient_id": "P00099",
+    "age": 58,
+    "sex": "Female",
+    "city": "Lucknow",
+    "vitals": {
+      "bpSys": 115,
+      "bpDia": 87,
+      "hr": 92,
+      "temp": 36.2,
+      "spo2": 94
+    },
+    "symptom_duration_days": 7,
+    "severity": 1,
+    "activeSymptoms": [
+      {
+        "id": "abdominal_pain",
+        "name": "Abdominal Pain",
+        "redFlag": false
+      },
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "shortness_of_breath",
+        "name": "Shortness Of Breath",
+        "redFlag": true
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.85,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  },
+  {
+    "patient_id": "P00100",
+    "age": 26,
+    "sex": "Other",
+    "city": "Delhi",
+    "vitals": {
+      "bpSys": 138,
+      "bpDia": 93,
+      "hr": 85,
+      "temp": 38.3,
+      "spo2": 95
+    },
+    "symptom_duration_days": 4,
+    "severity": 2,
+    "activeSymptoms": [
+      {
+        "id": "cough",
+        "name": "Cough",
+        "redFlag": false
+      },
+      {
+        "id": "fatigue",
+        "name": "Fatigue",
+        "redFlag": false
+      },
+      {
+        "id": "runny_nose",
+        "name": "Runny Nose",
+        "redFlag": false
+      },
+      {
+        "id": "sore_throat",
+        "name": "Sore Throat",
+        "redFlag": false
+      }
+    ],
+    "aiPrediction": {
+      "probable_condition_label": "Common Cold",
+      "urgency_label_demo": "routine_review",
+      "model_name": "MediSense-Demo-Classifier-v1",
+      "confidence_demo": 0.72,
+      "explanation_demo": "Synthetic explanation for software testing only; clinician review is required."
+    },
+    "doctor_decision": "overridden_ai",
+    "decision_note": "Synthetic demo decision"
+  }
+]
