@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMediSense } from '../../context/MediSenseContext';
 import logoImg from '../../assets/logo.png';
+import MediChatbot from '../patient/MediChatbot';
 import {
   User,
   Stethoscope,
@@ -18,6 +19,7 @@ import {
   Activity,
   CheckCircle2,
   AlertCircle,
+  HelpCircle,
   KeyRound
 } from 'lucide-react';
 
@@ -50,7 +52,7 @@ export default function AuthPage() {
     confirmPassword: ''
   });
 
-  // Doctor Role State
+  // Doctor / Hospital Role State
   const [adminRole, setAdminRole] = useState('doctor'); // 'doctor' | 'admin'
   const [doctorEmail, setDoctorEmail] = useState('');
   const [doctorPassword, setDoctorPassword] = useState('');
@@ -132,6 +134,7 @@ export default function AuthPage() {
 
   // Helper autofill handlers (fills form fields only; user must still click Sign In)
   const autofillPatient = (pEmail, pPass) => {
+    setAuthMode('patient_signin');
     setEmail(pEmail);
     setPassword(pPass);
     setErrorMessage('');
@@ -139,15 +142,18 @@ export default function AuthPage() {
   };
 
   const autofillStaff = (sEmail, sPass, role = 'doctor') => {
+    setAuthMode('doctor');
     setDoctorEmail(sEmail);
     setDoctorPassword(sPass);
     setAdminRole(role);
     setErrorMessage('');
-    setSuccessMessage(`Staff credentials populated into form. Click "Access Clinical Command Center" to proceed.`);
+    setSuccessMessage(`Hospital staff credentials populated into form. Click "Access Clinical Command Center" to proceed.`);
   };
 
+  const isPatientMode = authMode === 'patient_signin' || authMode === 'patient_signup';
+
   return (
-    <div className="relative min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col justify-between selection:bg-sky-500 selection:text-white">
+    <div className="relative min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col justify-between selection:bg-teal-500 selection:text-white">
       
       {/* Background Soft Medical Lighting Gradients */}
       <div className="absolute top-0 left-1/4 w-[600px] h-[350px] bg-gradient-to-br from-sky-200/40 via-teal-100/30 to-transparent rounded-full blur-3xl pointer-events-none"></div>
@@ -204,45 +210,32 @@ export default function AuthPage() {
         {/* Auth Card Container */}
         <div className="w-full max-w-xl bg-white border border-slate-200 rounded-3xl shadow-xl p-6 sm:p-8 space-y-6">
           
-          {/* 3-Way Mode Switcher Tabs */}
-          <div className="grid grid-cols-3 p-1 rounded-2xl bg-slate-100 border border-slate-200 text-xs font-bold">
+          {/* Clean 2-Way Mode Switcher Tabs (Patient Portal vs Doctor / Hospital) */}
+          <div className="grid grid-cols-2 p-1.5 rounded-2xl bg-slate-100 border border-slate-200 text-xs sm:text-sm font-bold shadow-inner">
             <button
               type="button"
               onClick={() => switchTab('patient_signin')}
-              className={`py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all ${
-                authMode === 'patient_signin'
+              className={`py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                isPatientMode
                   ? 'bg-white text-teal-700 shadow-md border border-slate-200'
                   : 'text-slate-500 hover:text-slate-900'
               }`}
             >
-              <User className="w-3.5 h-3.5" />
-              <span>Patient Sign In</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => switchTab('patient_signup')}
-              className={`py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all ${
-                authMode === 'patient_signup'
-                  ? 'bg-white text-teal-700 shadow-md border border-slate-200'
-                  : 'text-slate-500 hover:text-slate-900'
-              }`}
-            >
-              <UserPlus className="w-3.5 h-3.5" />
-              <span>New Patient Sign Up</span>
+              <User className="w-4 h-4 text-teal-600" />
+              <span>Patient Portal</span>
             </button>
 
             <button
               type="button"
               onClick={() => switchTab('doctor')}
-              className={`py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all ${
+              className={`py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 authMode === 'doctor'
                   ? 'bg-white text-indigo-700 shadow-md border border-slate-200'
                   : 'text-slate-500 hover:text-slate-900'
               }`}
             >
-              <Stethoscope className="w-3.5 h-3.5" />
-              <span>Doctor / Admin</span>
+              <Stethoscope className="w-4 h-4 text-indigo-600" />
+              <span>Doctor / Hospital</span>
             </button>
           </div>
 
@@ -261,9 +254,9 @@ export default function AuthPage() {
             </div>
           )}
 
-          {/* TAB 1: PATIENT SIGN IN */}
+          {/* TAB 1A: PATIENT SIGN IN */}
           {authMode === 'patient_signin' && (
-            <div className="space-y-5">
+            <div className="space-y-5 animate-in fade-in duration-200">
               <div>
                 <h3 className="text-lg font-bold text-slate-900">Patient Sign In</h3>
                 <p className="text-xs text-slate-500">Access your health vitals, symptom evaluations, and appointment receipts.</p>
@@ -308,9 +301,13 @@ export default function AuthPage() {
 
                 <div className="flex items-center justify-between text-xs text-slate-500">
                   <span className="text-[11px] text-slate-400">Default demo password: <code className="text-teal-700 font-bold">patient123</code></span>
-                  <span onClick={() => switchTab('patient_signup')} className="text-teal-600 hover:underline cursor-pointer font-semibold">
+                  <button
+                    type="button"
+                    onClick={() => switchTab('patient_signup')}
+                    className="text-teal-600 hover:text-teal-700 font-bold hover:underline cursor-pointer"
+                  >
                     Need an account? Sign up
-                  </span>
+                  </button>
                 </div>
 
                 <button
@@ -331,7 +328,7 @@ export default function AuthPage() {
                   <button
                     type="button"
                     onClick={() => autofillPatient('sarah.jenkins@medisense.ai', 'patient123')}
-                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/50 border border-slate-200 hover:border-teal-300 text-left transition-all text-xs"
+                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/50 border border-slate-200 hover:border-teal-300 text-left transition-all text-xs cursor-pointer"
                   >
                     <div className="font-bold text-slate-800">Sarah Jenkins (Demo)</div>
                     <div className="text-[10px] text-slate-500">sarah.jenkins@medisense.ai</div>
@@ -340,7 +337,7 @@ export default function AuthPage() {
                   <button
                     type="button"
                     onClick={() => autofillPatient('marcus.vance@medisense.ai', 'patient123')}
-                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/50 border border-slate-200 hover:border-teal-300 text-left transition-all text-xs"
+                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/50 border border-slate-200 hover:border-teal-300 text-left transition-all text-xs cursor-pointer"
                   >
                     <div className="font-bold text-slate-800">Marcus Vance (Demo)</div>
                     <div className="text-[10px] text-slate-500">marcus.vance@medisense.ai</div>
@@ -353,12 +350,21 @@ export default function AuthPage() {
             </div>
           )}
 
-          {/* TAB 2: NEW PATIENT SIGN UP (FULL REGISTRATION FORM) */}
+          {/* TAB 1B: NEW PATIENT SIGN UP (REVEALED VIA "NEED AN ACCOUNT? SIGN UP") */}
           {authMode === 'patient_signup' && (
-            <div className="space-y-5">
-              <div>
-                <h3 className="text-lg font-bold text-slate-900">New Patient Registration</h3>
-                <p className="text-xs text-slate-500">Create your health ID to check symptoms, track vitals, and book appointments.</p>
+            <div className="space-y-5 animate-in fade-in duration-200">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">New Patient Registration</h3>
+                  <p className="text-xs text-slate-500">Create your health ID to check symptoms, track vitals, and book appointments.</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => switchTab('patient_signin')}
+                  className="text-xs font-bold text-teal-600 hover:underline cursor-pointer"
+                >
+                  ← Back to Sign In
+                </button>
               </div>
 
               <form onSubmit={handlePatientSignUp} className="space-y-3.5 text-xs">
@@ -524,20 +530,24 @@ export default function AuthPage() {
 
                 <p className="text-center text-[11px] text-slate-500">
                   Already registered?{' '}
-                  <span onClick={() => switchTab('patient_signin')} className="text-teal-600 font-bold hover:underline cursor-pointer">
-                    Sign in here
-                  </span>
+                  <button
+                    type="button"
+                    onClick={() => switchTab('patient_signin')}
+                    className="text-teal-600 font-bold hover:underline cursor-pointer ml-1"
+                  >
+                    Sign in to your account
+                  </button>
                 </p>
 
               </form>
             </div>
           )}
 
-          {/* TAB 3: DOCTOR & HOSPITAL ADMIN */}
+          {/* TAB 2: DOCTOR / HOSPITAL */}
           {authMode === 'doctor' && (
-            <div className="space-y-5">
+            <div className="space-y-5 animate-in fade-in duration-200">
               <div>
-                <h3 className="text-lg font-bold text-slate-900">Physician & Hospital Administration</h3>
+                <h3 className="text-lg font-bold text-slate-900">Doctor / Hospital Portal</h3>
                 <p className="text-xs text-slate-500">Clinical Triage Command, Explainable AI models, and Decision Governance.</p>
               </div>
 
@@ -549,7 +559,7 @@ export default function AuthPage() {
                     setAdminRole('doctor');
                     setErrorMessage('');
                   }}
-                  className={`flex-1 py-1.5 rounded-lg font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                  className={`flex-1 py-1.5 rounded-lg font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     adminRole === 'doctor' ? 'bg-white text-indigo-700 shadow border border-slate-200' : 'text-slate-500'
                   }`}
                 >
@@ -562,7 +572,7 @@ export default function AuthPage() {
                     setAdminRole('admin');
                     setErrorMessage('');
                   }}
-                  className={`flex-1 py-1.5 rounded-lg font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                  className={`flex-1 py-1.5 rounded-lg font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     adminRole === 'admin' ? 'bg-white text-purple-700 shadow border border-slate-200' : 'text-slate-500'
                   }`}
                 >
@@ -574,7 +584,7 @@ export default function AuthPage() {
               <form onSubmit={handleDoctorSubmit} className="space-y-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    {adminRole === 'admin' ? 'Admin Staff Email' : 'Doctor ID / Hospital Email'}
+                    {adminRole === 'admin' ? 'Hospital Admin Staff Email' : 'Doctor ID / Hospital Email'}
                   </label>
                   <div className="relative">
                     <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -633,7 +643,7 @@ export default function AuthPage() {
                   <button
                     type="button"
                     onClick={() => autofillStaff('dr.chen@medisense.hospital.org', 'doctor123', 'doctor')}
-                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50/50 border border-slate-200 hover:border-indigo-300 text-left transition-all text-xs"
+                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50/50 border border-slate-200 hover:border-indigo-300 text-left transition-all text-xs cursor-pointer"
                   >
                     <div className="font-bold text-slate-800">Dr. Robert Chen, MD</div>
                     <div className="text-[10px] text-slate-500">Chief of Emergency Triage</div>
@@ -642,7 +652,7 @@ export default function AuthPage() {
                   <button
                     type="button"
                     onClick={() => autofillStaff('admin@medisense.hospital.org', 'admin123', 'admin')}
-                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-purple-50/50 border border-slate-200 hover:border-purple-300 text-left transition-all text-xs"
+                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-purple-50/50 border border-slate-200 hover:border-purple-300 text-left transition-all text-xs cursor-pointer"
                   >
                     <div className="font-bold text-slate-800">Hospital Administration</div>
                     <div className="text-[10px] text-slate-500">Clinical Audit & Governance</div>
@@ -707,6 +717,14 @@ export default function AuthPage() {
       <footer className="relative z-10 max-w-7xl mx-auto w-full px-6 py-5 text-center text-xs text-slate-500 border-t border-slate-200/80 bg-white/60">
         <p>MediSense AI • Built with React, Tailwind CSS, Recharts & Synthetic Clinical Data for Medical Hackathons.</p>
       </footer>
+
+      {/* Floating Clinical AI Companion "Medi" on Auth/Login Page */}
+      <MediChatbot
+        isGuest={true}
+        onSelectAuthMode={switchTab}
+        onFillPatientDemo={autofillPatient}
+        onFillDoctorDemo={autofillStaff}
+      />
 
     </div>
   );

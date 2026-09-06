@@ -10,11 +10,19 @@ import {
   Sparkles,
   ArrowRight,
   RotateCcw,
-  Volume2
+  LogIn,
+  UserPlus,
+  Stethoscope
 } from 'lucide-react';
 
-export default function MediChatbot() {
-  const { currentPatient, setPatientTab } = useMediSense();
+export default function MediChatbot({
+  isGuest = false,
+  onSelectAuthMode,
+  onFillPatientDemo,
+  onFillDoctorDemo
+}) {
+  const { currentPatient, setPatientTab, currentUser } = useMediSense();
+  const actualIsGuest = isGuest || !currentUser;
   const patientFirstName = currentPatient?.name ? currentPatient.name.split(' ')[0] : 'there';
 
   const [isOpen, setIsOpen] = useState(false);
@@ -22,19 +30,29 @@ export default function MediChatbot() {
     {
       id: 1,
       sender: 'medi',
-      text: `Hello ${patientFirstName}! 👋 I am **Medi**, your personal AI Health Companion at MediSense AI.\n\nI can guide you step-by-step through the app, analyze your symptoms, help you book doctor appointments with OPD receipts, or monitor your biometric vitals. How can I help you today?`,
+      text: actualIsGuest
+        ? `Hello and welcome to **MediSense AI**! 👋 I am **Medi**, your clinical AI companion.\n\nI can guide you step-by-step on how our platform works, what features patients and doctors have, and help you get started.\n\nAsk me anything! *(Note: To test the Symptom Checker and evaluate acute symptoms, please sign in or register an account first.)*`
+        : `Hello ${patientFirstName}! 👋 I am **Medi**, your personal AI Health Companion at MediSense AI.\n\nI can guide you step-by-step through the app, analyze your symptoms, help you book doctor appointments with OPD receipts, or monitor your biometric vitals. How can I help you today?`,
       timestamp: 'Just now',
       actionTab: null,
       actionLabel: null,
       isEmergency: false,
-      quickReplies: [
-        { label: '💡 How to Use This App', text: 'How to use this app?' },
-        { label: '🩺 Check My Symptoms', tab: 'symptoms' },
-        { label: '📅 Book Doctor & Get Receipt', tab: 'appointments' },
-        { label: '📊 Health Vitals & BP', tab: 'vitals' }
-      ]
+      quickReplies: actualIsGuest
+        ? [
+            { label: '💡 How to Use This App', text: 'How to use this app?' },
+            { label: '🩺 How Symptom Checker Works', text: 'How does the symptom checker work?' },
+            { label: '🏥 Doctor & Hospital Features', text: 'What can doctors do?' },
+            { label: '⚡ How to Sign In or Test?', text: 'How do I sign in or test?' }
+          ]
+        : [
+            { label: '💡 How to Use This App', text: 'How to use this app?' },
+            { label: '🩺 Check My Symptoms', tab: 'symptoms' },
+            { label: '📅 Book Doctor & Get Receipt', tab: 'appointments' },
+            { label: '📊 Health Vitals & BP', tab: 'vitals' }
+          ]
     }
   ]);
+
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -102,14 +120,22 @@ export default function MediChatbot() {
     }
   };
 
-  // Top Suggested Prompts
-  const quickPrompts = [
-    'How to use this app?',
-    'I have pain',
-    'I have sudden chest pain',
-    'How to book doctor & get receipt?',
-    'Where is my Digital Health Card?'
-  ];
+  // Suggested Prompts
+  const quickPrompts = actualIsGuest
+    ? [
+        'How to use this app?',
+        'I have chest pain',
+        'What can doctors do?',
+        'How to book an appointment?',
+        'How do I test with demo account?'
+      ]
+    : [
+        'How to use this app?',
+        'I have pain',
+        'I have sudden chest pain',
+        'How to book doctor & get receipt?',
+        'Where is my Digital Health Card?'
+      ];
 
   const handleSendMessage = (customText) => {
     const textToSend = customText || inputText;
@@ -128,7 +154,11 @@ export default function MediChatbot() {
 
     // Natural responsive bot delay
     setTimeout(() => {
-      const response = getMediResponse(textToSend, currentPatient?.name || 'Patient');
+      const response = getMediResponse(
+        textToSend,
+        actualIsGuest ? 'Visitor' : (currentPatient?.name || 'Patient'),
+        actualIsGuest
+      );
 
       const botMessage = {
         id: Date.now() + 1,
@@ -146,13 +176,30 @@ export default function MediChatbot() {
     }, 400);
   };
 
-  const handleActionClick = (tab) => {
-    if (tab) {
-      setPatientTab(tab);
-      // On mobile screens minimize to see tab
+  const handleQuickReplyClick = (reply) => {
+    if (reply.authAction) {
+      if (reply.authAction === 'patient_signin' && onSelectAuthMode) {
+        onSelectAuthMode('patient_signin');
+      } else if (reply.authAction === 'patient_signup' && onSelectAuthMode) {
+        onSelectAuthMode('patient_signup');
+      } else if (reply.authAction === 'doctor' && onSelectAuthMode) {
+        onSelectAuthMode('doctor');
+      } else if (reply.authAction === 'demo_patient' && onFillPatientDemo) {
+        onFillPatientDemo('sarah.jenkins@medisense.ai', 'patient123');
+      } else if (reply.authAction === 'demo_doctor' && onFillDoctorDemo) {
+        onFillDoctorDemo('dr.chen@medisense.hospital.org', 'doctor123', 'doctor');
+      }
+      // On small screens, close modal so user can see form
       if (window.innerWidth < 640) {
         setIsOpen(false);
       }
+    } else if (reply.tab) {
+      setPatientTab(reply.tab);
+      if (window.innerWidth < 640) {
+        setIsOpen(false);
+      }
+    } else if (reply.text) {
+      handleSendMessage(reply.text);
     }
   };
 
@@ -161,17 +208,26 @@ export default function MediChatbot() {
       {
         id: Date.now(),
         sender: 'medi',
-        text: `Chat reset! Hello ${patientFirstName}, how can I assist your health journey right now?`,
+        text: actualIsGuest
+          ? `Chat reset! Welcome to MediSense AI. How can I assist or guide you before you sign in?`
+          : `Chat reset! Hello ${patientFirstName}, how can I assist your health journey right now?`,
         timestamp: 'Just now',
         actionTab: null,
         actionLabel: null,
         isEmergency: false,
-        quickReplies: [
-          { label: '💡 How to Use This App', text: 'How to use this app?' },
-          { label: '🩺 Check My Symptoms', tab: 'symptoms' },
-          { label: '📅 Book Doctor & Get Receipt', tab: 'appointments' },
-          { label: '📊 Health Vitals', tab: 'vitals' }
-        ]
+        quickReplies: actualIsGuest
+          ? [
+              { label: '💡 How to Use This App', text: 'How to use this app?' },
+              { label: '🩺 How Symptom Checker Works', text: 'How does the symptom checker work?' },
+              { label: '🏥 Doctor & Hospital Features', text: 'What can doctors do?' },
+              { label: '⚡ How to Sign In or Test?', text: 'How do I sign in or test?' }
+            ]
+          : [
+              { label: '💡 How to Use This App', text: 'How to use this app?' },
+              { label: '🩺 Check My Symptoms', tab: 'symptoms' },
+              { label: '📅 Book Doctor & Get Receipt', tab: 'appointments' },
+              { label: '📊 Health Vitals', tab: 'vitals' }
+            ]
       }
     ]);
   };
@@ -183,10 +239,16 @@ export default function MediChatbot() {
         <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
           <div
             onClick={() => setIsOpen(true)}
-            className="hidden sm:flex items-center gap-2 bg-white text-slate-800 text-xs font-bold py-2.5 px-4 rounded-2xl shadow-xl border border-slate-200 cursor-pointer hover:shadow-2xl transition-all hover:bg-slate-50"
+            className="hidden sm:flex items-center gap-2 bg-white text-slate-800 text-xs font-bold py-2.5 px-4 rounded-2xl shadow-xl border border-slate-200 cursor-pointer hover:shadow-2xl transition-all hover:bg-slate-50 animate-pulse"
           >
             <Sparkles className="w-4 h-4 text-teal-600" />
-            <span>Ask <strong className="text-teal-600 font-extrabold">Medi</strong> (Voice AI Assistant)</span>
+            <span>
+              {actualIsGuest ? (
+                <>New here? Ask <strong className="text-teal-600 font-extrabold">Medi</strong> for a Tour!</>
+              ) : (
+                <>Ask <strong className="text-teal-600 font-extrabold">Medi</strong> (Voice AI Assistant)</>
+              )}
+            </span>
           </div>
           <button
             onClick={() => setIsOpen(true)}
@@ -213,7 +275,7 @@ export default function MediChatbot() {
                 <div className="flex items-center gap-1.5">
                   <h3 className="text-base font-black tracking-tight">Medi</h3>
                   <span className="px-1.5 py-0.5 rounded text-[9px] font-black bg-white/25 text-white uppercase tracking-wider">
-                    Clinical AI Companion
+                    {actualIsGuest ? 'Platform Tour Guide' : 'Clinical AI Companion'}
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5 text-[11px] text-teal-100">
@@ -275,31 +337,12 @@ export default function MediChatbot() {
                         {msg.quickReplies.map((reply, rIdx) => (
                           <button
                             key={rIdx}
-                            onClick={() => {
-                              if (reply.tab) {
-                                handleActionClick(reply.tab);
-                              } else if (reply.text) {
-                                handleSendMessage(reply.text);
-                              }
-                            }}
+                            onClick={() => handleQuickReplyClick(reply)}
                             className="px-2.5 py-1.5 rounded-xl bg-teal-50 hover:bg-teal-600 text-teal-800 hover:text-white border border-teal-200 hover:border-teal-600 text-[11px] font-bold transition-all shadow-2xs flex items-center gap-1 text-left"
                           >
                             <span>{reply.label}</span>
                           </button>
                         ))}
-                      </div>
-                    )}
-
-                    {/* Primary Tab Link Button (if separate) */}
-                    {isMedi && msg.actionTab && msg.actionLabel && (!msg.quickReplies || msg.quickReplies.length === 0) && (
-                      <div className="mt-3 pt-2.5 border-t border-slate-100">
-                        <button
-                          onClick={() => handleActionClick(msg.actionTab)}
-                          className="w-full py-2 px-3 rounded-xl font-bold text-xs text-white bg-teal-600 hover:bg-teal-500 shadow-sm flex items-center justify-center gap-1.5 transition-all"
-                        >
-                          <span>{msg.actionLabel}</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </button>
                       </div>
                     )}
 
@@ -377,7 +420,13 @@ export default function MediChatbot() {
               {/* Text Input */}
               <input
                 type="text"
-                placeholder={isListening ? 'Listening...' : 'Type or ask Medi anything (e.g. "pain", "fever")...'}
+                placeholder={
+                  isListening
+                    ? 'Listening...'
+                    : actualIsGuest
+                    ? 'Ask Medi anything (e.g. "How to use app?")...'
+                    : 'Type or ask Medi anything (e.g. "pain", "fever")...'
+                }
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 className="flex-1 bg-slate-50 text-xs sm:text-sm text-slate-900 p-2.5 rounded-2xl border border-slate-200 focus:outline-none focus:border-teal-500 focus:bg-white"
