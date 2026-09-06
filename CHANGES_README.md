@@ -28,12 +28,13 @@ This document details all recent modifications made to the **MediSense AI** fron
 ### Summary of Latest Changes:
 | Commit Hash | Type | Change Description |
 | :--- | :--- | :--- |
-| `8216060` | **Fix** | Resolved React runtime `ReferenceError: autofillStaff is not defined` on `AuthPage.jsx` when passing props to `MediChatbot`, fixing the blank white screen. |
-| `e7e722f` | **Feature** | Separated the login page (`AuthPage.jsx`) into **3 distinct, dedicated tabs**: `Patient`, `Doctor`, and `Hospital`, ensuring clean role entry. |
-| `977366d` | **Security** | Enforced strict healthcare privacy and role-based access control (RBAC). Removed all 1-click cross-portal jumping buttons from the Navbar, locked portal rendering strictly to `currentUser.role` in `App.jsx`, removed patient demo selectors, and eliminated backdoor review links. |
-| `b962c00` | **Fix** | Resolved missing `Building2` icon import and unextracted `activeDoctor` in `Navbar.jsx`. Added null-safety guards in `DoctorPortal` and `DoctorAnalytics`. |
-| `1dc6391` | **Feature** | Isolated the **Individual Doctor Workspace** (`DoctorPortal.jsx`) strictly to the authenticated physician's information, cabin, shift, and assigned patients. Added personalized visual charts in `DoctorAnalytics.jsx`. |
-| `0464a6d` | **Feature** | Built the dedicated **Hospital Central Command** (`HospitalPortal.jsx`) featuring the complete Doctors Staff & Live Availability Directory (*who is free when*), Total 16-Patient Census, and Institutional Visual Analytics. |
+| `b686191` | **Feature** | Aligned Patient & Doctor Portals strictly with the PRD specification matrix while preserving Hospital Central Command and the Medi AI Voice/Text Companion intact. |
+| `39f4000` | **Docs** | Added comprehensive English CHANGES_README documenting frontend architecture, RBAC, and integration specs. |
+| `8216060` | **Fix** | Resolved React runtime `ReferenceError: autofillStaff is not defined` on `AuthPage.jsx` when passing props to `MediChatbot`, fixing blank screen. |
+| `e7e722f` | **Feature** | Separated login page (`AuthPage.jsx`) into **3 distinct, dedicated tabs**: `Patient`, `Doctor`, and `Hospital`, ensuring clean role entry. |
+| `977366d` | **Security** | Enforced strict healthcare privacy and role-based access control (RBAC). Removed 1-click cross-portal jumping buttons from Navbar, locked portal rendering strictly to `currentUser.role` in `App.jsx`. |
+| `1dc6391` | **Feature** | Isolated **Individual Doctor Workspace** (`DoctorPortal.jsx`) strictly to authenticated physician's information, cabin, shift, and assigned patients. |
+| `0464a6d` | **Feature** | Built dedicated **Hospital Central Command** (`HospitalPortal.jsx`) with live Doctors Availability Directory (*who is free when*), 16-Patient Census, and Institutional Visual Analytics. |
 
 ---
 
