@@ -862,7 +862,7 @@ export default function AuthPage() {
         isGuest={true}
         onSelectAuthMode={switchTab}
         onFillPatientDemo={autofillPatient}
-        onFillDoctorDemo={autofillStaff}
+        onFillDoctorDemo={autofillDoctor}
       />
 
     </div>
