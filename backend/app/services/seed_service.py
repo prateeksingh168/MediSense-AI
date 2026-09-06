@@ -42,6 +42,7 @@ def find_dataset_dir() -> Path:
         Path("dataset"),
         Path("backend/Dataset"),
         Path("backend/dataset"),
+        Path(__file__).resolve().parents[3] / "database" / "seed",
         Path(__file__).resolve().parent.parent.parent / "Dataset",
         Path(__file__).resolve().parent.parent.parent / "dataset"
     ]
