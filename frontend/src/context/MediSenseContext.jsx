@@ -55,7 +55,162 @@ const INITIAL_APPOINTMENTS = [
   }
 ];
 
+const INITIAL_AUDIT_LOGS = [
+  {
+    id: 'log_001',
+    timestamp: '22:15:30',
+    date: 'Today, 10:15 PM',
+    isoTime: new Date(Date.now() - 6 * 60000).toISOString(),
+    userName: 'Dr. Aris Thorne, MD',
+    userRole: 'doctor',
+    identifier: 'thorne.cardio@medisense.org',
+    action: 'DOCTOR_SIGN_IN',
+    details: 'Authenticated to Physician Workspace from Cabin Room 104 (CCU Division).',
+    ipAddress: '10.14.2.88',
+    status: 'ACTIVE_NOW'
+  },
+  {
+    id: 'log_002',
+    timestamp: '22:10:12',
+    date: 'Today, 10:10 PM',
+    isoTime: new Date(Date.now() - 11 * 60000).toISOString(),
+    userName: 'Dr. Robert Chen, MD',
+    userRole: 'doctor',
+    identifier: 'chen.emerg@medisense.org',
+    action: 'DOCTOR_SIGN_IN',
+    details: 'Authenticated to Emergency Triage Console (Emergency Trauma Desk).',
+    ipAddress: '10.14.2.91',
+    status: 'ACTIVE_NOW'
+  },
+  {
+    id: 'log_003',
+    timestamp: '22:04:45',
+    date: 'Today, 10:04 PM',
+    isoTime: new Date(Date.now() - 17 * 60000).toISOString(),
+    userName: 'Sarah Jenkins',
+    userRole: 'patient',
+    identifier: 'sarah.jenkins@medisense.ai (UHID: pat_001)',
+    action: 'PATIENT_SIGN_IN',
+    details: 'Signed in via Patient Portal web client; accessed Vitals Tracking telemetry.',
+    ipAddress: '192.168.1.14',
+    status: 'ACTIVE_NOW'
+  },
+  {
+    id: 'log_004',
+    timestamp: '21:48:22',
+    date: 'Today, 09:48 PM',
+    isoTime: new Date(Date.now() - 33 * 60000).toISOString(),
+    userName: 'Dr. Priya Nair, MD',
+    userRole: 'doctor',
+    identifier: 'nair.surg@medisense.org',
+    action: 'DOCTOR_SIGN_IN',
+    details: 'Authenticated to Physician Workspace (Surgical Wing B).',
+    ipAddress: '10.14.3.12',
+    status: 'ACTIVE_NOW'
+  },
+  {
+    id: 'log_005',
+    timestamp: '21:30:10',
+    date: 'Today, 09:30 PM',
+    isoTime: new Date(Date.now() - 51 * 60000).toISOString(),
+    userName: 'Marcus Vance',
+    userRole: 'patient',
+    identifier: 'marcus.vance@medisense.ai (UHID: pat_002)',
+    action: 'PATIENT_SIGN_IN',
+    details: 'Signed in via Patient Portal; submitted acute migraine symptom assessment.',
+    ipAddress: '192.168.1.72',
+    status: 'SESSION_CONCLUDED'
+  },
+  {
+    id: 'log_006',
+    timestamp: '21:12:05',
+    date: 'Today, 09:12 PM',
+    isoTime: new Date(Date.now() - 69 * 60000).toISOString(),
+    userName: 'Hospital Administration Director',
+    userRole: 'admin',
+    identifier: 'admin@hospital.medisense.org',
+    action: 'HOSPITAL_ADMIN_SIGN_IN',
+    details: 'Executive login to Hospital Central Command. Full institutional monitoring authorized.',
+    ipAddress: '10.14.1.2',
+    status: 'ACTIVE_NOW'
+  }
+];
+
 export function MediSenseProvider({ children }) {
+  // Real-Time Audit Log & Live Session Store
+  const [auditLogs, setAuditLogs] = useState(() => {
+    try {
+      const saved = localStorage.getItem('medisense_live_audit_logs');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) {}
+    return INITIAL_AUDIT_LOGS;
+  });
+
+  const logAuditEvent = ({ userName, userRole, identifier, action, details, status = 'ACTIVE_NOW' }) => {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const dateStr = `Today, ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    const newLog = {
+      id: `log_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+      timestamp: timeStr,
+      date: dateStr,
+      isoTime: now.toISOString(),
+      userName: userName || 'Authenticated User',
+      userRole: userRole || 'patient',
+      identifier: identifier || 'System Session',
+      action: action || 'USER_SIGN_IN',
+      details: details || 'User authenticated and accessed system portal.',
+      ipAddress: `10.14.${Math.floor(Math.random() * 5 + 1)}.${Math.floor(Math.random() * 200 + 10)}`,
+      status
+    };
+
+    setAuditLogs(prev => {
+      const updated = [newLog, ...prev.filter(l => l.id !== newLog.id)];
+      try {
+        localStorage.setItem('medisense_live_audit_logs', JSON.stringify(updated.slice(0, 100)));
+      } catch (e) {}
+      return updated;
+    });
+  };
+
+  const simulateUserSignIn = (role = 'patient') => {
+    const randomDoctors = [
+      { name: 'Dr. Priya Nair, MD', email: 'nair.surg@medisense.org', dept: 'General & Trauma Surgery', cabin: 'Room 214' },
+      { name: 'Dr. Tariq Mansoor, MD', email: 'mansoor.neuro@medisense.org', dept: 'Neurology & Stroke Unit', cabin: 'Room 302' },
+      { name: 'Dr. Elena Rostova, MD', email: 'rostova.ped@medisense.org', dept: 'Pediatric Critical Care', cabin: 'Room 118' }
+    ];
+    const randomPatients = [
+      { name: 'Rohit Verma', uhid: 'pat_007', notes: 'Checked in via Patient Mobile App' },
+      { name: 'Ananya Deshmukh', uhid: 'pat_008', notes: 'Logged in to monitor continuous blood glucose' },
+      { name: 'Liam O\'Connor', uhid: 'pat_004', notes: 'Signed in to review historical triage assessment' }
+    ];
+
+    if (role === 'doctor') {
+      const doc = randomDoctors[Math.floor(Math.random() * randomDoctors.length)];
+      logAuditEvent({
+        userName: doc.name,
+        userRole: 'doctor',
+        identifier: doc.email,
+        action: 'DOCTOR_SIGN_IN',
+        details: `Simulated physician authentication: Signed into Physician Workspace (${doc.dept}, Cabin: ${doc.cabin}).`,
+        status: 'ACTIVE_NOW'
+      });
+    } else {
+      const pat = randomPatients[Math.floor(Math.random() * randomPatients.length)];
+      logAuditEvent({
+        userName: pat.name,
+        userRole: 'patient',
+        identifier: `UHID: ${pat.uhid}`,
+        action: 'PATIENT_SIGN_IN',
+        details: `Simulated patient session: ${pat.notes}.`,
+        status: 'ACTIVE_NOW'
+      });
+    }
+  };
+
   // Session & Authentication (null initially to show AuthPage)
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -257,6 +412,14 @@ export function MediSenseProvider({ children }) {
     });
     setActivePortal('patient');
     setPatientTab('symptoms');
+    logAuditEvent({
+      userName: newPatient.name,
+      userRole: 'patient',
+      identifier: `${cleanEmail} (UHID: ${newId})`,
+      action: 'PATIENT_REGISTRATION',
+      details: `New patient registration completed. Profile generated and session initiated.`,
+      status: 'ACTIVE_NOW'
+    });
     return newPatient;
   };
 
@@ -293,6 +456,14 @@ export function MediSenseProvider({ children }) {
       });
       setActivePortal('patient');
       setPatientTab('symptoms');
+      logAuditEvent({
+        userName: patient.name,
+        userRole: 'patient',
+        identifier: account?.email || patient.email || patient.id,
+        action: 'PATIENT_SIGN_IN',
+        details: `Patient authenticated to Patient Portal. Accessing health profile and vitals.`,
+        status: 'ACTIVE_NOW'
+      });
       return { success: true };
     }
 
@@ -363,6 +534,14 @@ export function MediSenseProvider({ children }) {
         email: cleanEmail
       });
       setActivePortal('hospital');
+      logAuditEvent({
+        userName: 'Hospital Administration Director',
+        userRole: 'admin',
+        identifier: cleanEmail,
+        action: 'HOSPITAL_ADMIN_SIGN_IN',
+        details: `Hospital Administration Director authenticated to Hospital Central Operations Command.`,
+        status: 'ACTIVE_NOW'
+      });
     } else {
       // Find matching doctor or default to Dr. Aris Thorne
       let matchedDoc = hospitalDoctors[0]; // Dr. Aris Thorne
@@ -393,6 +572,14 @@ export function MediSenseProvider({ children }) {
         email: cleanEmail
       });
       setActivePortal('doctor');
+      logAuditEvent({
+        userName: matchedDoc.name,
+        userRole: 'doctor',
+        identifier: `${cleanEmail} (${matchedDoc.department})`,
+        action: 'DOCTOR_SIGN_IN',
+        details: `Attending Physician signed in to Individual Workspace. Cabin: ${matchedDoc.cabin}, Shift: ${matchedDoc.dutyShift}.`,
+        status: 'ACTIVE_NOW'
+      });
     }
 
     return { success: true };
@@ -415,6 +602,16 @@ export function MediSenseProvider({ children }) {
 
   // Logout handler
   const logoutUser = () => {
+    if (currentUser) {
+      logAuditEvent({
+        userName: currentUser.name || 'User',
+        userRole: currentUser.role || 'patient',
+        identifier: currentUser.email || currentUser.patientId || currentUser.doctorId || 'Session',
+        action: 'USER_LOGOUT',
+        details: `User signed out. Session safely terminated.`,
+        status: 'SESSION_CONCLUDED'
+      });
+    }
     setCurrentUser(null);
     setActivePortal('patient');
   };
@@ -773,7 +970,11 @@ export function MediSenseProvider({ children }) {
         updateDoctorStatus,
         currentDoctorId,
         switchDoctor,
-        activeDoctor
+        activeDoctor,
+        auditLogs,
+        setAuditLogs,
+        logAuditEvent,
+        simulateUserSignIn
       }}
 
 
