@@ -55,11 +55,19 @@ cover/
 *.mo
 *.pot
 
-# Django stuff:
-*.log
-local_settings.py
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+backend/medisense.db
 db.sqlite3
 db.sqlite3-journal
+
+# Local Datasets (not committed to repo)
+backend/Dataset/
+backend/dataset/
+Dataset/
+dataset/
 
 # Flask stuff:
 instance/
