@@ -132,7 +132,7 @@ export default function DoctorPortal() {
             </div>
           </div>
 
-          {/* Top Right: Status Badge & Evaluator Doctor Switcher */}
+          {/* Top Right: Status Badge & Verified Physician ID */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 self-start lg:self-auto">
             
             {/* Status Pill */}
@@ -145,24 +145,11 @@ export default function DoctorPortal() {
               <span>{doc.statusLabel}</span>
             </div>
 
-            {/* Evaluator Switch Doctor Dropdown */}
-            <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-100 border border-slate-200 text-xs">
-              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider pl-2">
-                Switch Doctor:
-              </span>
-              <select
-                value={currentDoctorId}
-                onChange={(e) => switchDoctor(e.target.value)}
-                className="bg-white px-2.5 py-1.5 rounded-xl font-extrabold text-slate-800 border border-slate-200 focus:outline-none cursor-pointer text-xs shadow-sm"
-              >
-                {(hospitalDoctors || []).map(d => (
-                  <option key={d.id} value={d.id}>
-                    {d.name} ({d.department?.split('&')[0]?.trim()})
-                  </option>
-                ))}
-              </select>
+            {/* Verified Clinical Credentials Badge */}
+            <div className="px-3.5 py-2 rounded-2xl bg-indigo-50/80 border border-indigo-200 text-indigo-900 text-xs font-bold flex items-center gap-2 shadow-sm">
+              <ShieldCheck className="w-4 h-4 text-indigo-600" />
+              <span>Physician License • {doc.id.toUpperCase()}</span>
             </div>
-
 
           </div>
         </div>

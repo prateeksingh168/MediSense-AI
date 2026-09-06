@@ -330,7 +330,12 @@ export function MediSenseProvider({ children }) {
       if (userObj.role === 'admin') {
         setActivePortal('hospital');
       } else {
-        const docId = userObj.doctorId || (userObj.name?.includes('Chen') ? 'doc_003' : userObj.name?.includes('Mansoor') ? 'doc_002' : 'doc_001');
+        const docId = userObj.doctorId || 
+          (userObj.name?.includes('Chen') ? 'doc_003' : 
+           userObj.name?.includes('Mansoor') ? 'doc_002' : 
+           userObj.name?.includes('Nair') ? 'doc_004' : 
+           userObj.name?.includes('Zhang') ? 'doc_005' : 
+           userObj.name?.includes('Morales') ? 'doc_006' : 'doc_001');
         setCurrentDoctorId(docId);
         setActivePortal('doctor');
       }

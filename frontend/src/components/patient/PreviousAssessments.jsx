@@ -1,18 +1,12 @@
-﻿import React from 'react';
+import React from 'react';
 import { useMediSense } from '../../context/MediSenseContext';
 import { TriageBadge, StatusBadge } from '../common/Badge';
-import { Clock, Stethoscope, ChevronRight, FileText, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Clock, Stethoscope, FileText, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export default function PreviousAssessments() {
-  const { cases, currentPatient, setSelectedCaseId, setActivePortal, setReviewModalOpen } = useMediSense();
+  const { cases, currentPatient } = useMediSense();
 
   const patientCases = cases.filter(c => c.patientId === currentPatient.id);
-
-  const openCaseInDoctorReview = (caseId) => {
-    setSelectedCaseId(caseId);
-    setActivePortal('doctor');
-    setReviewModalOpen(true);
-  };
 
   return (
     <div className="space-y-6">
@@ -123,13 +117,9 @@ export default function PreviousAssessments() {
                       <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
                       <span>Case currently awaiting review in Doctor Triage Queue.</span>
                     </div>
-                    <button
-                      onClick={() => openCaseInDoctorReview(item.id)}
-                      className="text-xs font-bold text-teal-700 hover:text-teal-800 flex items-center gap-1 underline underline-offset-2 shrink-0"
-                    >
-                      <span>Review as Doctor</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
-                    </button>
+                    <span className="text-[11px] font-bold text-amber-800 bg-amber-100/90 px-3 py-1 rounded-lg border border-amber-300 shrink-0">
+                      Pending Clinical Review
+                    </span>
                   </div>
                 )}
 

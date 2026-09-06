@@ -94,6 +94,16 @@ export default function DoctorAuthModal({ isOpen, onClose }) {
           department: 'Emergency & Trauma Services',
           license: 'MED-CADUCEUS-2026'
         };
+      } else if (type === 'nair') {
+        doctorProfile = {
+          id: 'DOC-SURG-5511',
+          doctorId: 'doc_004',
+          name: 'Dr. Priya Nair, MD',
+          role: 'doctor',
+          email: 'dr.nair@medisense.org',
+          department: 'General & Trauma Surgery',
+          license: 'MED-CADUCEUS-2026'
+        };
       } else {
         doctorProfile = {
           id: 'HOSP-ADMIN-7700',
@@ -223,6 +233,17 @@ export default function DoctorAuthModal({ isOpen, onClose }) {
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
+                onClick={() => handleDemoFill('nair')}
+                className="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 text-left transition-all group cursor-pointer"
+              >
+                <div className="text-xs font-extrabold text-slate-900 group-hover:text-indigo-700">
+                  Dr. Priya Nair, MD
+                </div>
+                <div className="text-[10px] text-slate-500">General & Trauma Surgery</div>
+              </button>
+
+              <button
+                type="button"
                 onClick={() => handleDemoFill('thorne')}
                 className="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 text-left transition-all group cursor-pointer"
               >
@@ -230,17 +251,6 @@ export default function DoctorAuthModal({ isOpen, onClose }) {
                   Dr. Aris Thorne, MD
                 </div>
                 <div className="text-[10px] text-slate-500">Cardiology & CCU</div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleDemoFill('al-mansoor')}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 text-left transition-all group cursor-pointer"
-              >
-                <div className="text-xs font-extrabold text-slate-900 group-hover:text-indigo-700">
-                  Dr. Sarah Al-Mansoor
-                </div>
-                <div className="text-[10px] text-slate-500">Chief of Neurology</div>
               </button>
 
               <button
@@ -256,14 +266,30 @@ export default function DoctorAuthModal({ isOpen, onClose }) {
 
               <button
                 type="button"
-                onClick={() => handleDemoFill('admin')}
+                onClick={() => handleDemoFill('al-mansoor')}
                 className="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 text-left transition-all group cursor-pointer"
               >
-                <div className="text-xs font-extrabold text-slate-900 group-hover:text-indigo-700 flex items-center gap-1">
-                  <Building2 className="w-3 h-3 text-indigo-600" />
-                  <span>Hospital Admin</span>
+                <div className="text-xs font-extrabold text-slate-900 group-hover:text-indigo-700">
+                  Dr. Sarah Al-Mansoor
                 </div>
-                <div className="text-[10px] text-slate-500">Telemetry & Operations</div>
+                <div className="text-[10px] text-slate-500">Chief of Neurology</div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleDemoFill('admin')}
+                className="col-span-2 p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 text-left transition-all group cursor-pointer flex items-center justify-between"
+              >
+                <div>
+                  <div className="text-xs font-extrabold text-slate-900 group-hover:text-indigo-700 flex items-center gap-1.5">
+                    <Building2 className="w-3.5 h-3.5 text-indigo-600" />
+                    <span>Hospital Administration Central Command</span>
+                  </div>
+                  <div className="text-[10px] text-slate-500">Institutional Telemetry, Doctors Roster & All Wards Census</div>
+                </div>
+                <span className="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
+                  Executive
+                </span>
               </button>
             </div>
           </div>

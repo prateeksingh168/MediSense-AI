@@ -642,6 +642,24 @@ export default function AuthPage() {
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
+                    onClick={() => autofillStaff('dr.nair@medisense.hospital.org', 'doctor123', 'doctor')}
+                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50/50 border border-slate-200 hover:border-indigo-300 text-left transition-all text-xs cursor-pointer"
+                  >
+                    <div className="font-bold text-slate-800">Dr. Priya Nair, MD</div>
+                    <div className="text-[10px] text-slate-500">General & Trauma Surgery</div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => autofillStaff('dr.thorne@medisense.hospital.org', 'doctor123', 'doctor')}
+                    className="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50/50 border border-slate-200 hover:border-indigo-300 text-left transition-all text-xs cursor-pointer"
+                  >
+                    <div className="font-bold text-slate-800">Dr. Aris Thorne, MD</div>
+                    <div className="text-[10px] text-slate-500">Cardiology & CCU</div>
+                  </button>
+
+                  <button
+                    type="button"
                     onClick={() => autofillStaff('dr.chen@medisense.hospital.org', 'doctor123', 'doctor')}
                     className="p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50/50 border border-slate-200 hover:border-indigo-300 text-left transition-all text-xs cursor-pointer"
                   >
@@ -654,8 +672,11 @@ export default function AuthPage() {
                     onClick={() => autofillStaff('admin@medisense.hospital.org', 'admin123', 'admin')}
                     className="p-2.5 rounded-xl bg-slate-50 hover:bg-purple-50/50 border border-slate-200 hover:border-purple-300 text-left transition-all text-xs cursor-pointer"
                   >
-                    <div className="font-bold text-slate-800">Hospital Administration</div>
-                    <div className="text-[10px] text-slate-500">Clinical Audit & Governance</div>
+                    <div className="font-bold text-slate-800 flex items-center gap-1">
+                      <Building2 className="w-3 h-3 text-purple-600" />
+                      <span>Hospital Admin</span>
+                    </div>
+                    <div className="text-[10px] text-slate-500">Telemetry & Operations</div>
                   </button>
                 </div>
                 <p className="text-[10px] text-slate-400 text-center italic">
