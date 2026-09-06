@@ -28,6 +28,7 @@ This document details all recent modifications made to the **MediSense AI** fron
 ### Summary of Latest Changes:
 | Commit Hash | Type | Change Description |
 | :--- | :--- | :--- |
+| `2295b49` | **Feature** | Added automated AI Doctor Recommendation & Pre-Selection based on patient symptoms, 1-click appointment booking with official printable OPD token receipts, and unified Assigned Patients with Case Prioritization into a single doctor workspace tab. |
 | `a1484dd` | **Feature** | Added **Real-Time Live Sign-in & User Access Audit Logging** for Hospital Central Command, tracking all doctor, patient, and admin sessions with timestamps, and streamlined hospital portal strictly to core essentials. |
 | `b686191` | **Feature** | Aligned Patient & Doctor Portals strictly with the PRD specification matrix while preserving Hospital Central Command and the Medi AI Voice/Text Companion intact. |
 | `39f4000` | **Docs** | Added comprehensive English CHANGES_README documenting frontend architecture, RBAC, and integration specs. |

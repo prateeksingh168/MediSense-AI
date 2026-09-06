@@ -1,37 +1,27 @@
 import React, { useState, useMemo } from 'react';
 import { useMediSense } from '../../context/MediSenseContext';
 import {
-  Activity,
   Users,
   Stethoscope,
   Building2,
   Clock,
-  CheckCircle2,
-  AlertCircle,
   Search,
-  Filter,
   ShieldCheck,
-  Sparkles,
-  UserCheck,
-  LogOut,
-  LogIn,
-  RotateCw,
   PlusCircle,
-  Laptop,
-  Radio,
-  Fingerprint
+  Fingerprint,
+  LogIn
 } from 'lucide-react';
 
 export default function HospitalLiveAudit() {
   const {
     auditLogs = [],
     simulateUserSignIn,
-    setAuditLogs,
-    currentUser
+    hospitalDoctors = [],
+    patientsList = []
   } = useMediSense();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [roleFilter, setRoleFilter] = useState('ALL'); // 'ALL' | 'ACTIVE' | 'doctor' | 'patient' | 'admin'
+  const [roleFilter, setRoleFilter] = useState('ALL'); // 'ALL' | 'doctor' | 'patient' | 'admin'
   const [toastMessage, setToastMessage] = useState(null);
 
   const showToast = (msg) => {
@@ -39,8 +29,14 @@ export default function HospitalLiveAudit() {
     setTimeout(() => setToastMessage(null), 3500);
   };
 
+  // User counts
+  const totalDoctors = hospitalDoctors.length;
+  const totalPatients = patientsList.length;
+  const totalAdmins = 1;
+  const totalSystemUsers = totalDoctors + totalPatients + totalAdmins;
+
+  // Log counts
   const totalLogs = auditLogs.length;
-  const activeNowCount = auditLogs.filter(l => l.status === 'ACTIVE_NOW').length;
   const doctorLogsCount = auditLogs.filter(l => l.userRole === 'doctor').length;
   const patientLogsCount = auditLogs.filter(l => l.userRole === 'patient').length;
   const adminLogsCount = auditLogs.filter(l => l.userRole === 'admin').length;
@@ -57,7 +53,6 @@ export default function HospitalLiveAudit() {
       if (!matchesSearch) return false;
 
       if (roleFilter === 'ALL') return true;
-      if (roleFilter === 'ACTIVE') return log.status === 'ACTIVE_NOW';
       return log.userRole === roleFilter;
     });
   }, [auditLogs, searchQuery, roleFilter]);
@@ -65,14 +60,7 @@ export default function HospitalLiveAudit() {
   const handleSimulateSignIn = (role) => {
     if (simulateUserSignIn) {
       simulateUserSignIn(role);
-      showToast(`New ${role.toUpperCase()} sign-in event logged in real time!`);
-    }
-  };
-
-  const handleClearLogs = () => {
-    if (window.confirm('Reset live audit logs to default?')) {
-      localStorage.removeItem('medisense_live_audit_logs');
-      window.location.reload();
+      showToast(`Naya ${role.toUpperCase()} login record add ho gaya!`);
     }
   };
 
@@ -87,82 +75,100 @@ export default function HospitalLiveAudit() {
         </div>
       )}
 
-      {/* Header Banner */}
+      {/* Header Banner: Total Users & Login Tracking */}
       <div className="p-6 sm:p-7 rounded-3xl bg-white border border-slate-200 shadow-sm">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           
           <div>
             <div className="flex items-center gap-2 text-teal-700 text-xs font-bold uppercase tracking-wider">
-              <Radio className="w-4 h-4 text-emerald-500 animate-pulse" />
-              <span>Real-Time User Access Telemetry • Live Session Store</span>
+              <LogIn className="w-4 h-4 text-teal-600" />
+              <span>User Sign-In History & User Directory</span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
-              Hospital Live Sign-In & User Activity Hub
+              Hospital Login History & Total Users
             </h3>
             <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-2xl">
-              Continuous live tracking of who is using the platform, when they authenticated, their healthcare role (Doctor, Patient, Administrator), and session duration.
+              Track exactly who signed into the system and when (Doctors, Patients, Administrators), with complete user counts.
             </p>
           </div>
 
-          {/* Quick Simulation & Live Pulse Badge */}
+          {/* Quick Simulation Buttons */}
           <div className="flex flex-wrap items-center gap-2.5 self-start lg:self-auto">
-            <div className="px-3.5 py-2 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-2 shadow-sm">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>{activeNowCount} Users Online Now</span>
-            </div>
-
             <button
               onClick={() => handleSimulateSignIn('patient')}
-              className="px-3 py-2 rounded-2xl bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm"
-              title="Simulate a new patient logging in right now"
+              className="px-3.5 py-2 rounded-2xl bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm"
+              title="Add a new patient login record"
             >
               <PlusCircle className="w-3.5 h-3.5 text-teal-600" />
-              <span>+ Test Patient Sign-In</span>
+              <span>+ Add Patient Login</span>
             </button>
 
             <button
               onClick={() => handleSimulateSignIn('doctor')}
-              className="px-3 py-2 rounded-2xl bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm"
-              title="Simulate a new doctor logging in right now"
+              className="px-3.5 py-2 rounded-2xl bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-sm"
+              title="Add a new doctor login record"
             >
               <PlusCircle className="w-3.5 h-3.5 text-indigo-600" />
-              <span>+ Test Doctor Sign-In</span>
+              <span>+ Add Doctor Login</span>
             </button>
           </div>
 
         </div>
 
-        {/* Live Metrics Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-6 pt-6 border-t border-slate-100">
+        {/* Total Users Summary Cards (Ek Jgh Total Kitne Users Hai: Doctor + Patient + Admin) */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mt-6 pt-6 border-t border-slate-100">
           
-          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
-            <div className="text-[11px] font-semibold text-slate-500">Total Sign-Ins Logged</div>
-            <div className="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">{totalLogs}</div>
-            <span className="text-[10px] text-teal-700 font-bold">Stored in real-time</span>
+          {/* Card 1: Total Users in System */}
+          <div className="p-4 rounded-2xl bg-slate-900 text-white shadow-sm">
+            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total System Users</div>
+            <div className="text-2xl sm:text-3xl font-black text-white mt-1">
+              {totalSystemUsers}
+            </div>
+            <span className="text-[10px] text-teal-400 font-semibold block mt-0.5">
+              {totalDoctors} Doctors • {totalPatients} Patients • 1 Admin
+            </span>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200">
-            <div className="text-[11px] font-bold text-emerald-800">Active Online Now</div>
-            <div className="text-xl sm:text-2xl font-black text-emerald-700 mt-0.5">{activeNowCount}</div>
-            <span className="text-[10px] text-emerald-700 font-medium">Live active sessions</span>
+          {/* Card 2: Total Doctors */}
+          <div className="p-4 rounded-2xl bg-indigo-50 border border-indigo-200">
+            <div className="text-[11px] font-bold text-indigo-700 uppercase tracking-wider flex items-center justify-between">
+              <span>Total Doctors</span>
+              <Stethoscope className="w-3.5 h-3.5 text-indigo-600" />
+            </div>
+            <div className="text-2xl sm:text-3xl font-black text-indigo-900 mt-1">
+              {totalDoctors}
+            </div>
+            <span className="text-[10px] text-indigo-600 font-medium block mt-0.5">
+              Verified attending staff
+            </span>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-indigo-50 border border-indigo-200">
-            <div className="text-[11px] font-bold text-indigo-800">Doctor Access Events</div>
-            <div className="text-xl sm:text-2xl font-black text-indigo-700 mt-0.5">{doctorLogsCount}</div>
-            <span className="text-[10px] text-indigo-700 font-medium">Physician workspace</span>
+          {/* Card 3: Total Patients */}
+          <div className="p-4 rounded-2xl bg-teal-50 border border-teal-200">
+            <div className="text-[11px] font-bold text-teal-700 uppercase tracking-wider flex items-center justify-between">
+              <span>Total Patients</span>
+              <Users className="w-3.5 h-3.5 text-teal-600" />
+            </div>
+            <div className="text-2xl sm:text-3xl font-black text-teal-900 mt-1">
+              {totalPatients}
+            </div>
+            <span className="text-[10px] text-teal-600 font-medium block mt-0.5">
+              Registered patient accounts
+            </span>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-teal-50 border border-teal-200">
-            <div className="text-[11px] font-bold text-teal-800">Patient Access Events</div>
-            <div className="text-xl sm:text-2xl font-black text-teal-700 mt-0.5">{patientLogsCount}</div>
-            <span className="text-[10px] text-teal-700 font-medium">Symptom & vitals app</span>
-          </div>
-
-          <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200">
-            <div className="text-[11px] font-bold text-amber-800">Admin Operations</div>
-            <div className="text-xl sm:text-2xl font-black text-amber-700 mt-0.5">{adminLogsCount}</div>
-            <span className="text-[10px] text-amber-700 font-medium">Hospital command</span>
+          {/* Card 4: Total Login Events Recorded */}
+          <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+            <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center justify-between">
+              <span>Logins Recorded</span>
+              <LogIn className="w-3.5 h-3.5 text-slate-400" />
+            </div>
+            <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
+              {totalLogs}
+            </div>
+            <span className="text-[10px] text-slate-500 font-medium block mt-0.5">
+              Sign-in timestamp history
+            </span>
           </div>
 
         </div>
@@ -177,18 +183,17 @@ export default function HospitalLiveAudit() {
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <input
             type="text"
-            placeholder="Search sign-ins by name, UHID, email, IP, or role..."
+            placeholder="Search login history by name, UHID, email, or role..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-slate-50 text-xs sm:text-sm text-slate-900 pl-10 pr-4 py-2.5 rounded-2xl border border-slate-200 focus:outline-none focus:border-teal-500 focus:bg-white"
           />
         </div>
 
-        {/* Filter Pills */}
+        {/* Filter Pills (No 'online' filter as requested) */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
           {[
-            { id: 'ALL', label: `All (${totalLogs})` },
-            { id: 'ACTIVE', label: `Active Online (${activeNowCount})` },
+            { id: 'ALL', label: `All Logins (${totalLogs})` },
             { id: 'doctor', label: `Doctors (${doctorLogsCount})` },
             { id: 'patient', label: `Patients (${patientLogsCount})` },
             { id: 'admin', label: `Admins (${adminLogsCount})` }
@@ -209,29 +214,26 @@ export default function HospitalLiveAudit() {
 
       </div>
 
-      {/* Real-Time Live Activity Feed List */}
+      {/* Real-Time Login Feed Cards (Clean: Kisne Kab Login Kiya, NO online badges) */}
       <div className="space-y-3">
         {filteredLogs.length === 0 ? (
           <div className="p-12 text-center rounded-3xl bg-white border border-slate-200 text-slate-500 text-xs space-y-2">
             <Users className="w-8 h-8 text-slate-400 mx-auto" />
-            <p className="font-bold">No sign-in records matched your filter criteria.</p>
+            <p className="font-bold">No login records found matching your filter.</p>
           </div>
         ) : (
           filteredLogs.map((log) => {
             const isDoctor = log.userRole === 'doctor';
             const isPatient = log.userRole === 'patient';
             const isAdmin = log.userRole === 'admin';
-            const isOnline = log.status === 'ACTIVE_NOW';
 
             return (
               <div
                 key={log.id}
-                className={`p-4 sm:p-5 rounded-3xl bg-white border transition-all shadow-sm hover:shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
-                  isOnline ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-200'
-                }`}
+                className="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 hover:border-slate-300 transition-all shadow-sm hover:shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4"
               >
                 
-                {/* Left: User Avatar & Basic Info */}
+                {/* Left: User Avatar, Name & Role */}
                 <div className="flex items-start sm:items-center gap-3.5">
                   
                   {/* Avatar Initial with Role Color */}
@@ -265,39 +267,27 @@ export default function HospitalLiveAudit() {
                         {isAdmin && <Building2 className="w-3 h-3" />}
                         <span>{log.userRole}</span>
                       </span>
-
-                      {/* Online Pulse Indicator */}
-                      {isOnline ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-200">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                          <span>Online / Active Now</span>
-                        </span>
-                      ) : (
-                        <span className="text-[10px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">
-                          Session Concluded
-                        </span>
-                      )}
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-slate-500 mt-1">
-                      <span className="font-mono text-slate-600 font-semibold">{log.identifier}</span>
+                      <span className="font-mono text-slate-700 font-semibold">{log.identifier}</span>
                       <span>•</span>
-                      <span className="flex items-center gap-1 text-slate-600">
+                      <span className="flex items-center gap-1 text-slate-500 text-[11px]">
                         <Fingerprint className="w-3 h-3 text-slate-400" />
                         IP: {log.ipAddress}
                       </span>
                     </div>
 
-                    <p className="text-xs text-slate-600 mt-1.5 font-medium leading-relaxed">
+                    <p className="text-xs text-slate-600 mt-1 font-medium leading-relaxed">
                       {log.details}
                     </p>
                   </div>
 
                 </div>
 
-                {/* Right: Timestamp & Action Badge */}
+                {/* Right: Exactly KAB login kiya (Clock time + date) */}
                 <div className="flex flex-row sm:flex-col items-start sm:items-end justify-between sm:justify-center gap-1 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
-                  <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-slate-800">
+                  <div className="flex items-center gap-1.5 text-xs sm:text-sm font-mono font-black text-slate-900">
                     <Clock className="w-3.5 h-3.5 text-teal-600" />
                     <span>{log.timestamp}</span>
                   </div>
@@ -319,14 +309,11 @@ export default function HospitalLiveAudit() {
       <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-          <span>Real-time access audit conforms to healthcare security standards. All user sign-ins are encrypted and time-stamped.</span>
+          <span>Every login event is time-stamped and automatically appended to this access history.</span>
         </div>
-        <button
-          onClick={handleClearLogs}
-          className="text-xs font-semibold text-slate-400 hover:text-slate-700 underline cursor-pointer"
-        >
-          Reset Demo Audit History
-        </button>
+        <span className="text-xs font-semibold text-slate-400">
+          Total Registered Users: {totalSystemUsers}
+        </span>
       </div>
 
     </div>

@@ -50,9 +50,9 @@ export default function HospitalPortal() {
               <Users className="w-3.5 h-3.5 text-indigo-600" />
               <span>{hospitalPatients.length} Total Patients</span>
             </div>
-            <div className="px-3.5 py-2 rounded-2xl bg-sky-50 border border-sky-200 text-sky-800 text-xs font-bold flex items-center gap-2 shadow-sm">
-              <Radio className="w-3.5 h-3.5 text-sky-600 animate-pulse" />
-              <span>{activeNowCount} Online Now</span>
+            <div className="px-3.5 py-2 rounded-2xl bg-slate-900 text-white text-xs font-bold flex items-center gap-2 shadow-sm">
+              <Users className="w-3.5 h-3.5 text-teal-400" />
+              <span>{hospitalDoctors.length + hospitalPatients.length + 1} Total Users</span>
             </div>
           </div>
         </div>
@@ -88,15 +88,16 @@ export default function HospitalPortal() {
 
           <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
             <div>
-              <div className="text-xs font-semibold text-slate-500">Live Active Platform Sessions</div>
-              <div className="text-2xl font-black text-emerald-700 mt-0.5 flex items-center gap-2">
-                <span>{activeNowCount} Online Now</span>
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+              <div className="text-xs font-semibold text-slate-500">Total System Users</div>
+              <div className="text-2xl font-black text-slate-900 mt-0.5">
+                {hospitalDoctors.length + hospitalPatients.length + 1} Registered
               </div>
-              <span className="text-[11px] text-slate-500 font-medium">Real-time sign-in telemetry</span>
+              <span className="text-[11px] text-teal-700 font-medium">
+                {hospitalDoctors.length} Doctors • {hospitalPatients.length} Patients • 1 Admin
+              </span>
             </div>
-            <div className="p-3 rounded-2xl bg-emerald-100/70 text-emerald-700">
-              <Radio className="w-6 h-6" />
+            <div className="p-3 rounded-2xl bg-indigo-100/70 text-indigo-700">
+              <Users className="w-6 h-6" />
             </div>
           </div>
 
@@ -138,7 +139,7 @@ export default function HospitalPortal() {
           }`}
         >
           <Radio className="w-4 h-4 text-emerald-400 animate-pulse" />
-          <span>Real-Time Sign-In & Live User Log ({auditLogs.length})</span>
+          <span>User Login History & Total Users ({auditLogs.length})</span>
         </button>
       </div>
 
