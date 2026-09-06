@@ -29,12 +29,22 @@ import {
 } from 'lucide-react';
 
 export default function DoctorAnalytics() {
-  const { activeDoctor, hospitalPatients, cases } = useMediSense();
+  const { activeDoctor, hospitalDoctors, hospitalPatients, cases } = useMediSense();
+
+  const doc = activeDoctor || (hospitalDoctors && hospitalDoctors[0]) || {
+    id: 'doc_001',
+    name: 'Dr. Aris Thorne, MD',
+    title: 'Senior Attending Cardiologist',
+    department: 'Cardiology & CCU',
+    cabin: 'Room 104',
+    dutyShift: '08:00 - 16:30',
+    contact: 'Ext #4421'
+  };
 
   // Patients assigned strictly to this doctor
   const myPatients = useMemo(() => {
-    return hospitalPatients.filter(p => p.attendingDoctorId === activeDoctor.id);
-  }, [hospitalPatients, activeDoctor.id]);
+    return (hospitalPatients || []).filter(p => p.attendingDoctorId === doc.id);
+  }, [hospitalPatients, doc.id]);
 
   // Urgency Distribution of this doctor's patients
   const urgencyData = useMemo(() => {
@@ -53,7 +63,8 @@ export default function DoctorAnalytics() {
 
   // Weekly consult trend tailored for this doctor
   const weeklyConsultData = useMemo(() => {
-    const base = activeDoctor.department.includes('Cardio') ? 6 : activeDoctor.department.includes('Emerg') ? 10 : 7;
+    const dept = doc.department || '';
+    const base = dept.includes('Cardio') ? 6 : dept.includes('Emerg') ? 10 : 7;
     return [
       { day: 'Mon', consults: base + 2, emergencies: 2 },
       { day: 'Tue', consults: base + 4, emergencies: 3 },
@@ -63,12 +74,13 @@ export default function DoctorAnalytics() {
       { day: 'Sat', consults: Math.round(base * 0.7), emergencies: 2 },
       { day: 'Sun', consults: Math.round(base * 0.5), emergencies: 1 }
     ];
-  }, [activeDoctor.department]);
+  }, [doc.department]);
 
   // My Cases Concordance
-  const reviewedByMe = cases.filter(c => c.doctorReview?.doctorName?.includes(activeDoctor.name.split(' ')[1] || ''));
+  const reviewedByMe = (cases || []).filter(c => c.doctorReview?.doctorName?.includes(doc.name?.split(' ')[1] || ''));
   const myAccepted = reviewedByMe.filter(c => c.doctorReview?.action === 'ACCEPTED').length;
   const myConcordance = reviewedByMe.length > 0 ? Math.round((myAccepted / reviewedByMe.length) * 100) : 94;
+
 
   return (
     <div className="space-y-8">
@@ -79,8 +91,9 @@ export default function DoctorAnalytics() {
           <div>
             <div className="flex items-center gap-2 text-indigo-700 text-xs font-bold uppercase tracking-wider">
               <Stethoscope className="w-4 h-4" />
-              <span>Personal Physician Telemetry • {activeDoctor.name}</span>
+              <span>Personal Physician Telemetry • {doc.name}</span>
             </div>
+
             <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
               My Clinical Practice & Caseload Analytics
             </h3>
@@ -219,8 +232,9 @@ export default function DoctorAnalytics() {
         </div>
 
         <div className="px-3.5 py-2 rounded-xl bg-white border border-indigo-200 text-indigo-900 text-xs font-bold shrink-0 shadow-sm">
-          License: {activeDoctor.contact}
+          License: {doc.contact}
         </div>
+
       </div>
 
     </div>

@@ -43,38 +43,52 @@ export default function DoctorPortal() {
     updateDoctorStatus
   } = useMediSense();
 
+  const doc = activeDoctor || (hospitalDoctors && hospitalDoctors[0]) || {
+    id: 'doc_001',
+    name: 'Dr. Aris Thorne, MD',
+    title: 'Senior Attending Cardiologist',
+    department: 'Cardiology & CCU',
+    cabin: 'Room 104',
+    dutyShift: '08:00 - 16:30',
+    contact: 'Ext #4421',
+    status: 'AVAILABLE',
+    statusLabel: 'Available (Free Now)',
+    nextFreeTime: 'Free Now'
+  };
+
   // Selected patient for EMR quick modal
   const [selectedPatient, setSelectedPatient] = useState(null);
 
   // Filter patients strictly assigned to the logged-in doctor
   const myPatients = useMemo(() => {
-    return hospitalPatients.filter(p => p.attendingDoctorId === activeDoctor.id);
-  }, [hospitalPatients, activeDoctor.id]);
+    return (hospitalPatients || []).filter(p => p.attendingDoctorId === doc.id);
+  }, [hospitalPatients, doc.id]);
 
   // Filter cases relevant to this doctor
   const myCases = useMemo(() => {
-    return cases.filter(c => {
+    return (cases || []).filter(c => {
       const isAssigned = myPatients.some(p => p.id === c.patientId);
       const isDeptMatch =
-        (activeDoctor.department.includes('Cardio') && c.aiAnalysis?.primaryCondition?.includes('Coronary')) ||
-        (activeDoctor.department.includes('Emerg') && c.triageLevel === 'EMERGENCY') ||
-        (activeDoctor.department.includes('Neuro') && c.aiAnalysis?.primaryCondition?.includes('Headache')) ||
-        (activeDoctor.department.includes('Pulm') && c.aiAnalysis?.primaryCondition?.includes('Asthma')) ||
-        (activeDoctor.department.includes('Endo') && c.aiAnalysis?.primaryCondition?.includes('Hyperglycemia'));
+        (doc.department?.includes('Cardio') && c.aiAnalysis?.primaryCondition?.includes('Coronary')) ||
+        (doc.department?.includes('Emerg') && c.triageLevel === 'EMERGENCY') ||
+        (doc.department?.includes('Neuro') && c.aiAnalysis?.primaryCondition?.includes('Headache')) ||
+        (doc.department?.includes('Pulm') && c.aiAnalysis?.primaryCondition?.includes('Asthma')) ||
+        (doc.department?.includes('Endo') && c.aiAnalysis?.primaryCondition?.includes('Hyperglycemia'));
       return isAssigned || isDeptMatch;
     });
-  }, [cases, myPatients, activeDoctor]);
+  }, [cases, myPatients, doc]);
 
   const myEmergencyCount = myPatients.filter(p => p.triageUrgency === 'EMERGENCY').length;
   const myPendingCount = myCases.filter(c => c.status === 'PENDING_REVIEW').length;
-  const myReviewedCount = cases.filter(c => c.doctorReview?.doctorName?.includes(activeDoctor.name.split(' ')[1] || '')).length;
+  const myReviewedCount = (cases || []).filter(c => c.doctorReview?.doctorName?.includes(doc.name?.split(' ')[1] || '')).length;
 
   const handleSelectCase = (caseId) => {
     setSelectedCaseId(caseId);
     setReviewModalOpen(true);
   };
 
-  const isAvailable = activeDoctor.status === 'AVAILABLE';
+  const isAvailable = doc.status === 'AVAILABLE';
+
 
   return (
     <div className="space-y-8">
@@ -85,34 +99,34 @@ export default function DoctorPortal() {
           
           <div className="flex items-start gap-4">
             <div className="w-16 h-16 rounded-3xl bg-indigo-50 border border-indigo-200 text-indigo-700 flex items-center justify-center font-black text-xl shrink-0 shadow-inner">
-              {activeDoctor.name.replace('Dr. ', '').split(' ')[0][0]}
-              {activeDoctor.name.replace('Dr. ', '').split(' ')[1]?.[0] || 'M'}
+              {doc.name.replace('Dr. ', '').split(' ')[0][0]}
+              {doc.name.replace('Dr. ', '').split(' ')[1]?.[0] || 'M'}
             </div>
             <div>
               <div className="flex items-center gap-2 text-indigo-700 text-xs font-bold uppercase tracking-wider">
                 <Stethoscope className="w-4 h-4" />
-                <span>Physician Workspace • {activeDoctor.department}</span>
+                <span>Physician Workspace • {doc.department}</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-0.5 tracking-tight">
-                {activeDoctor.name}
+                {doc.name}
               </h2>
               <p className="text-xs sm:text-sm font-semibold text-slate-600">
-                {activeDoctor.title}
+                {doc.title}
               </p>
               <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-slate-500">
                 <span className="flex items-center gap-1 font-medium text-slate-700">
                   <Building2 className="w-3.5 h-3.5 text-slate-400" />
-                  {activeDoctor.cabin}
+                  {doc.cabin}
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1 font-medium text-slate-700">
                   <Clock className="w-3.5 h-3.5 text-slate-400" />
-                  {activeDoctor.dutyShift}
+                  {doc.dutyShift}
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1 font-medium text-slate-700">
                   <Phone className="w-3.5 h-3.5 text-slate-400" />
-                  {activeDoctor.contact}
+                  {doc.contact}
                 </span>
               </div>
             </div>
@@ -128,7 +142,7 @@ export default function DoctorPortal() {
                 : 'bg-amber-50 text-amber-800 border-amber-300'
             }`}>
               <span className={`w-2.5 h-2.5 rounded-full ${isAvailable ? 'bg-emerald-500 animate-ping' : 'bg-amber-500'}`}></span>
-              <span>{activeDoctor.statusLabel}</span>
+              <span>{doc.statusLabel}</span>
             </div>
 
             {/* Evaluator Switch Doctor Dropdown */}
@@ -141,13 +155,14 @@ export default function DoctorPortal() {
                 onChange={(e) => switchDoctor(e.target.value)}
                 className="bg-white px-2.5 py-1.5 rounded-xl font-extrabold text-slate-800 border border-slate-200 focus:outline-none cursor-pointer text-xs shadow-sm"
               >
-                {hospitalDoctors.map(doc => (
-                  <option key={doc.id} value={doc.id}>
-                    {doc.name} ({doc.department.split('&')[0].trim()})
+                {(hospitalDoctors || []).map(d => (
+                  <option key={d.id} value={d.id}>
+                    {d.name} ({d.department?.split('&')[0]?.trim()})
                   </option>
                 ))}
               </select>
             </div>
+
 
           </div>
         </div>

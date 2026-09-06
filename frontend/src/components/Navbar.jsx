@@ -9,7 +9,8 @@ import {
   Users,
   ChevronDown,
   Activity,
-  Lock
+  Lock,
+  Building2
 } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 import DoctorAuthModal from './auth/DoctorAuthModal';
@@ -26,11 +27,13 @@ export default function Navbar() {
     emergencyCount,
     cases,
     doctorAuthModalOpen,
-    setDoctorAuthModalOpen
+    setDoctorAuthModalOpen,
+    activeDoctor
   } = useMediSense();
 
   const pendingCount = cases.filter(c => c.status === 'PENDING_REVIEW').length;
   const isDoctorRole = currentUser?.role === 'doctor' || currentUser?.role === 'admin';
+
 
 
   return (
