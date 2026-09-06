@@ -353,7 +353,9 @@ export function MediSenseProvider({ children }) {
       return { success: false, error: 'Security key must be at least 4 characters long.' };
     }
 
-    if (role === 'admin' || cleanEmail.includes('admin') || cleanEmail.includes('hosp')) {
+    const isAdmin = role === 'admin' || (role !== 'doctor' && (cleanEmail.startsWith('admin') || cleanEmail.includes('admin@') || cleanEmail.startsWith('hospital')));
+
+    if (isAdmin) {
       setCurrentUser({
         role: 'admin',
         name: 'Hospital Administration Director',
@@ -364,16 +366,18 @@ export function MediSenseProvider({ children }) {
     } else {
       // Find matching doctor or default to Dr. Aris Thorne
       let matchedDoc = hospitalDoctors[0]; // Dr. Aris Thorne
-      if (cleanEmail.includes('chen') || cleanEmail.includes('emerg')) {
+      if (cleanEmail.includes('nair') || cleanEmail.includes('surg')) {
+        matchedDoc = hospitalDoctors.find(d => d.id === 'doc_004') || hospitalDoctors[0];
+      } else if (cleanEmail.includes('chen') || cleanEmail.includes('emerg')) {
         matchedDoc = hospitalDoctors.find(d => d.id === 'doc_003') || hospitalDoctors[0];
       } else if (cleanEmail.includes('mansoor') || cleanEmail.includes('neuro')) {
         matchedDoc = hospitalDoctors.find(d => d.id === 'doc_002') || hospitalDoctors[0];
-      } else if (cleanEmail.includes('nair') || cleanEmail.includes('surg')) {
-        matchedDoc = hospitalDoctors.find(d => d.id === 'doc_004') || hospitalDoctors[0];
       } else if (cleanEmail.includes('zhang') || cleanEmail.includes('pulm')) {
         matchedDoc = hospitalDoctors.find(d => d.id === 'doc_005') || hospitalDoctors[0];
       } else if (cleanEmail.includes('morales') || cleanEmail.includes('endo')) {
         matchedDoc = hospitalDoctors.find(d => d.id === 'doc_006') || hospitalDoctors[0];
+      } else if (cleanEmail.includes('thorne') || cleanEmail.includes('cardio')) {
+        matchedDoc = hospitalDoctors.find(d => d.id === 'doc_001') || hospitalDoctors[0];
       }
 
       setCurrentDoctorId(matchedDoc.id);

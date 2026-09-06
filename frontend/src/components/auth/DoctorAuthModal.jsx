@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 
 export default function DoctorAuthModal({ isOpen, onClose }) {
-  const { currentUser, loginClinician, setActivePortal } = useMediSense();
+  const { currentUser, loginClinician, setActivePortal, hospitalDoctors } = useMediSense();
 
   const [doctorId, setDoctorId] = useState('');
   const [securityKey, setSecurityKey] = useState('');
@@ -39,21 +39,42 @@ export default function DoctorAuthModal({ isOpen, onClose }) {
 
     setTimeout(() => {
       // Determine if hospital admin or doctor
-      const isAdmin = doctorId.toLowerCase().includes('admin') || doctorId.toLowerCase().includes('hosp');
-      const doctorProfile = {
-        id: doctorId.trim(),
-        name: isAdmin ? 'Hospital Operations Command' : 'Dr. Aris Thorne, MD',
-        role: isAdmin ? 'admin' : 'doctor',
-        email: doctorId.includes('@') ? doctorId : `${doctorId.toLowerCase()}@medisense.org`,
-        department: isAdmin ? 'Hospital Operations & Bed Telemetry' : 'Cardiology & Emergency Medicine',
-        license: 'MED-REG-LIC-2026-X9'
-      };
+      const cleanInput = doctorId.toLowerCase().trim();
+      const isAdmin = cleanInput.includes('admin') || cleanInput.startsWith('hosp');
 
-      loginClinician(doctorProfile);
-      setActivePortal('doctor');
+      if (isAdmin) {
+        const adminProfile = {
+          id: 'HOSP-ADMIN-7700',
+          name: 'Hospital Administration Director',
+          role: 'admin',
+          email: doctorId.includes('@') ? doctorId : 'hospital.admin@medisense.org',
+          department: 'Hospital Administration & Telemetry',
+          license: 'HOSP-OPS-KEY-2026'
+        };
+        loginClinician(adminProfile);
+        setActivePortal('hospital');
+      } else {
+        const matched = (hospitalDoctors || []).find(d => 
+          cleanInput.includes(d.name.toLowerCase().split(' ')[1] || '---') ||
+          d.id.toLowerCase() === cleanInput
+        ) || (cleanInput.includes('nair') ? (hospitalDoctors || []).find(d => d.id === 'doc_004') : hospitalDoctors[0]);
+
+        const doctorProfile = {
+          id: matched.id,
+          doctorId: matched.id,
+          name: matched.name,
+          role: 'doctor',
+          email: doctorId.includes('@') ? doctorId : `${matched.name.toLowerCase().replace(/[^a-z]/g, '')}@medisense.org`,
+          department: matched.department,
+          license: 'MED-CADUCEUS-2026'
+        };
+        loginClinician(doctorProfile);
+        setActivePortal('doctor');
+      }
+
       setIsAuthenticating(false);
       onClose();
-    }, 400);
+    }, 350);
   };
 
   const handleDemoFill = (type) => {
